@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
   <title>MCC FILE AND DOCUMENT TRACKER</title>
 
   <style>

@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
 
   <title>MCC FILE AND DOCUMENT TRACKER</title>
  	
@@ -85,6 +86,9 @@ header("location:indexs.php?page=home");
   							<input type="password" id="password" name="password" placeholder="Enter Password" class="form-control">
   						</div>
   						<center><button class="btn-sm btn-block btn-wave col-md-4 btn-success">Login</button></center>
+						  <div class="text-center mt-3">
+							<a href="forgot-password.php" id="forgot-password-link">Forgot Password?</a>
+						</div>
   					</form>
   				</div>
   			</div>

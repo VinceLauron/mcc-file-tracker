@@ -7,6 +7,7 @@ foreach($user->fetch_array() as $k =>$v){
 }
 }
 ?>
+ <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
 <div class="container-fluid">
 	
 	<form action="" id="manage-user">

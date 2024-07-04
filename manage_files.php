@@ -16,7 +16,7 @@ $qry = $conn->query("SELECT * FROM files where id=".$_GET['id']);
         <input type="hidden" name="folder_id" value="<?php echo isset($_GET['fid']) ? htmlspecialchars($_GET['fid']) : ''; ?>">
 
         <?php if (!isset($_GET['id']) || empty($_GET['id'])): ?>
-       
+            <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Upload</span>

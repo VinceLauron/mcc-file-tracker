@@ -9,6 +9,7 @@ $qry = $conn->query("SELECT * FROM folders where id=".$_GET['id']);
 	}
 }
 ?>
+ <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
 <div class="container-fluid">
 	<form action="" id="manage-folder">
 		<input type="hidden" name="id" value="<?php echo isset($_GET['id']) ? $_GET['id'] :'' ?>">

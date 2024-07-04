@@ -36,6 +36,7 @@ a.custom-menu-list span.icon{
 		margin-right: 5px
 }
 </style>
+<link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
 <nav aria-label="breadcrumb ">
   <ol class="breadcrumb">
   <li class="breadcrumb-item text-success">Dashboard</li>

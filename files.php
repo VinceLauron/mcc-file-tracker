@@ -120,7 +120,7 @@ if ($action == 'update_fullname') {
         color: #009879;
     }
 </style>
-
+<link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
 <nav aria-label="breadcrumb ">
     <ol class="breadcrumb">
 

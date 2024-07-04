@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
     <title>MCC FILE AND DOCUMENT TRACKER</title>
     <style>
         body {
