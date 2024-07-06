@@ -11,15 +11,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check if email and verification code match
-    $stmt = $conn->prepare("SELECT * FROM applicant WHERE email = ? AND verification_code = ? AND is_verified = 1");
+    $stmt = $conn->prepare("SELECT fullname FROM applicant WHERE email = ? AND verification_code = ? AND is_verified = 1");
     $stmt->bind_param("ss", $email, $password);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         // Successful login
+        $user = $result->fetch_assoc();
         $_SESSION['email'] = $email;
-        header("Location: home.php"); // Redirect to dashboard or another secure page
+        $_SESSION['fullname'] = $user['fullname'];
+        header("Location: index.php"); // Redirect to dashboard or another secure page
         exit();
     } else {
         echo "<script>alert('Invalid email or verification code.');</script>";
@@ -37,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/img/mcc1.png" type="image/x-icon" />
-
     <title>Login</title>
     <style>
         body {
@@ -119,9 +120,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>Login</header>
 
+    <div class="container">
+    <h1>Sign In As an Applicant</h1>
+        <header>Login</header>
         <form action="login.php" method="POST">
             <div class="form">
                 <div class="details">

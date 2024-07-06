@@ -1,162 +1,107 @@
+@media (max-width: 1300px) {}
+
+@media (max-width: 1120px) {}
+
+@media (max-width: 992px) {
+  .hero_area {
+    min-height: auto;
+  }
+
+  .hero_area {
+    background: linear-gradient(130deg, #231a6f, #0f054c);
+  }
+
+  .hero_area .hero_bg_box {
+    display: none;
+  }
+
+  .slider_section {
+    padding: 45px 0 75px 0;
+  }
+
+  .custom_nav-container .navbar-nav {
+    padding-top: 15px;
+    align-items: center;
+  }
 
 
-/*--------------------------------------------------------------------- File Name: responsive.css ---------------------------------------------------------------------*/
+  .custom_nav-container .navbar-nav .nav-item .nav-link {
+    padding: 5px 25px;
+    margin: 5px 0;
+  }
 
 
-/*------------------------------------------------------------------- 991px x 768px ---------------------------------------------------------------------*/
-
-@media (min-width: 1200px) and (max-width: 1500px) {
-    .cont span {
-        padding: 49px 0px 65px 0px;
-    }
 }
 
-@media (min-width: 992px) and (max-width: 1199px) {
-    .weare .weare-box p {
-        font-size: 15px;
-        line-height: 25px;
-    }
-    .contact {
-        margin-top: 70px;
-    }
-    .cont span {
-        font-size: 48px;
-        padding: 50px 0px 65px 0px;
-    }
-    .text-bg h1 {
-        font-size: 41px;
-        line-height: 23px;
-    }
-    .text-bg span {
-        font-size: 48px;
-        line-height: 60px;
-    }
-    .text-bg {
-        max-width: 344px;
-    }
+@media (max-width: 768px) {
+  .about_section .img-box {
+    margin-bottom: 45px;
+  }
+
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
-    .text-bg h1 {
-        padding-top: 10px;
-        font-size: 44px;
-        line-height: 61px;
-        padding-bottom: 0px;
-    }
-    .text-bg span {
-        font-size: 28px;
-        line-height: 30px;
-    }
-    .text-bg a {
-        margin-right: 5px;
-        padding: 10px 20px;
-        float: left;
-        max-width: 156px;
-    }
-    .text-bg {
-        max-width: 251px;
-    }
-    .three_box .Soft-box h3 {
-        font-size: 25px;
-    }
-    .three_box .Soft-box p {
-        font-size: 16px;
-    }
-    .cont span {
-        font-size: 35px;
-        padding: 30px 0px 65px 0px;
-        line-height: 57px;
-    }
-    .slider a {
-        font-size: 12px;
-    }
-    .main_form {
-        padding: 25px;
-    }
-    .contact {
-        margin-top: 70px;
-    }
+@media (max-width: 576px) {
+  .header_section .header_top .contact_nav a span {
+    display: none;
+  }
+
+
+  .client_section .client_container {
+    width: 100%;
+  }
+
+  .client_section .box {
+    margin: 0;
+  }
+
+  .owl-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 45px;
+  }
+
+  .client_section .owl-carousel .owl-nav .owl-prev,
+  .client_section .owl-carousel .owl-nav .owl-next {
+    position: unset;
+    margin: 0 2.5px;
+  }
 }
 
-@media (min-width: 576px) and (max-width: 767px) {
-    .mean-container .mean-bar {
-        margin-top: 0px;
-    }
-    .text-bg a {
-        float: left;
-        margin-bottom: 30px;
-    }
-    .titlepage h2 {
-        font-size: 36px;
-    }
-    .header_bg {
-        background: #bccec4;
-    }
-    .text-bg {
-        max-width: 509px;
-    }
-    .cont span {
-        padding: 0px 0px 30px 0px;
-    }
-    .cont a {
-        max-width: 233px;
-        margin-bottom: 30px;
-    }
-    .contact {
-        margin-top: 70px;
-    }
+@media (max-width: 480px) {
+  .slider_section .detail-box h1 {
+    font-size: 2rem;
+  }
+
+  .track_section form {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .track_section form input {
+    width: 100%;
+  }
+
+  .track_section form button {
+    padding: 10px 60px;
+    margin-top: 10px;
+  }
 }
 
-@media (max-width: 575px) {
-    .header {
-        padding: 40px 0px 0px 0px;
-    }
-    .logo {
-        text-align: center !important;
-        padding-bottom: 25px;
-        float: inherit;
-    }
-    ul.costomer {
-        display: none;
-    }
-    .header_bg {
-        background: #bccec4;
-    }
-    .text-bg h1 {
-        font-size: 35px;
-        line-height: 55px;
-        padding-bottom: 18px;
-    }
-    .text-bg a {
-        float: left;
-        margin-bottom: 30px;
-    }
-    .text-bg span {
-        font-size: 35px;
-        line-height: 45px;
-    }
-    .text-bg p {
-        padding-top: 0;
-    }
-    .titlepage h2 {
-        font-size: 28px;
-        line-height: 35px;
-    }
-    .contact .titlepage {
-        padding-bottom: 10px;
-        padding-top: 0;
-    }
-    .main_form {
-        padding: 35px 25px;
-    }
-    .cont span {
-        padding: 15px 0px 25px 0px;
-        font-size: 31px;
-        line-height: 46px;
-    }
-    .cont a {
-        max-width: 233px;
-        margin-bottom: 30px;
-    }
+@media (max-width: 420px) {
+  .service_section .box {
+    flex-direction: column;
+  }
+
+  .service_section .box .img-box {
+    justify-content: flex-start;
+    margin-bottom: 15px;
+  }
 }
 
+@media (max-width: 376px) {}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1170px;
+  }
+}

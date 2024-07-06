@@ -46,7 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/img/mcc1.png" type="image/x-icon" />
-
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS file -->
+<link href="styles.css">
     <title>Verify Email</title>
 </head>
 <body>
@@ -70,6 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <span class="btnText">Verify</span>
                             <i class="uil uil-navigator"></i>
                         </button>
+                        <a href="login.php" class="primary">Login Applicant</a> <!-- Added primary class -->
                     </div> 
                 </div>
             </div>
