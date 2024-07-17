@@ -12,13 +12,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $contact = $_POST['contact'];
     $sex = $_POST['sex'];
-    $occupation = $_POST['occupation'];
+    $program_graduated = $_POST['program_graduated'];
     $id_number = $_POST['id_number'];
     $year_graduated = $_POST['year_graduated'];
-    $school_graduated = $_POST['school_graduated'];
-    $address = $_POST['address'];
-    $nationality = $_POST['nationality'];
-    $postal = $_POST['postal'];
+    $admission = $_POST['admission'];
+
 
     // Generate a verification code
     $verification_code = rand(100000, 999999);
@@ -30,8 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Insert user data into the database
-    $stmt = $conn->prepare("INSERT INTO applicant (fullname, dob, email, contact, sex, occupation, id_number, year_graduated, school_graduated, address, nationality, postal, verification_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssssssssss", $fullname, $dob, $email, $contact, $sex, $occupation, $id_number, $year_graduated, $school_graduated, $address, $nationality, $postal, $verification_code);
+    $stmt = $conn->prepare("INSERT INTO applicant (fullname, dob, email, contact, sex, program_graduated, id_number, year_graduated, admission, verification_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssss", $fullname, $dob, $email, $contact, $sex, $program_graduated, $id_number, $year_graduated, $admission, $verification_code);
 
     if ($stmt->execute()) {
         // Send the verification code to the user's email

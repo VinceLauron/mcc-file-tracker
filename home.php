@@ -1,113 +1,204 @@
-<style>
-	.custom-menu {
-        z-index: 1000;
-	    position: absolute;
-	    background-color: #ffffff;
-	    border: 1px solid #0000001c;
-	    border-radius: 5px;
-	    padding: 8px;
-	    min-width: 13vw;
+<?php
+// Include the database connection
+include('db_connect.php');
+if(!isset($_SESSION['login_id']))
+header('location:login.php');
+
+// Initialize variables
+$requests_today = 0;
+$requests_week = 0;
+$requests_month = 0;
+
+// Initialize status counts
+$pending_count = 0;
+$rejected_count = 0;
+$released_count = 0;
+$on_process_count = 0;
+
+// Count requests by day
+$result_today = $conn->query("SELECT COUNT(*) as count FROM request WHERE DATE(date_created) = CURDATE()");
+if ($result_today) {
+    $requests_today = $result_today->fetch_assoc()['count'];
+} else {
+    echo "Error retrieving requests for today: " . $conn->error;
 }
-a.custom-menu-list {
-    width: 100%;
-    display: flex;
-    color: #4c4b4b;
-    font-weight: 600;
-    font-size: 1em;
-    padding: 1px 11px;
+
+// Count requests by week
+$result_week = $conn->query("SELECT COUNT(*) as count FROM request WHERE YEARWEEK(date_created, 1) = YEARWEEK(CURDATE(), 1)");
+if ($result_week) {
+    $requests_week = $result_week->fetch_assoc()['count'];
+} else {
+    echo "Error retrieving requests for this week: " . $conn->error;
 }
-	span.card-icon {
-    position: absolute;
-    font-size: 3em;
-    bottom: .2em;
-    color: #ffffff80;
+
+// Count requests by month
+$result_month = $conn->query("SELECT COUNT(*) as count FROM request WHERE YEAR(date_created) = YEAR(CURDATE()) AND MONTH(date_created) = MONTH(CURDATE())");
+if ($result_month) {
+    $requests_month = $result_month->fetch_assoc()['count'];
+} else {
+    echo "Error retrieving requests for this month: " . $conn->error;
 }
-.file-item{
-	cursor: pointer;
-}
-a.custom-menu-list:hover,.file-item:hover,.file-item.active {
-    background: #80808024;
-}
-table th,td{
-	/*border-left:1px solid gray;*/
-}
-a.custom-menu-list span.icon{
-		width:1em;
-		margin-right: 5px
-}
-</style>
-<link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
-<nav aria-label="breadcrumb ">
-  <ol class="breadcrumb">
-  <li class="breadcrumb-item text-success">Dashboard</li>
-  </ol>
-</nav>
-<div class="containe-fluid">
-	<?php include('db_connect.php') ;
-	$files = $conn->query("SELECT f.*,u.name as uname FROM files f inner join users u on u.id = f.user_id where  f.is_public = 1 order by date(f.date_updated) desc");
 
-	?>
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="card col-md-4 offset-2 bg-success float-left">
-				<div class="card-body text-white">
-					<h4><b>Users</b></h4>
-					<hr>
-					<span class="card-icon"><i class="fa fa-users"></i></span>
-					<h3 class="text-right"><b><?php echo $conn->query('SELECT * FROM users')->num_rows ?></b></h3>
-				</div>
-			</div>
-			<div class="card col-md-4 offset-2 bg-success ml-4 float-left">
-				<div class="card-body text-white">
-					<h4><b>Files</b></h4>
-					<hr>
-					<span class="card-icon"><i class="fa fa-file"></i></span>
-					<h3 class="text-right"><b><?php echo $conn->query('SELECT * FROM files')->num_rows ?></b></h3>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	
-
-</div>
-<div id="menu-file-clone" style="display: none;">
-	<a href="javascript:void(0)" class="custom-menu-list file-option download"><span><i class="fa fa-download"></i> </span>Download</a>
-</div>
-<script>
-	//FILE
-	$('.file-item').bind("contextmenu", function(event) { 
-    event.preventDefault();
-
-    $('.file-item').removeClass('active')
-    $(this).addClass('active')
-    $("div.custom-menu").hide();
-    var custom =$("<div class='custom-menu file'></div>")
-        custom.append($('#menu-file-clone').html())
-        custom.find('.download').attr('data-id',$(this).attr('data-id'))
-    custom.appendTo("body")
-	custom.css({top: event.pageY + "px", left: event.pageX + "px"});
-
-	
-	$("div.file.custom-menu .download").click(function(e){
-		e.preventDefault()
-		window.open('download.php?id='+$(this).attr('data-id'))
-	})
-
-	
-
-})
-	$(document).bind("click", function(event) {
-    $("div.custom-menu").hide();
-    $('#file-item').removeClass('active')
-
-});
-	$(document).keyup(function(e){
-
-    if(e.keyCode === 27){
-        $("div.custom-menu").hide();
-    $('#file-item').removeClass('active')
-
+// Count requests by status
+$result_status = $conn->query("SELECT status, COUNT(*) as count FROM request GROUP BY status");
+if ($result_status) {
+    while ($row = $result_status->fetch_assoc()) {
+        switch ($row['status']) {
+            case 'pending':
+                $pending_count = $row['count'];
+                break;
+            case 'rejected':
+                $rejected_count = $row['count'];
+                break;
+            case 'released':
+                $released_count = $row['count'];
+                break;
+            case 'on_process':
+                $on_process_count = $row['count'];
+                break;
+        }
     }
-})
-</script>
+} else {
+    echo "Error retrieving request status counts: " . $conn->error;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
+  <title>Dashboard - MCC Document Tracker</title>
+  <style>
+    .container {
+      width: 100%;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .card {
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .card h4 {
+      margin: 0;
+    }
+    .card-body {
+      padding: 15px;
+    }
+    .text-white {
+      color: #fff;
+    }
+    .bg-success {
+      background-color: #28a745;
+    }
+    .text-right {
+      text-align: right;
+    }
+    canvas {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Dashboard</h1>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card bg-success text-white">
+          <div class="card-body" style="background-color: #2a2f5b;">
+            <h4><b>Requests Today</b></h4>
+            <hr>
+            <h3 class="text-right"><b><?php echo $requests_today; ?></b></h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card bg-success text-white">
+          <div class="card-body" style="background-color: #2a2f5b;">
+            <h4><b>Requests This Week</b></h4>
+            <hr>
+            <h3 class="text-right"><b><?php echo $requests_week; ?></b></h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card bg-success text-white">
+          <div class="card-body" style="background-color: #2a2f5b;">
+            <h4><b>Requests This Month</b></h4>
+            <hr>
+            <h3 class="text-right"><b><?php echo $requests_month; ?></b></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <canvas id="requestChart"></canvas>
+      </div>
+      <div class="col-md-6">
+        <canvas id="statusChart"></canvas>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    var ctx = document.getElementById('requestChart').getContext('2d');
+    var requestChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Today', 'This Week', 'This Month'],
+        datasets: [{
+          label: 'Requests',
+          data: [<?php echo $requests_today; ?>, <?php echo $requests_week; ?>, <?php echo $requests_month; ?>],
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)'
+          ],
+          borderColor: [
+            'rgba(75, 192, 192, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    var ctxStatus = document.getElementById('statusChart').getContext('2d');
+    var statusChart = new Chart(ctxStatus, {
+      type: 'pie',
+      data: {
+        labels: ['Pending', 'Rejected', 'Released', 'On Process'],
+        datasets: [{
+          label: 'Request Statuses',
+          data: [<?php echo $pending_count; ?>, <?php echo $rejected_count; ?>, <?php echo $released_count; ?>, <?php echo $on_process_count; ?>],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)'
+          ],
+          borderWidth: 1
+        }]
+      }
+    });
+  </script>
+</body>
+</html>

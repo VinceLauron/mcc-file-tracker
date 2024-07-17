@@ -41,7 +41,7 @@ header("location:indexs.php?page=home");
 		left:0;
 		width:60%;
 		height: calc(100%);
-		background:#28a745;
+		background:darkblue;
 		display: flex;
 		align-items: center;
 	}
@@ -71,21 +71,21 @@ header("location:indexs.php?page=home");
   		</div>
   		<div id="login-right">
   			<div class="w-100">
-  				<h4 class="text-success text-center"><b>MADRIDEJOS COMMUNITY COLLEGE FILE AND DOCUMENT TRACKER</b></h4>
+  				<h4 style="color:black; text-align: center;"><b>MADRIDEJOS COMMUNITY COLLEGE FILE AND DOCUMENT TRACKER</b></h4>
   				<br>
   			
   			<div class="card col-md-8">
   				<div class="card-body">
   					<form id="login-form" >
   						<div class="form-group">
-  							<label for="username" class="control-label text-success">Username</label>
+  							<label for="username" class="control-label" style="color: black">Username</label>
   							<input type="email" id="username" name="username" placeholder="Enter Username" class="form-control">
   						</div>
   						<div class="form-group">
-  							<label for="password" class="control-label text-success">Password</label>
+  							<label for="password" class="control-label" style="color: black">Password</label>
   							<input type="password" id="password" name="password" placeholder="Enter Password" class="form-control">
   						</div>
-  						<center><button class="btn-sm btn-block btn-wave col-md-4 btn-success">Login</button></center>
+  						<center><button class="btn-sm btn-block btn-wave col-md-4 btn-primary">Login</button></center>
 						  <div class="text-center mt-3">
 							<a href="forgot-password.php" id="forgot-password-link">Forgot Password?</a>
 						</div>

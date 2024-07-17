@@ -1,7 +1,10 @@
 <?php
-// Start the session and check if the user is logged in
-session_start();
-if (!isset($_SESSION['login_id'])) {
+// Check if session is already started
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
 }
@@ -20,17 +23,13 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch approved requests from database
-$approved_sql = "SELECT * FROM request WHERE status = 'approved'";
-$approved_result = $conn->query($approved_sql);
+$email = $_SESSION['email'];
 
-// Fetch pending requests from database
-$pending_sql = "SELECT * FROM request WHERE status = 'pending'";
-$pending_result = $conn->query($pending_sql);
-
-// Fetch rejected requests from database
-$rejected_sql = "SELECT * FROM request WHERE status = 'rejected'";
-$rejected_result = $conn->query($rejected_sql);
+// Fetch user's requests from the database
+$stmt = $conn->prepare("SELECT id, id_number, fullname, contact, course, docu_type, purpose, status, note FROM request WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$stmt->bind_result($id, $id_number, $fullname, $contact, $course, $docu_type, $purpose, $status, $note);
 ?>
 
 <!DOCTYPE html>
@@ -38,17 +37,10 @@ $rejected_result = $conn->query($rejected_sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="assets/img/mcc1.png" type="image/x-icon" />
-    <title>Request Status - MCC Document Tracker</title>
+    <title>Your Requests - MCC Document Tracker</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
         .container {
-            width: 80%;
+            width: 100%;
             margin: 0 auto;
             padding: 20px;
             background: #fff;
@@ -58,10 +50,6 @@ $rejected_result = $conn->query($rejected_sql);
         h1 {
             text-align: center;
             color: #333;
-        }
-        h2 {
-            color: #333;
-            margin-top: 40px;
         }
         table {
             width: 100%;
@@ -79,92 +67,70 @@ $rejected_result = $conn->query($rejected_sql);
             background-color: #2a2f5b;
             color: white;
         }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            color: #fff;
+            margin-top: 10px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        .btn-view {
+            background-color: #007bff;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Request Status</h1>
-        
-        <h2>Approved Requests</h2>
+        <h1>Your Requests</h1>
         <table>
             <tr>
+                <th>ID Number</th>
                 <th>Full Name</th>
                 <th>Contact</th>
-                <th>ID Number</th>
+                <th>Course/Program</th>
                 <th>Document Type</th>
                 <th>Purpose</th>
                 <th>Status</th>
+                <th>Note</th>
+                <th>Actions</th>
             </tr>
             <?php
-            if ($approved_result->num_rows > 0) {
-                while ($row = $approved_result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['fullname']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['contact']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['id_number']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['docu_type']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['purpose']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['status']) . "</td>";
-                    echo "</tr>";
+            while ($stmt->fetch()) {
+                $status_class = '';
+                if ($status == 'pending') {
+                    $status_class = 'status-pending';
+                } elseif ($status == 'onprocess') {
+                    $status_class = 'status-onprocess';
+                } elseif ($status == 'rejected') {
+                    $status_class = 'status-rejected';
                 }
-            } else {
-                echo "<tr><td colspan='5'>No approved requests</td></tr>";
-            }
-            ?>
-        </table>
-        
-        <h2>Pending Requests</h2>
-        <table>
-            <tr>
-                <th>Full Name</th>
-                <th>Contact</th>
-                <th>ID Number</th>
-                <th>Document Type</th>
-                <th>Purpose</th>
-                <th>Status</th>
-            </tr>
-            <?php
-            if ($pending_result->num_rows > 0) {
-                while ($row = $pending_result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['fullname']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['contact']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['id_number']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['docu_type']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['purpose']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['status']) . "</td>";
-                    echo "</tr>";
+                elseif ($status == 'released') {
+                    $status_class = 'status-released';
                 }
-            } else {
-                echo "<tr><td colspan='5'>No pending requests</td></tr>";
-            }
-            ?>
-        </table>
-        
-        <h2>Rejected Requests</h2>
-        <table>
-            <tr>
-                <th>Full Name</th>
-                <th>Contact</th>
-                <th>ID Number</th>
-                <th>Document Type</th>
-                <th>Purpose</th>
-                <th>Status</th>
-            </tr>
-            <?php
-            if ($rejected_result->num_rows > 0) {
-                while ($row = $rejected_result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['fullname']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['contact']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['id_number']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['docu_type']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['purpose']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['status']) . "</td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='5'>No rejected requests</td></tr>";
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($id_number) . "</td>";
+                echo "<td>" . htmlspecialchars($fullname) . "</td>";
+                echo "<td>" . htmlspecialchars($contact) . "</td>";
+                echo "<td>" . htmlspecialchars($course) . "</td>";
+                echo "<td>" . htmlspecialchars($docu_type) . "</td>";
+                echo "<td>" . htmlspecialchars($purpose) . "</td>";
+                echo "<td class='$status_class'>" . htmlspecialchars($status) . "</td>";
+                echo "<td>" . htmlspecialchars($note) . "</td>";
+                echo "<td>
+                        <a href='view_request.php?id=" . htmlspecialchars($id) . "' class='btn btn-view'>View</a>
+                        <a href='delete_request.php?id=" . htmlspecialchars($id) . "' class='btn btn-delete' onclick='return confirm(\"Are you sure you want to delete this request?\")'>Delete</a>
+                      </td>";
+                echo "</tr>";
             }
             ?>
         </table>
@@ -173,5 +139,7 @@ $rejected_result = $conn->query($rejected_sql);
 </html>
 
 <?php
+$stmt->close(); 
 $conn->close();
 ?>
+

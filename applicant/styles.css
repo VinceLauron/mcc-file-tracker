@@ -18,8 +18,8 @@
 
 /* Primary button styles */
 .primary {
-    background-color: #28a745; /* Green color for primary button */
-    color: #fff;
+    background-color: #007BFF; /* Green color for primary button */
+    color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -29,7 +29,7 @@
 }
 
 .primary:hover {
-    background-color: #218838; /* Darker green on hover */
+    background-color: #007BFF; /* Darker green on hover */
 }
 
 /* Additional styles */

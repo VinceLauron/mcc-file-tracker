@@ -1,5 +1,7 @@
 <?php 
 include('db_connect.php');
+if(!isset($_SESSION['login_id']))
+header('location:login.php');
 if(isset($_GET['id'])){
 $qry = $conn->query("SELECT * FROM files where id=".$_GET['id']);
 	if($qry->num_rows > 0){

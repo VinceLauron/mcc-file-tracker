@@ -53,12 +53,18 @@ if (!isset($_SESSION['email'])) {
         #sidebar .nav-item.active {
             background-color: #495057;
         }
+        #sidebar .logo {
+        display: block;
+            margin: 0 auto 20px;
+            width: 100px;
+            height: auto;
+        }
     </style>
 </head>
 <body>
     
     <nav id="sidebar" class="mx-lt-5 bg-dark">
-        <img src="assets/img/mcc1.png" class="logo" style="width: 100px; height: 50px; margin: 10px;">
+    <img src="assets/img/mcc1.png" class="logo">
         <div class="sidebar-list">
             <div class="nav-item nav-home" onclick="loadContent('home.php')">
                 <span class="icon-field"><i class="fa fa-home"></i></span> Dashboard
@@ -68,9 +74,6 @@ if (!isset($_SESSION['email'])) {
             </div>
             <div class="nav-item nav-files" onclick="loadContent('receive_form.php')">
                 <span class="icon-field"><i class="fa fa-envelope-open"></i></span> Received Form
-            </div>
-            <div class="nav-item nav-search" onclick="loadContent('form_details.php')">
-                <span class="icon-field"><i class="fa fa-file-alt"></i></span> Form Details
             </div>
             <div class="nav-item nav-users" onclick="loadContent('user_details.php')">
                 <span class="icon-field"><i class="fa fa-users"></i></span> User Details

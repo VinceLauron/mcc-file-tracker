@@ -52,9 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container">
-        <header>Email Verification</header>
+        
 
         <form action="verify.php" method="POST">
+        <header>Email Verification</header>
             <div class="form">
                 <div class="details verification">
                     <span class="title">Enter Verification Code</span>
@@ -71,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <span class="btnText">Verify</span>
                             <i class="uil uil-navigator"></i>
                         </button>
-                        <a href="login.php" class="primary">Login Applicant</a> <!-- Added primary class -->
+                       <a href="login.php"> <button type="button" class="primary">Login Applicant</button> </a><!-- Added primary class -->
                     </div> 
                 </div>
             </div>
