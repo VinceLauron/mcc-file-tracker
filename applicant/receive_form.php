@@ -40,12 +40,13 @@ $stmt->bind_result($id, $id_number, $fullname, $contact, $course, $docu_type, $p
     <title>Your Requests - MCC Document Tracker</title>
     <style>
         .container {
-            width: 100%;
+            width: 90%;
             margin: 0 auto;
             padding: 20px;
             background: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
+            border-radius: 8px;
         }
         h1 {
             text-align: center;
@@ -64,8 +65,8 @@ $stmt->bind_result($id, $id_number, $fullname, $contact, $course, $docu_type, $p
             text-align: left;
         }
         th {
-            background-color: #2a2f5b;
-            color: white;
+            background: silver;
+            color: black;
         }
         .btn {
             padding: 8px 16px;
@@ -87,59 +88,117 @@ $stmt->bind_result($id, $id_number, $fullname, $contact, $course, $docu_type, $p
         .btn:hover {
             opacity: 0.9;
         }
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+            table, th, td {
+                font-size: 14px;
+                padding: 8px;
+            }
+            .btn {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 5px;
+            }
+            table, th, td {
+                font-size: 12px;
+                padding: 6px;
+            }
+            .btn {
+                padding: 4px 8px;
+                font-size: 12px;
+            }
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            table thead {
+                display: none;
+            }
+            table tr {
+                display: block;
+                margin-bottom: 10px;
+            }
+            table td {
+                display: block;
+                text-align: right;
+                border-bottom: 1px solid #ddd;
+                position: relative;
+                padding-left: 50%;
+            }
+            table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                width: calc(50% - 20px);
+                padding-right: 10px;
+                text-align: left;
+                font-weight: bold;
+                white-space: nowrap;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Your Requests</h1>
         <table>
-            <tr>
-                <th>ID Number</th>
-                <th>Full Name</th>
-                <th>Contact</th>
-                <th>Course/Program</th>
-                <th>Document Type</th>
-                <th>Purpose</th>
-                <th>Status</th>
-                <th>Note</th>
-                <th>Actions</th>
-            </tr>
-            <?php
-            while ($stmt->fetch()) {
-                $status_class = '';
-                if ($status == 'pending') {
-                    $status_class = 'status-pending';
-                } elseif ($status == 'onprocess') {
-                    $status_class = 'status-onprocess';
-                } elseif ($status == 'rejected') {
-                    $status_class = 'status-rejected';
+            <thead>
+                <tr>
+                    <th>ID Number</th>
+                    <th>Full Name</th>
+                    <th>Contact</th>
+                    <th>Course/Program</th>
+                    <th>Document Type</th>
+                    <th>Purpose</th>
+                    <th>Status</th>
+                    <th>Note</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                while ($stmt->fetch()) {
+                    $status_class = '';
+                    if ($status == 'pending') {
+                        $status_class = 'status-pending';
+                    } elseif ($status == 'onprocess') {
+                        $status_class = 'status-onprocess';
+                    } elseif ($status == 'rejected') {
+                        $status_class = 'status-rejected';
+                    } elseif ($status == 'released') {
+                        $status_class = 'status-released';
+                    }
+                    echo "<tr>";
+                    echo "<td data-label='ID Number'>" . htmlspecialchars($id_number) . "</td>";
+                    echo "<td data-label='Full Name'>" . htmlspecialchars($fullname) . "</td>";
+                    echo "<td data-label='Contact'>" . htmlspecialchars($contact) . "</td>";
+                    echo "<td data-label='Course/Program'>" . htmlspecialchars($course) . "</td>";
+                    echo "<td data-label='Document Type'>" . htmlspecialchars($docu_type) . "</td>";
+                    echo "<td data-label='Purpose'>" . htmlspecialchars($purpose) . "</td>";
+                    echo "<td data-label='Status' class='$status_class'>" . htmlspecialchars($status) . "</td>";
+                    echo "<td data-label='Note'>" . htmlspecialchars($note) . "</td>";
+                    echo "<td data-label='Actions'>
+                            <a href='view_request.php?id=" . htmlspecialchars($id) . "' class='btn btn-view'>View</a>
+                            <a href='delete_request.php?id=" . htmlspecialchars($id) . "' class='btn btn-delete' onclick='return confirm(\"Are you sure you want to delete this request?\")'>Delete</a>
+                          </td>";
+                    echo "</tr>";
                 }
-                elseif ($status == 'released') {
-                    $status_class = 'status-released';
-                }
-                echo "<tr>";
-                echo "<td>" . htmlspecialchars($id_number) . "</td>";
-                echo "<td>" . htmlspecialchars($fullname) . "</td>";
-                echo "<td>" . htmlspecialchars($contact) . "</td>";
-                echo "<td>" . htmlspecialchars($course) . "</td>";
-                echo "<td>" . htmlspecialchars($docu_type) . "</td>";
-                echo "<td>" . htmlspecialchars($purpose) . "</td>";
-                echo "<td class='$status_class'>" . htmlspecialchars($status) . "</td>";
-                echo "<td>" . htmlspecialchars($note) . "</td>";
-                echo "<td>
-                        <a href='view_request.php?id=" . htmlspecialchars($id) . "' class='btn btn-view'>View</a>
-                        <a href='delete_request.php?id=" . htmlspecialchars($id) . "' class='btn btn-delete' onclick='return confirm(\"Are you sure you want to delete this request?\")'>Delete</a>
-                      </td>";
-                echo "</tr>";
-            }
-            ?>
+                ?>
+            </tbody>
         </table>
     </div>
 </body>
 </html>
 
 <?php
-$stmt->close(); 
+$stmt->close();
 $conn->close();
 ?>
-

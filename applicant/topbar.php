@@ -107,6 +107,11 @@
         .right-icons button i, .right-icons .notification-icon i {
             margin-right: 8px;
         }
+        .hamburger-menu {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+        }
         .content {
             margin-top: 80px; /* Adjust based on the height of your navbar */
             padding: 20px;
@@ -122,10 +127,27 @@
         section.active {
             display: block; /* Show only the active section */
         }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+            .nav-links li {
+                margin: 10px 0;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .hamburger-menu {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="navbar">
+        <div class="hamburger-menu"><i class="fas fa-bars"></i></div>
         <ul class="nav-links">
             <li><a href="home.php" class="nav-link" data-target="home">Home</a></li>
             <li class="center"><a href="#request-form" class="nav-link" data-target="request-form" data-file="request_form.php">Request Form</a></li>
@@ -182,6 +204,11 @@
                 $('html, body').animate({
                     scrollTop: $('#' + target).offset().top
                 }, 800);
+
+                // Close the menu if in mobile view
+                if ($(window).width() <= 768) {
+                    $('.nav-links').removeClass('active');
+                }
             });
 
             $('#logout-button').on('click', function(){
@@ -197,6 +224,10 @@
                         window.location.href = 'login.php';
                     }
                 });
+            });
+
+            $('.hamburger-menu').on('click', function() {
+                $('.nav-links').toggleClass('active');
             });
         });
     </script>
