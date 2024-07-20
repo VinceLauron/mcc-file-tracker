@@ -23,13 +23,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-<<<<<<< HEAD
-// Fetch requests from database
-$sql = "SELECT * FROM request WHERE status = 'pending' OR status = 'onprocess'";
-=======
 // Fetch requests from database, ordered by created_at or id in descending order
 $sql = "SELECT * FROM request WHERE status = 'pending' OR status = 'onprocess' ORDER BY date_created DESC"; // or ORDER BY id DESC
->>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
 $result = $conn->query($sql);
 ?>
 
@@ -39,11 +34,8 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Requests - MCC Document Tracker</title>
-<<<<<<< HEAD
-=======
     <!-- Include SweetAlert CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
->>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
     <style>
         .container {
             width: 100%;
@@ -126,25 +118,11 @@ $result = $conn->query($sql);
                     echo "<td>" . htmlspecialchars($row['docu_type']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['purpose']) . "</td>";
                     echo "<td>
-<<<<<<< HEAD
-                            <form action='update_request_status.php' method='POST' style='display:inline;'>
-=======
                             <form action='update_request_status.php' method='POST' class='request-form' style='display:inline;'>
->>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
                                 <input type='hidden' name='request_id' value='" . htmlspecialchars($row['id']) . "'>
                                 <textarea name='note' class='note-input' placeholder='Enter note here...'></textarea>";
                                 
                                 if ($row['status'] == 'onprocess') {
-<<<<<<< HEAD
-                                    echo "<button type='submit' name='action' value='release' class='btn btn-release'>Release</button>";
-                                } else if ($row['status'] == 'released') {
-                                    echo "<button type='submit' name='action' value='released' class='btn btn-approve' disabled>Released</button>";
-                                } else {
-                                    echo "<button type='submit' name='action' value='onprocess' class='btn btn-approve'>Accepted/On Process</button>";
-                                }
-
-                                echo "<button type='submit' name='action' value='reject' class='btn btn-reject'>Reject</button>
-=======
                                     echo "<button type='button' name='action' value='release' class='btn btn-release' onclick='confirmAction(this, \"Release\")'>Release</button>";
                                 } else if ($row['status'] == 'released') {
                                     echo "<button type='button' name='action' value='released' class='btn btn-approve' disabled>Released</button>";
@@ -153,7 +131,6 @@ $result = $conn->query($sql);
                                 }
 
                                 echo "<button type='button' name='action' value='reject' class='btn btn-reject' onclick='confirmAction(this, \"Reject\")'>Reject</button>
->>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
                             </form>
                           </td>";
                     echo "</tr>";
@@ -164,8 +141,6 @@ $result = $conn->query($sql);
             ?>
         </table>
     </div>
-<<<<<<< HEAD
-=======
 
     <!-- Include SweetAlert JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -196,7 +171,6 @@ $result = $conn->query($sql);
             });
         }
     </script>
->>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
 </body>
 </html>
 
