@@ -54,13 +54,19 @@ if (!isset($_SESSION['email'])) {
         #sidebar .nav-item.active {
             background-color: #495057;
         }
+<<<<<<< HEAD
 
         #sidebar .logo {
             display: block;
+=======
+        #sidebar .logo {
+        display: block;
+>>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
             margin: 0 auto 20px;
             width: 100px;
             height: auto;
         }
+<<<<<<< HEAD
 
         #sidebar-toggle {
             display: none;
@@ -100,12 +106,18 @@ if (!isset($_SESSION['email'])) {
                 margin-left: 250px;
             }
         }
+=======
+>>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
     </style>
 </head>
 <body>
     <div id="sidebar-toggle"><i class="fas fa-bars"></i></div>
     <nav id="sidebar" class="mx-lt-5 bg-dark">
+<<<<<<< HEAD
         <img src="assets/img/mcc1.png" class="logo">
+=======
+    <img src="assets/img/mcc1.png" class="logo">
+>>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
         <div class="sidebar-list">
             <div class="nav-item nav-home" onclick="loadContent('home.php')">
                 <span class="icon-field"><i class="fa fa-home"></i></span> Home
@@ -114,7 +126,11 @@ if (!isset($_SESSION['email'])) {
                 <span class="icon-field"><i class="fa fa-envelope"></i></span> Request Form
             </div>
             <div class="nav-item nav-files" onclick="loadContent('receive_form.php')">
+<<<<<<< HEAD
                 <span class="icon-field"><i class="fa fa-envelope-open"></i></span> Status Request
+=======
+                <span class="icon-field"><i class="fa fa-envelope-open"></i></span> Received Form
+>>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
             </div>
             <div class="nav-item nav-users" onclick="loadContent('user_details.php')">
                 <span class="icon-field"><i class="fa fa-users"></i></span> User Details

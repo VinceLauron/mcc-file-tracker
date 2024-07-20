@@ -1,14 +1,21 @@
 <?php
 session_start();
 
+<<<<<<< HEAD
 if (!isset($_SESSION['email'])) {
     header('location:login.php');
     exit();
 }
+=======
+if(!isset($_SESSION['email']))
+header('location:login.php');
+
+>>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
@@ -59,5 +66,17 @@ if (!isset($_SESSION['email'])) {
         <img src="assets/img/bshm.jpg" alt="Description of Image"><br>
         <img src="assets/img/bsba.jpg" alt="Description of Image">
     </div>
+=======
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/img/mcc1.png" type="image/x-icon" />
+  <title>Document</title>
+</head>
+<body>
+<?php include 'topbar.php' ?>
+    
+>>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
 </body>
 </html>

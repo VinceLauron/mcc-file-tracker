@@ -52,7 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     icon: "success",
                     confirmButtonText: "OK"
                 }).then(function() {
+<<<<<<< HEAD
                     window.location.href = "index.php";
+=======
+                    window.location.href = "home.php";
+>>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
                 });
             });
         </script>';
