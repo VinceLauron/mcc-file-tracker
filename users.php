@@ -27,6 +27,8 @@
 			<tbody>
 				<?php
  					include 'db_connect.php';
+					 if(!isset($_SESSION['login_id']))
+					 header('location:login.php');
  					$users = $conn->query("SELECT * FROM users order by name asc");
  					$i = 1;
  					while($row= $users->fetch_assoc()):

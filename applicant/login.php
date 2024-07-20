@@ -21,17 +21,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $result->fetch_assoc();
         $_SESSION['email'] = $email;
         $_SESSION['fullname'] = $user['fullname'];
-        header("Location: index.php"); // Redirect to dashboard or another secure page
-        exit();
+
+        // Display SweetAlert
+        echo '<script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    Swal.fire({
+                        title: "Success!",
+                        text: "Login successful!",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    }).then(function() {
+                        window.location.href = "index.php"; // Redirect to dashboard or another page
+                    });
+                });
+              </script>';
     } else {
-        echo "<script>alert('Invalid email or verification code.');</script>";
+        // Display SweetAlert for invalid login
+        echo '<script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Invalid email or verification code.",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                });
+              </script>';
     }
 
     $stmt->close();
     $conn->close();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/img/mcc1.png" type="image/x-icon" />
     <title>Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -121,29 +143,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
-    <div class="container">
-    <h1>Sign In As an Applicant</h1>
-        <header>Login</header>
-        <form action="login.php" method="POST">
-            <div class="form">
-                <div class="details">
-                    <div class="input-field">
-                        <label>Email</label>
-                        <input type="email" name="email" placeholder="Enter your email" required>
-                    </div>
-                    <div class="input-field">
-                        <label>Password</label>
-                        <input type="password" name="password" placeholder="Enter your password" required>
-                    </div>
-                    <div class="buttons">
-                        <button type="submit" class="submit">
-                            <span class="btnText">Login</span>
-                        </button>
-                        <a href="signup.php" class="signup-link">Don't have an account? Sign up here</a>
-                    </div>
+<div class="container">
+    <h1> Applicant Sign In</h1>
+    <header>Login</header>
+    <form action="login.php" method="POST">
+        <div class="form">
+            <div class="details">
+                <div class="input-field">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="input-field">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <div class="buttons">
+                    <button type="submit" class="submit">
+                        <span class="btnText">Login</span>
+                    </button>
+                    <a href="signup.php" class="signup-link">Don't have an account? Sign up here</a>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>
+
 </body>
 </html>

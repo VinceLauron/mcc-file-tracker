@@ -31,13 +31,13 @@
   <link href="radiance/css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="radiance/css/responsive.css" rel="stylesheet" />
-
+<style>
+</style>
 </head>
 
 <body>
 
   <div class="hero_area">
-
     <div class="hero_bg_box">
       <div class="bg_img_box">
         <img src="radiance/images/hero-bg.png" alt="">
@@ -48,10 +48,11 @@
     <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="index.php">
             <span>
-              MCC
+              MCC DOCUMENT TRACKER
             </span>
+             
           </a>
 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,6 +78,7 @@
       </div>
     </header>
     <!-- end header section -->
+     
     <!-- slider section -->
     <section class="slider_section ">
       <div id="customCarousel1" class="carousel slide" data-ride="carousel">
@@ -87,7 +89,7 @@
                 <div class="col-md-6 ">
                   <div class="detail-box">
                     <h1>
-                      MCC COMMUNITY <br>
+                      MADRIDEJOS COMMUNITY <br>
                       COLLEGE
                     </h1>
                     <p>
@@ -114,7 +116,7 @@
                 <div class="col-md-6 ">
                   <div class="detail-box">
                     <h1>
-                    MCC COMMUNITY <br>
+                    MADRIDEJOS COMMUNITY <br>
                     COLLEGE
                     </h1>
                     <p>
@@ -141,7 +143,7 @@
                 <div class="col-md-6 ">
                   <div class="detail-box">
                     <h1>
-                    MCC COMMUNITY <br>
+                    MADRIDEJOS COMMUNITY <br>
                     COLLEGE
                     </h1>
                     <p>
@@ -405,6 +407,69 @@
   </script>
   <!-- End Google Map -->
 
+  <script>
+ function updateTime() {
+  var dateInfo = new Date();
+
+  /* time */
+  var hr,
+    _min = (dateInfo.getMinutes() < 10) ? "0" + dateInfo.getMinutes() : dateInfo.getMinutes(),
+    sec = (dateInfo.getSeconds() < 10) ? "0" + dateInfo.getSeconds() : dateInfo.getSeconds(),
+    ampm = (dateInfo.getHours() >= 12) ? "PM" : "AM";
+
+  // replace 0 with 12 at midnight, subtract 12 from hour if 13–23
+  if (dateInfo.getHours() == 0) {
+    hr = 12;
+  } else if (dateInfo.getHours() > 12) {
+    hr = dateInfo.getHours() - 12;
+  } else {
+    hr = dateInfo.getHours();
+  }
+
+  var currentTime = hr + ":" + _min + ":" + sec;
+
+  // print time
+  document.getElementsByClassName("hms")[0].innerHTML = currentTime;
+  document.getElementsByClassName("ampm")[0].innerHTML = ampm;
+
+  /* date */
+  var dow = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    month = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    day = dateInfo.getDate();
+
+  // store date
+  var currentDate = dow[dateInfo.getDay()] + ", " + month[dateInfo.getMonth()] + " " + day;
+
+  document.getElementsByClassName("date")[0].innerHTML = currentDate;
+};
+
+// print time and date once, then update them every second
+updateTime();
+setInterval(function() {
+  updateTime()
+}, 1000);
+</script>
 </body>
 
 </html>

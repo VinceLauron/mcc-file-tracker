@@ -18,6 +18,7 @@
 <body>
     <div class="container">
         <header>Registration</header>
+       <center><h1> Create New Account</h1></center> 
 
         <form action="register.php" method="POST" id="registration-form">
             <div class="form first">
@@ -25,6 +26,10 @@
                     <span class="title">Personal Details</span>
 
                     <div class="fields">
+                         <div class="input-field">
+                            <label>School ID Number</label>
+                            <input type="text" name="id_number" placeholder="Enter School ID number" required>
+                        </div>
                         <div class="input-field">
                             <label>Full Name</label>
                             <input type="text" name="fullname" placeholder="Enter your name" required>
@@ -33,16 +38,6 @@
                         <div class="input-field">
                             <label>Date of Birth</label>
                             <input type="date" name="dob" placeholder="Enter birth date" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Email</label>
-                            <input type="email" name="email" placeholder="Enter your email" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Mobile Number</label>
-                            <input type="text" name="contact" placeholder="Enter mobile number" required>
                         </div>
 
                         <div class="input-field">
@@ -56,44 +51,33 @@
                         </div>
 
                         <div class="input-field">
-                            <label>Occupation</label>
-                            <input type="text" name="occupation" placeholder="Enter your occupation" required>
+                            <label>Email</label>
+                            <input type="email" name="email" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Mobile Number</label>
+                            <input type="text" name="contact" placeholder="Enter mobile number" required>
                         </div>
                     </div>
                 </div>
 
                 <div class="details ID">
-                    <span class="title">Identity Details</span>
 
                     <div class="fields">
+                    <div class="input-field">
+                            <label>Program Graduated</label>
+                            <input type="text" name="program_graduated" placeholder="Enter your Program" required>
+                        </div>
+
                         <div class="input-field">
-                            <label>ID Number</label>
-                            <input type="text" name="id_number" placeholder="Enter School ID number" required>
+                            <label>Year Of Admission</label>
+                            <input type="text" name="admission" placeholder="Enter Year Admission" required>
                         </div>
 
                         <div class="input-field">
                             <label>Year Graduated</label>
                             <input type="text" name="year_graduated" placeholder="Enter Year Graduated" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>School Graduated</label>
-                            <input type="text" name="school_graduated" placeholder="Enter School Name" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Address Type</label>
-                            <input type="text" name="address" placeholder="Permanent or Temporary" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Nationality</label>
-                            <input type="text" name="nationality" placeholder="Enter nationality" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Postal Code</label>
-                            <input type="text" name="postal" placeholder="Enter Postal Code" required>
                         </div>
                     </div>
 

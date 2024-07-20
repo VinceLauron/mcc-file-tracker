@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Include SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.7/dist/sweetalert2.min.css">
     <style>
         body {
             margin: 0;
@@ -56,6 +58,28 @@
             margin-right: 5px; /* Space between icon and text */
         }
     </style>
+    <!-- Include SweetAlert JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.7/dist/sweetalert2.all.min.js"></script>
+    <script>
+        function confirmLogout(event) {
+            event.preventDefault(); // Prevent the default action
+            // Use SweetAlert for confirmation
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You are about to logout.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, logout'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Proceed with logout
+                    window.location.href = event.target.href;
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -64,8 +88,9 @@
             MCC Document Tracker
         </div>
         <div class="topbar-menu">
-            <a href="login.php" class="logout">
-                <i class="fa fa-power-off"></i> Logout
+            <a href="login.php" class="logout" onclick="confirmLogout(event)">
+                <i class="fa fa-power-off"></i> Logout<br>
+                <?php echo $_SESSION['fullname']; ?> 
             </a>
         </div>
     </div>

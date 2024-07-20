@@ -47,6 +47,8 @@
     </style>
 </head>
 <body>
+      if(!isset($_SESSION['login_id']))
+    header('location:login.php');
     <h1>Files Information</h1>
     <div class="row">
             <div class="col-lg-12">
@@ -63,6 +65,9 @@
         <?php
         include 'db_connect.php';
 
+        if(!isset($_SESSION['login_id']))
+        header('location:login.php');
+    
         $files_query = $conn->query("SELECT * FROM files ORDER BY fullname ASC");
 
         while ($file = $files_query->fetch_assoc()) {
