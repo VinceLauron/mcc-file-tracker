@@ -2,26 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<<<<<<< HEAD
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Include SweetAlert CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.7/dist/sweetalert2.min.css">
-    <style>
-        .topbar {
-            position: fixed;
-            width: 100%;
-            height: 60px;
-            background-color: #2a2f5b;
-            color: white;
-            display: flex;
-            align-items: center;
-            padding: 0 50px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1000; /* Make sure it is above other content */
-            top: 0; /* Ensure it is placed at the top */
-=======
     <title>Your Page Title</title>
     <link rel="icon" href="assets/img/mcc1.png" type="image/x-icon" />
     <!-- Include the Google Fonts link if not already included -->
@@ -58,7 +38,6 @@
         .nav-links {
             display: flex;
             align-items: center;
->>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
         }
         .nav-links li {
             list-style: none;
@@ -71,16 +50,6 @@
             font-weight: 500;
             padding: 6px 0;
             text-decoration: none;
-<<<<<<< HEAD
-            margin-left: 30px;
-            padding: 60px;
-            display: flex;
-            align-items: center;
-        }
-
-        .topbar .topbar-menu .fa {
-            margin-right: 5px; /* Space between icon and text */
-=======
         }
         .nav-links li a:before {
             content: '';
@@ -173,7 +142,6 @@
             .hamburger-menu {
                 display: block;
             }
->>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
         }
 
         #sidebar {
@@ -281,17 +249,6 @@
     </script>
 </head>
 <body>
-<<<<<<< HEAD
-    <div class="topbar">
-        <div class="topbar-brand">MCC Document Tracker</div>
-        <div class="topbar-menu">
-            <a href="login.php" class="logout" onclick="confirmLogout(event)">
-                <i class="fa fa-power-off"></i> Logout<br>
-                <?php echo $_SESSION['fullname']; ?>
-            </a>
-        </div>
-    </div>
-=======
     <div class="navbar">
         <div class="hamburger-menu"><i class="fas fa-bars"></i></div>
         <ul class="nav-links">
@@ -377,6 +334,5 @@
             });
         });
     </script>
->>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
 </body>
 </html>

@@ -17,19 +17,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_SESSION['email']; // Get the logged-in user's email
 
     // Database connection
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "fms_db";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    include 'db_connect.php';
 
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-
     // Insert data into database
     $sql = "INSERT INTO request (fullname, contact, id_number, course, docu_type, purpose, date_created, email, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')";
     $stmt = $conn->prepare($sql);
