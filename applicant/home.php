@@ -1,25 +1,20 @@
 <?php
 session_start();
 
-<<<<<<< HEAD
 if (!isset($_SESSION['email'])) {
     header('location:login.php');
     exit();
 }
-=======
-if(!isset($_SESSION['email']))
-header('location:login.php');
-
->>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<<<<<<< HEAD
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <link rel="icon" href="assets/img/mcc1.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Home</title>
     <style>
         .container {
             text-align: center;
@@ -54,6 +49,7 @@ header('location:login.php');
     </style>
 </head>
 <body>
+    <?php include 'topbar.php'; ?>
     <div class="container">
         <h2>Home</h2>
         <img src="assets/img/Madridejos.jpg" alt="Description of Image">
@@ -66,17 +62,5 @@ header('location:login.php');
         <img src="assets/img/bshm.jpg" alt="Description of Image"><br>
         <img src="assets/img/bsba.jpg" alt="Description of Image">
     </div>
-=======
-
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="assets/img/mcc1.png" type="image/x-icon" />
-  <title>Document</title>
-</head>
-<body>
-<?php include 'topbar.php' ?>
-    
->>>>>>> 338cc41baf20f40be0953b24b32df9d486bf1981
 </body>
 </html>
