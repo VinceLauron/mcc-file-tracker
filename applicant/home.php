@@ -1,27 +1,63 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['email']))
-header('location:login.php');
+if (!isset($_SESSION['email'])) {
+    header('location:login.php');
+    exit();
+}
 ?>
-
-
-
-    <div class="main-content" id="main-content">
-        <h1>Welcome, <?php echo $_SESSION['fullname']; ?>!</h1>
-        <p>You have successfully logged in.</p>
-    </div>
-
-    <script>
-        function loadContent(page) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', page, true);
-            xhr.onload = function() {
-                if (this.status === 200) {
-                    document.getElementById('main-content').innerHTML = this.responseText;
-                }
-            };
-            xhr.send();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .container {
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
         }
-    </script>
 
+        h2, h1, p {
+            animation: fadeInUp 2s ease-in-out;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            animation: zoomIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes zoomIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Home</h2>
+        <img src="assets/img/Madridejos.jpg" alt="Description of Image">
+        <h1>MADRIDEJOS COMMUNITY <br> COLLEGE</h1>
+        <p>is a higher education institution located in Bunakan, Madridejos, a municipality in the province of Cebu, Philippines. The college was established to provide accessible and affordable education to the local community, focusing on developing skilled professionals who can contribute to the region's socioeconomic growth.</p>
+        <img src="assets/img/mcc1.png" alt="Description of Image">
+        <h1>MADRIDEJOS COMMUNITY COLLEGE<br> OFFERS COURSES LIKE</h1>
+        <img src="assets/img/bsit.jpg" alt="Description of Image"><br>
+        <img src="assets/img/bsed.jpg" alt="Description of Image"><br>
+        <img src="assets/img/bshm.jpg" alt="Description of Image"><br>
+        <img src="assets/img/bsba.jpg" alt="Description of Image">
+    </div>
+</body>
+</html>

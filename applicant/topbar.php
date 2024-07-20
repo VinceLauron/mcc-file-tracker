@@ -8,25 +8,18 @@
     <!-- Include SweetAlert CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.7/dist/sweetalert2.min.css">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-
         .topbar {
             position: fixed;
-            width: calc(100% - 280px); /* Adjust to the width of the sidebar */
+            width: 100%;
             height: 60px;
             background-color: #2a2f5b;
             color: white;
             display: flex;
             align-items: center;
-            padding: 0 20px;
+            padding: 0 50px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             z-index: 1000; /* Make sure it is above other content */
-            left: 250px; /* Align with sidebar */
-            top: 0; /* Ensure it stays at the top of the page */
+            top: 0; /* Ensure it is placed at the top */
         }
 
         .topbar .topbar-brand {
@@ -43,19 +36,95 @@
         .topbar .topbar-menu a {
             color: white;
             text-decoration: none;
-            margin-left: 20px;
-            padding: 10px;
+            margin-left: 30px;
+            padding: 60px;
             display: flex;
             align-items: center;
         }
 
-        .topbar .topbar-menu a:hover {
-            background-color: #495057;
-            border-radius: 5px;
-        }
-
         .topbar .topbar-menu .fa {
             margin-right: 5px; /* Space between icon and text */
+        }
+
+        #sidebar {
+            position: fixed;
+            top: 60px; /* Make sure the sidebar starts below the topbar */
+            width: 250px;
+            height: calc(100% - 60px);
+            background-color: #2a2f5b;
+            padding-top: 20px;
+            left: 0;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #sidebar .sidebar-list {
+            padding: 0;
+            list-style: none;
+        }
+
+        #sidebar .nav-item {
+            display: block;
+            padding: 15px 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #sidebar .nav-item .icon-field {
+            margin-right: 10px;
+        }
+
+        #sidebar .nav-item:hover,
+        #sidebar .nav-item.active {
+            background-color: #495057;
+        }
+
+        #sidebar .logo {
+            display: block;
+            margin: 0 auto 20px;
+            width: 100px;
+            height: auto;
+        }
+
+        #sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: black;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        #main-content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: margin-left 0.3s ease-in-out;
+            padding-top: 80px; /* Ensure content is not hidden under the topbar */
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                transform: translateX(-250px);
+            }
+
+            #sidebar-toggle {
+                display: block;
+            }
+
+            #main-content {
+                margin-left: 0;
+            }
+
+            #sidebar.show {
+                transform: translateX(0);
+            }
+
+            #main-content.shifted {
+                margin-left: 250px;
+            }
         }
     </style>
     <!-- Include SweetAlert JavaScript -->
@@ -82,18 +151,14 @@
     </script>
 </head>
 <body>
-
     <div class="topbar">
-        <div class="topbar-brand">
-            MCC Document Tracker
-        </div>
+        <div class="topbar-brand">MCC Document Tracker</div>
         <div class="topbar-menu">
             <a href="login.php" class="logout" onclick="confirmLogout(event)">
                 <i class="fa fa-power-off"></i> Logout<br>
-                <?php echo $_SESSION['fullname']; ?> 
+                <?php echo $_SESSION['fullname']; ?>
             </a>
         </div>
     </div>
-
 </body>
 </html>
