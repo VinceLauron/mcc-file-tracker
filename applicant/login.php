@@ -139,11 +139,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .signup-link:hover {
             text-decoration: underline;
         }
+        .responsive-img{
+            width: 70%;
+            height: 70%;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <center> <img src="img/mcc1.png" alt="MCC Logo" class="responsive-img" style="margin-bottom: 20px;"></center>
     <h1> Applicant Sign In</h1>
     <header>Login</header>
     <form action="login.php" method="POST">
