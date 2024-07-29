@@ -11,7 +11,7 @@
 				<a href="indexs.php?page=view_requests" class="nav-item nav-files"><span class='icon-field'><i class="fa fa-file"></i></span> Status Request</a>
 				<a href="indexs.php?page=all_request" class="nav-item nav-form"><span class='icon-field'><i class="fa fa-file"></i></span> All Request</a>
 				<?php if($_SESSION['login_type'] == 1): ?>
-				<a href="indexs.php?page=users" class="nav-item nav-users"><span class='icon-field'><i class="fa fa-users"></i></span> Users</a>
+				<a href="indexs.php?page=users" class="nav-item nav-users"><span class='icon-field'><i class="fa fa-users"></i></span> Manage Users</a>
 			<?php endif; ?>
 		</div>
 
