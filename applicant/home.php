@@ -6,6 +6,10 @@ session_start();
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
+        if (!isset($_SESSION['email'])) {
+    header('location:login.php');
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
