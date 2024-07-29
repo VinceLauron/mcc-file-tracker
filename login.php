@@ -66,6 +66,7 @@
       </div>
     </div>
     <div id="login-right" class="container" >
+       <img src="img/mcc1.png" alt="MCC Logo" style="margin-bottom: 20px;">
       <div class="w-100">
         <h4 class="text-center" style="color:black;"><b>MADRIDEJOS COMMUNITY COLLEGE DOCUMENT TRACKER</b></h4>
         <br>
