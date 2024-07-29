@@ -58,7 +58,7 @@
   }
   .responsive-img {
     width: 100%;
-    height: auto;
+    height: 80%;
   }
 </style>
 
