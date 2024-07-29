@@ -1,11 +1,11 @@
 <?php
-include 'db_connect.php';
 session_start();
 
-if (!isset($_SESSION['email'])) {
-    header('location:login.php');
-    exit();
-}
+// Database connection
+    $conn = new mysqli("12.0.0.1", "u510162695_fms_db_root", "1Fms_db_root", "u510162695_fms_db");
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
