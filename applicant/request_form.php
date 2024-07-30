@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $course = htmlspecialchars($_POST['course']);
     $docu_type = htmlspecialchars($_POST['docu_type']);
     $purpose = htmlspecialchars($_POST['purpose']);
-    $date_created = htmlspecialchars($_POST['date_created']);
+    $date_created = date("Y-m-d H:i:s"); // Automatically set current date and time
     $email = $_SESSION['email']; // Get the logged-in user's email
 
     // Insert data into database
@@ -61,9 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $notif_stmt->close();
     $conn->close();
 }
-
-// Get the current date and time
-$current_datetime = date("Y-m-d\TH:i:s");
 ?>
 
 
@@ -198,10 +195,6 @@ $current_datetime = date("Y-m-d\TH:i:s");
         <div class="form-group">
           <label for="purpose">Purpose of Request:</label>
           <textarea id="purpose" name="purpose" rows="4" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="date_created">Date Of Request:</label>
-          <input type="datetime-local" id="date_created" name="date_created" required>
         </div>
         <button type="submit" class="btn">Submit Request</button>
       </form>
