@@ -1,4 +1,7 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 if (!isset($_SESSION['login_id'])) {
     header('location: login.php');
     exit;
@@ -96,10 +99,10 @@ if (!isset($_SESSION['login_id'])) {
         </div>
        
         <div class="col-md-2" style="justify-content: flex-end;">
-        <div class="notification" onclick="showNotifications();" id="notificationBell">
-            <i class="fas fa-bell"></i>
-            <span id="notificationCount" class="notification-count"></span>
-        </div>
+            <div class="notification" onclick="showNotifications();" id="notificationBell">
+                <i class="fas fa-bell"></i>
+                <span id="notificationCount" class="notification-count"></span>
+            </div>
             <a class="text-light" href="#" onclick="logout();"><?php echo $_SESSION['login_name'] ?> <i class="fa fa-power-off"></i></a>
         </div>
     </div>
@@ -135,44 +138,48 @@ if (!isset($_SESSION['login_id'])) {
     }
 
     function fetchNotifications() {
-        fetch('fetch_notifications.php')
-            .then(response => response.json())
-            .then(data => {
-                let notificationCount = data.length;
-                document.getElementById('notificationCount').textContent = notificationCount > 0 ? notificationCount : '';
+    fetch('fetch_notifications.php')
+        .then(response => response.json())
+        .then(data => {
+            let notificationCount = data.length;
+            document.getElementById('notificationCount').textContent = notificationCount > 0 ? notificationCount : '';
 
-                let notificationsList = '';
-                if (data.length > 0) {
-                    notificationsList = '<ul>';
-                    data.forEach(notification => {
-                        notificationsList += `<li>${notification.message} - ${new Date(notification.date_created).toLocaleString()}</li>`;
-                    });
-                    notificationsList += '</ul>';
-                } else {
-                    notificationsList = '<p>No new notifications.</p>';
-                }
-                Swal.fire({
-                    title: 'Notifications',
-                    html: notificationsList,
-                    icon: 'info',
-                    confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        markNotificationsAsRead();
-                    }
+            let notificationsList = '';
+            if (data.length > 0) {
+                notificationsList = '<ul>';
+                data.forEach(notification => {
+                    notificationsList += `<li>${notification.message} - ${new Date(notification.date_created).toLocaleString()}</li>`;
                 });
-            });
-    }
+                notificationsList += '</ul>';
+            } else {
+                notificationsList = '<p>No new notifications.</p>';
+            }
 
-    function markNotificationsAsRead() {
-        fetch('mark_notifications_as_read.php', { method: 'POST' })
-            .then(() => {
-                // After marking as read, fetch the notifications again to update the count
-                fetchNotifications();
+            Swal.fire({
+                title: 'Notifications',
+                html: notificationsList,
+                icon: 'info',
+                confirmButtonText: 'OK',
+                didClose: () => {
+                    markNotificationsAsRead();
+                }
             });
-    }
+        })
+        .catch(error => {
+            console.error('Error fetching notifications:', error);
+        });
+}
 
-    document.addEventListener('DOMContentLoaded', fetchNotifications);
+function markNotificationsAsRead() {
+    fetch('mark_notifications_as_read.php', { method: 'POST' })
+        .then(() => {
+            // Optionally, you can fetch notifications again to update the count if needed
+        })
+        .catch(error => {
+            console.error('Error marking notifications as read:', error);
+        });
+}
+
 </script>
 
 </body>
