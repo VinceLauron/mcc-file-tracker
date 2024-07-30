@@ -1,22 +1,24 @@
 <?php
 session_start();
-include 'db_connect.php';
 
-$email = $_SESSION['email']; // Or use 'login_id' based on your session variable
-
-$sql = "SELECT message, date_created FROM notifications WHERE user_email = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $email);
-$stmt->execute();
-$result = $stmt->get_result();
-
-$notifications = [];
-while ($row = $result->fetch_assoc()) {
-    $notifications[] = $row;
+if (!isset($_SESSION['login_id'])) {
+    header('location: login.php');
+    exit;
 }
 
-echo json_encode($notifications);
+include 'db_connect.php';
 
-$stmt->close();
+$sql = "SELECT * FROM notifications WHERE status = 0 ORDER BY date_created DESC";
+$result = $conn->query($sql);
+
+$notifications = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $notifications[] = $row;
+    }
+}
+
 $conn->close();
+
+echo json_encode($notifications);
 ?>
