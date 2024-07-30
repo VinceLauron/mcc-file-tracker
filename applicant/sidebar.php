@@ -54,18 +54,58 @@ if (!isset($_SESSION['email'])) {
         #sidebar .nav-item.active {
             background-color: #495057;
         }
+
         #sidebar .logo {
-        display: block;
+            display: block;
             margin: 0 auto 20px;
             width: 100px;
             height: auto;
+        }
+
+        #sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: black;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #main-content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                transform: translateX(-250px);
+            }
+
+            #sidebar-toggle {
+                display: block;
+            }
+
+            #main-content {
+                margin-left: 0;
+            }
+
+            #sidebar.show {
+                transform: translateX(0);
+            }
+
+            #main-content.shifted {
+                margin-left: 250px;
+            }
         }
     </style>
 </head>
 <body>
     <div id="sidebar-toggle"><i class="fas fa-bars"></i></div>
     <nav id="sidebar" class="mx-lt-5 bg-dark">
-    <img src="assets/img/mcc1.png" class="logo">
+        <img src="assets/img/mcc1.png" class="logo">
         <div class="sidebar-list">
             <div class="nav-item nav-home" onclick="loadContent('home.php')">
                 <span class="icon-field"><i class="fa fa-home"></i></span> Home
@@ -74,7 +114,7 @@ if (!isset($_SESSION['email'])) {
                 <span class="icon-field"><i class="fa fa-envelope"></i></span> Request Form
             </div>
             <div class="nav-item nav-files" onclick="loadContent('receive_form.php')">
-                <span class="icon-field"><i class="fa fa-envelope-open"></i></span> Received Form
+                <span class="icon-field"><i class="fa fa-envelope-open"></i></span> Status Request
             </div>
             <div class="nav-item nav-users" onclick="loadContent('user_details.php')">
                 <span class="icon-field"><i class="fa fa-users"></i></span> User Details
