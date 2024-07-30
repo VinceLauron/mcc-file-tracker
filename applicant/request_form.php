@@ -5,39 +5,38 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
+// Database connection
+include 'db_connect.php';
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$email = $_SESSION['email'];
+
+// Process the form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Collect and sanitize form inputs
     $fullname = htmlspecialchars($_POST['fullname']);
     $contact = htmlspecialchars($_POST['contact']);
     $id_number = htmlspecialchars($_POST['id_number']);
     $course = htmlspecialchars($_POST['course']);
     $docu_type = htmlspecialchars($_POST['docu_type']);
     $purpose = htmlspecialchars($_POST['purpose']);
-    $date_created = date('Y-m-d H:i:s'); // Automatically set the date and time
-    $email = $_SESSION['email']; // Get the logged-in user's email
+    $date_created = date('Y-m-d H:i:s');
+    $email = $_SESSION['email'];
 
-    // Database connection
-include 'db_connect.php';
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Insert data into database
     $sql = "INSERT INTO request (fullname, contact, id_number, course, docu_type, purpose, date_created, email, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssssss", $fullname, $contact, $id_number, $course, $docu_type, $purpose, $date_created, $email);
 
     if ($stmt->execute()) {
-        // Insert notification into database
         $notification_message = "New request submitted by " . $fullname;
         $notif_sql = "INSERT INTO notifications (user_email, message) VALUES (?, ?)";
         $notif_stmt = $conn->prepare($notif_sql);
         $notif_stmt->bind_param("ss", $email, $notification_message);
         $notif_stmt->execute();
+        $notif_stmt->close();
 
-        // Display SweetAlert message
         echo '<script>
             document.addEventListener("DOMContentLoaded", function() {
                 Swal.fire({
@@ -63,11 +62,23 @@ include 'db_connect.php';
         </script>';
     }
 
-    // Close connection
     $stmt->close();
-    $notif_stmt->close();
-    $conn->close();
 }
+
+// Retrieve user information from the database based on email
+$user = null;
+$sql = "SELECT id_number, fullname, program_graduated, contact FROM applicant WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $user = $result->fetch_assoc();
+}
+
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -138,7 +149,8 @@ include 'db_connect.php';
       color: #fff;
       border: none;
       border-radius: 4px;
-      font-size: 16px;      cursor: pointer;
+      font-size: 16px;
+      cursor: pointer;
     }
 
     .btn:hover {
@@ -168,26 +180,19 @@ include 'db_connect.php';
       <form id="requestForm" action="request_form.php" method="POST">
         <div class="form-group">
           <label for="id_number">ID Number:</label>
-          <input type="text" id="id_number" name="id_number" required>
+          <input type="text" id="id_number" name="id_number" value="<?php echo $user['id_number']; ?>" readonly>
         </div>
         <div class="form-group">
           <label for="fullname">Full Name:</label>
-          <input type="text" id="fullname" name="fullname" required>
+          <input type="text" id="fullname" name="fullname" value="<?php echo $user['fullname']; ?>" readonly>
         </div>
         <div class="form-group">
           <label for="contact">Contact:</label>
-          <input type="text" id="contact" name="contact" required>
+          <input type="text" id="contact" name="contact" value="<?php echo $user['contact']; ?>" readonly>
         </div>
         <div class="form-group">
           <label for="course">Course:</label>
-          <select id="course" name="course" required>
-            <option value="" disabled selected>Select Course Here</option>
-            <option value="BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</option>
-            <option value="BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT">BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT</option>
-            <option value="BACHELOR OF SCIENCE IN HOSPITALITY MANAGMENT">BACHELOR OF SCIENCE IN HOSPITALITY MANAGMENT</option>
-            <option value="BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO">BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO</option>
-            <option value="BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION">BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION</option>
-          </select>
+          <input type="text" id="course" name="course" value="<?php echo $user['program_graduated']; ?>" readonly>
         </div>
         <div class="form-group">
           <label for="docu_type">Document Type:</label>

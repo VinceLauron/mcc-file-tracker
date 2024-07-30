@@ -67,7 +67,14 @@
                     <div class="fields">
                     <div class="input-field">
                             <label>Program Graduated</label>
-                            <input type="text" name="program_graduated" placeholder="Enter your Program" required>
+                            <select id="program_graduated" name="program_graduated" required>
+            <option value="" disabled selected>Select Course Here</option>
+            <option value="BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</option>
+            <option value="BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT">BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT</option>
+            <option value="BACHELOR OF SCIENCE IN HOSPITALITY MANAGMENT">BACHELOR OF SCIENCE IN HOSPITALITY MANAGMENT</option>
+            <option value="BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO">BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO</option>
+            <option value="BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION">BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION</option>
+          </select>
                         </div>
 
                         <div class="input-field">
