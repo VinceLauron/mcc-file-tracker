@@ -13,15 +13,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $course = htmlspecialchars($_POST['course']);
     $docu_type = htmlspecialchars($_POST['docu_type']);
     $purpose = htmlspecialchars($_POST['purpose']);
-    
-    // Set timezone to Philippine time
-    date_default_timezone_set('Asia/Manila');
     $date_created = date('Y-m-d H:i:s'); // Automatically set the date and time
-
     $email = $_SESSION['email']; // Get the logged-in user's email
 
     // Database connection
-    include 'db_connect.php';
+include 'db_connect.php';
 
     // Check connection
     if ($conn->connect_error) {
@@ -142,8 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       color: #fff;
       border: none;
       border-radius: 4px;
-      font-size: 16px;      
-      cursor: pointer;
+      font-size: 16px;      cursor: pointer;
     }
 
     .btn:hover {
@@ -189,7 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="" disabled selected>Select Course Here</option>
             <option value="BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</option>
             <option value="BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT">BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT</option>
-            <option value="BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT">BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT</option>
+            <option value="BACHELOR OF SCIENCE IN HOSPITALITY MANAGMENT">BACHELOR OF SCIENCE IN HOSPITALITY MANAGMENT</option>
             <option value="BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO">BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO</option>
             <option value="BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION">BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION</option>
           </select>
