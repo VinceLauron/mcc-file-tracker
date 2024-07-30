@@ -1,6 +1,5 @@
 <?php
 session_start();
-include 'db_connect.php';
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
@@ -14,8 +13,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $course = htmlspecialchars($_POST['course']);
     $docu_type = htmlspecialchars($_POST['docu_type']);
     $purpose = htmlspecialchars($_POST['purpose']);
-    $date_created = date("Y-m-d H:i:s"); // Automatically set current date and time
+    $date_created = date('Y-m-d'); // Automatically set the date and time
     $email = $_SESSION['email']; // Get the logged-in user's email
+
+    // Database connection
+ include 'db_connect.php';
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
     // Insert data into database
     $sql = "INSERT INTO request (fullname, contact, id_number, course, docu_type, purpose, date_created, email, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')";
@@ -62,7 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -132,8 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       color: #fff;
       border: none;
       border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
+      font-size: 16px;      cursor: pointer;
     }
 
     .btn:hover {
@@ -195,6 +202,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="form-group">
           <label for="purpose">Purpose of Request:</label>
           <textarea id="purpose" name="purpose" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="date_created">Date Of Request:</label>
+          <input type="text" id="date_created" name="date_created" value="<?php echo date('Y-m-d'); ?>" readonly>
         </div>
         <button type="submit" class="btn">Submit Request</button>
       </form>
