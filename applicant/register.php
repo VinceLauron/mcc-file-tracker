@@ -48,7 +48,7 @@ if ($conn->connect_error) {
             $mail->Port = 587;
 
             //Recipients
-            $mail->setFrom('lauronvince13@gmail.com', 'Mailer');
+            $mail->setFrom('lauronvince13@gmail.com', 'mccdocumenttracker');
             $mail->addAddress($email, $fullname);
 
             // Content

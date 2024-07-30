@@ -17,7 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date_created = htmlspecialchars($_POST['date_created']);
     $email = $_SESSION['email']; // Get the logged-in user's email
 
-
     // Insert data into database
     $sql = "INSERT INTO request (fullname, contact, id_number, course, docu_type, purpose, date_created, email, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')";
     $stmt = $conn->prepare($sql);
@@ -62,7 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $notif_stmt->close();
     $conn->close();
 }
+
+// Get the current date and time
+$current_datetime = date("Y-m-d\TH:i:s");
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
