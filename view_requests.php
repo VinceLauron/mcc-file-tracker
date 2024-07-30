@@ -12,6 +12,11 @@ if (!isset($_SESSION['login_id'])) {
 // Database connection
 include 'db_connect.php';
 
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 // Fetch requests from database, ordered by created_at or id in descending order
 $sql = "SELECT * FROM request WHERE status = 'pending' OR status = 'onprocess' ORDER BY date_created DESC"; // or ORDER BY id DESC
 $result = $conn->query($sql);
@@ -25,6 +30,8 @@ $result = $conn->query($sql);
     <title>View Requests - MCC Document Tracker</title>
     <!-- Include SweetAlert CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+    <!-- Include DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <style>
         .container {
             width: 100%;
@@ -86,16 +93,19 @@ $result = $conn->query($sql);
 <body>
     <div class="container">
         <h1>Pending Requests</h1>
-        <table>
-            <tr>
-                <th>ID Number</th>
-                <th>Full Name</th>
-                <th>Contact</th>
-                <th>Course/Program</th>
-                <th>Document Type</th>
-                <th>Purpose</th>
-                <th>Actions</th>
-            </tr>
+        <table id="requestsTable">
+            <thead>
+                <tr>
+                    <th>ID Number</th>
+                    <th>Full Name</th>
+                    <th>Contact</th>
+                    <th>Course/Program</th>
+                    <th>Document Type</th>
+                    <th>Purpose</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
             <?php
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
@@ -128,13 +138,23 @@ $result = $conn->query($sql);
                 echo "<tr><td colspan='7'>No pending requests</td></tr>";
             }
             ?>
+            </tbody>
         </table>
     </div>
 
     <!-- Include SweetAlert JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $('#requestsTable').DataTable({
+                "pageLength": 5
+            });
+        });
+
         function confirmAction(button, actionText) {
             Swal.fire({
                 title: 'Are you sure?',

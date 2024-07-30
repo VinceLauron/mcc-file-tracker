@@ -1,9 +1,8 @@
 <?php
 session_start();
 
+// Database connection
 include 'db_connect.php';
-
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -91,17 +90,27 @@ $conn->close();
         }
         .form-group {
             margin-bottom: 1em;
+            display: flex;
+            flex-direction: column;
         }
         .form-group label {
-            display: block;
             font-weight: bold;
             margin-bottom: 0.5em;
         }
         .form-group input {
-            width: 100%;
             padding: 0.5em;
             border: 1px solid #ccc;
             border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form-group-inline {
+            display: flex;
+            justify-content: space-between;
+            gap: 1em;
+        }
+        .form-group-inline .form-group {
+            flex: 1;
         }
         .form-group button {
             padding: 0.75em 1.5em;
@@ -121,44 +130,46 @@ $conn->close();
     <div class="container">
         <h1>User Details</h1>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-        <div class="form-group">
-                <label for="id_number">ID Number:</label>
-                <input type="text" id="id_number" name="id_number" value="<?php echo htmlspecialchars($id_number); ?>" required>
+            <div class="form-group-inline">
+                <div class="form-group">
+                    <label for="id_number">ID Number:</label>
+                    <input type="text" id="id_number" name="id_number" value="<?php echo htmlspecialchars($id_number); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="fullname">Full Name:</label>
+                    <input type="text" id="fullname" name="fullname" value="<?php echo htmlspecialchars($fullname); ?>" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="fullname">Full Name:</label>
-                <input type="text" id="fullname" name="fullname" value="<?php echo htmlspecialchars($fullname); ?>" required>
+            <div class="form-group-inline">
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" value="<?php echo htmlspecialchars($dob); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact">Mobile Number:</label>
+                    <input type="text" id="contact" name="contact" value="<?php echo htmlspecialchars($contact); ?>" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dob" value="<?php echo htmlspecialchars($dob); ?>" required>
+            <div class="form-group-inline">
+                <div class="form-group">
+                    <label for="sex">Gender:</label>
+                    <input type="text" id="sex" name="sex" value="<?php echo htmlspecialchars($sex); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="program_graduated">Program Graduated:</label>
+                    <input type="text" id="program_graduated" name="program_graduated" value="<?php echo htmlspecialchars($program_graduated); ?>" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" readonly>
+            <div class="form-group-inline">
+                <div class="form-group">
+                    <label for="year_graduated">Year Graduated:</label>
+                    <input type="text" id="year_graduated" name="year_graduated" value="<?php echo htmlspecialchars($year_graduated); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="admission">Year Of Admission:</label>
+                    <input type="text" id="admission" name="admission" value="<?php echo htmlspecialchars($admission); ?>" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="contact">Mobile Number:</label>
-                <input type="text" id="contact" name="contact" value="<?php echo htmlspecialchars($contact); ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="sex">Gender:</label>
-                <input type="text" id="sex" name="sex" value="<?php echo htmlspecialchars($sex); ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="program_graduated">Program Graduated:</label>
-                <input type="text" id="program_graduated" name="program_graduated" value="<?php echo htmlspecialchars($program_graduated); ?>" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="year_graduated">Year Graduated:</label>
-                <input type="text" id="year_graduated" name="year_graduated" value="<?php echo htmlspecialchars($year_graduated); ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="admission">Year Of Admission:</label>
-                <input type="text" id="admission" name="admission" value="<?php echo htmlspecialchars($admission); ?>" required>
-            </div>
-
             <div class="form-group">
                 <button type="submit">Update Details</button>
             </div>

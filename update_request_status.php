@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['message'] = "Error updating request status: " . $stmt->error;
     }
 
-    header("Location: indexs.php");
+    header("Location: indexs.php?page=view_requests");
     exit();
 }
 
