@@ -50,7 +50,7 @@
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="index.php">
             <span>
-              MCC DOCUMENT TRACKER
+              MCC DOCUMENT TRACKERs
             </span>
              
           </a>
