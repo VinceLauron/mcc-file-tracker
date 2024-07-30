@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $course = htmlspecialchars($_POST['course']);
     $docu_type = htmlspecialchars($_POST['docu_type']);
     $purpose = htmlspecialchars($_POST['purpose']);
-    $date_created = date('Y-m-d'); // Automatically set the date and time
+    $date_created = date('Y-m-d H:i:s'); // Automatically set the date and time
     $email = $_SESSION['email']; // Get the logged-in user's email
 
     // Database connection
@@ -203,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="form-group">
           <label for="date_created">Date Of Request:</label>
-          <input type="text" id="date_created" name="date_created" value="<?php echo date('Y-m-d'); ?>" readonly>
+          <input type="text" id="date_created" name="date_created" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly>
         </div>
         <button type="submit" class="btn">Submit Request</button>
       </form>
