@@ -37,7 +37,7 @@
             margin-right: 5px;
         }
         .topbar-brand {
-            font-size: 24px;
+            font-size: 16px;
             font-weight: bold;
         }
         .topbar-brand, .topbar-menu {
