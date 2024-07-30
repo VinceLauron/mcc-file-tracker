@@ -138,48 +138,49 @@ if (!isset($_SESSION['login_id'])) {
     }
 
     function fetchNotifications() {
-    fetch('fetch_notifications.php')
-        .then(response => response.json())
-        .then(data => {
-            let notificationCount = data.length;
-            document.getElementById('notificationCount').textContent = notificationCount > 0 ? notificationCount : '';
+        fetch('fetch_notifications.php')
+            .then(response => response.json())
+            .then(data => {
+                let notificationCount = data.length;
+                document.getElementById('notificationCount').textContent = notificationCount > 0 ? notificationCount : '';
 
-            let notificationsList = '';
-            if (data.length > 0) {
-                notificationsList = '<ul>';
-                data.forEach(notification => {
-                    notificationsList += `<li>${notification.message} - ${new Date(notification.date_created).toLocaleString()}</li>`;
-                });
-                notificationsList += '</ul>';
-            } else {
-                notificationsList = '<p>No new notifications.</p>';
-            }
-
-            Swal.fire({
-                title: 'Notifications',
-                html: notificationsList,
-                icon: 'info',
-                confirmButtonText: 'OK',
-                didClose: () => {
-                    markNotificationsAsRead();
+                let notificationsList = '';
+                if (data.length > 0) {
+                    notificationsList = '<ul>';
+                    data.forEach(notification => {
+                        let notificationDate = new Date(notification.date_created);
+                        let formattedDate = notificationDate.toLocaleString(); // Format the date and time
+                        notificationsList += `<li>${notification.message} - ${formattedDate}</li>`;
+                    });
+                    notificationsList += '</ul>';
+                } else {
+                    notificationsList = '<p>No new notifications.</p>';
                 }
+
+                Swal.fire({
+                    title: 'Notifications',
+                    html: notificationsList,
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                    didClose: () => {
+                        markNotificationsAsRead();
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching notifications:', error);
             });
-        })
-        .catch(error => {
-            console.error('Error fetching notifications:', error);
-        });
-}
+    }
 
-function markNotificationsAsRead() {
-    fetch('mark_notifications_as_read.php', { method: 'POST' })
-        .then(() => {
-            // Optionally, you can fetch notifications again to update the count if needed
-        })
-        .catch(error => {
-            console.error('Error marking notifications as read:', error);
-        });
-}
-
+    function markNotificationsAsRead() {
+        fetch('mark_notifications_as_read.php', { method: 'POST' })
+            .then(() => {
+                // Optionally, you can fetch notifications again to update the count if needed
+            })
+            .catch(error => {
+                console.error('Error marking notifications as read:', error);
+            });
+    }
 </script>
 
 </body>

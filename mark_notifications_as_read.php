@@ -1,16 +1,14 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['login_id'])) {
-    header('location: login.php');
-    exit;
-}
-
-// Database connection
 include 'db_connect.php';
 
-$sql = "UPDATE notifications SET status = 1";
-$conn->query($sql);
+$email = $_SESSION['email']; // Or use 'login_id' based on your session variable
 
+$sql = "UPDATE notifications SET read_status = 1 WHERE user_email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+
+$stmt->close();
 $conn->close();
 ?>

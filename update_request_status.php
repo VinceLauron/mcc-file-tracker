@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Send an email to the user with the note
         $subject = "Request Status Update";
         $message = "Your request has been " . $status . ".\n\nNote: " . $note;
-        $headers = "From: no-reply@example.com";
+        $headers = "From: mccdocumenttracker.com";
 
         if (mail($email, $subject, $message, $headers)) {
             $_SESSION['message'] .= " Notification email sent.";
