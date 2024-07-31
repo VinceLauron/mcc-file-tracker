@@ -256,9 +256,6 @@
                 <h5>
                   Vince Simuelle Lauron
                 </h5>
-                <p>
-                  Developer
-                </p>
               </div>
             </div>
           </div>
@@ -271,9 +268,6 @@
                 <h5>
                   Bryan James Desuyo
                 </h5>
-                <p>
-                  Designer/Researcher
-                </p>
               </div>
             </div>
           </div>
@@ -286,9 +280,6 @@
                 <h5>
                   Argie Magallanes
                 </h5>
-                <p>
-                Designer/Researcher
-                </p>
               </div>
             </div>
           </div>
@@ -301,9 +292,6 @@
                 <h5>
                  Arabela Villarosa
                 </h5>
-                <p>
-                Researcher
-                </p>
               </div>
             </div>
           </div>
