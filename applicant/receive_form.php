@@ -10,14 +10,7 @@ if (!isset($_SESSION['email'])) {
 }
 
 // Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "fms_db";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
+include 'db_connect.php';
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
