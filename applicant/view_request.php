@@ -69,59 +69,73 @@ if (isset($_GET['id'])) {
 $conn->close();
 ?>
 <title>MCC DOCUMENT TRACKER</title>
-<link rel="icon" href="assets/img/mcc1.png" type="image/x-icon" /> 
-<body>
-    <div class="container mt-5">
+<link rel="icon" href="assets/img/mcc1.png" type="image/x-icon" />
+<body style="background-image: url('../img/back.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 100vh;">
+    <div class="container mt-5" style="background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 8px;">
+        <!-- Back to Index Button -->
+        <div class="mb-4">
+            <a href="index.php" class="btn btn-secondary">Back to Index</a>
+        </div>
         <h2 style="text-align: center;">Edit Request</h2>
         <?php if (!$disableForm && isset($_GET['id'])): ?>
             <form id="editRequestForm" method="POST" action="">
                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
-                <div class="form-group mb-3">
-                    <label for="id_number">ID Number</label>
-                    <input type="text" class="form-control" id="id_number" name="id_number" value="<?php echo htmlspecialchars($id_number); ?>" required>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="id_number">ID Number</label>
+                        <input type="text" class="form-control" id="id_number" name="id_number" value="<?php echo htmlspecialchars($id_number); ?>" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" class="form-control" id="fullname" name="fullname" value="<?php echo htmlspecialchars($fullname); ?>" required>
+                    </div>
                 </div>
-                <div class="form-group mb-3">
-                    <label for="fullname">Full Name</label>
-                    <input type="text" class="form-control" id="fullname" name="fullname" value="<?php echo htmlspecialchars($fullname); ?>" required>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="contact">Contact</label>
+                        <input type="text" class="form-control" id="contact" name="contact" value="<?php echo htmlspecialchars($contact); ?>" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="course">Course/Program</label>
+                        <select class="form-control" id="course" name="course" required>
+                            <option value="" disabled>Select Course/Program</option>
+                            <option value="BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY" <?php if ($course == "BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY") echo 'selected'; ?>>BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</option>
+                            <option value="BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT" <?php if ($course == "BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT") echo 'selected'; ?>>BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT</option>
+                            <option value="BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT" <?php if ($course == "BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT") echo 'selected'; ?>>BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT</option>
+                            <option value="BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO" <?php if ($course == "BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO") echo 'selected'; ?>>BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO</option>
+                            <option value="BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION" <?php if ($course == "BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION") echo 'selected'; ?>>BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group mb-3">
-                    <label for="contact">Contact</label>
-                    <input type="text" class="form-control" id="contact" name="contact" value="<?php echo htmlspecialchars($contact); ?>" required>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="docu_type">Document Type</label>
+                        <select class="form-control" id="docu_type" name="docu_type" required>
+                            <option value="" disabled>Select Document Type</option>
+                            <option value="Good Moral Certificates" <?php if ($docu_type == "Good Moral Certificates") echo 'selected'; ?>>Good Moral Certificates</option>
+                            <option value="Transcript of Records" <?php if ($docu_type == "Transcript of Records") echo 'selected'; ?>>Transcript of Records</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="purpose">Purpose</label>
+                        <input type="text" class="form-control" id="purpose" name="purpose" value="<?php echo htmlspecialchars($purpose); ?>" required>
+                    </div>
                 </div>
-                <div class="form-group mb-3">
-                    <label for="course">Course/Program</label>
-                    <select class="form-control" id="course" name="course" required>
-                        <option value="" disabled>Select Course/Program</option>
-                        <option value="BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY" <?php if ($course == "BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY") echo 'selected'; ?>>BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</option>
-                        <option value="BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT" <?php if ($course == "BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT") echo 'selected'; ?>>BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT</option>
-                        <option value="BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT" <?php if ($course == "BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT") echo 'selected'; ?>>BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT</option>
-                        <option value="BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO" <?php if ($course == "BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO") echo 'selected'; ?>>BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO</option>
-                        <option value="BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION" <?php if ($course == "BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION") echo 'selected'; ?>>BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION</option>
-                    </select>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="status">Status</label>
+                        <input type="text" class="form-control" id="status" name="status" value="<?php echo htmlspecialchars($status); ?>" readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="note">Note</label>
+                        <textarea class="form-control" id="note" name="note" required readonly><?php echo htmlspecialchars($note); ?></textarea>
+                    </div>
                 </div>
-                <div class="form-group mb-3">
-                    <label for="docu_type">Document Type</label>
-                    <select class="form-control" id="docu_type" name="docu_type" required>
-                        <option value="" disabled>Select Document Type</option>
-                        <option value="Good Moral Certificates" <?php if ($docu_type == "Good Moral Certificates") echo 'selected'; ?>>Good Moral Certificates</option>
-                        <option value="Transcript of Records" <?php if ($docu_type == "Transcript of Records") echo 'selected'; ?>>Transcript of Records</option>
-                    </select>
+                <div class="row">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Update Changes</button>
+                    </div>
                 </div>
-                <div class="form-group mb-3">
-                    <label for="purpose">Purpose</label>
-                    <input type="text" class="form-control" id="purpose" name="purpose" value="<?php echo htmlspecialchars($purpose); ?>" required>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="status">Status</label>
-                    <!-- Display status as a readonly input field -->
-                    <input type="text" class="form-control" id="status" name="status" value="<?php echo htmlspecialchars($status); ?>" readonly>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="note">Note</label>
-                    <textarea class="form-control" id="note" name="note" required readonly><?php echo htmlspecialchars($note); ?></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Update</button>
             </form>
         <?php endif; ?>
 
@@ -165,4 +179,3 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGzV+rT04oFb4IHsiX3YDzH7UVR8+4vfVRe+Br4dKc5Ux" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-ho+j7jyWK8fNpkmMj0zthpj8vLkm/D/QDf6f9/jy5iVdISp+Ejsd6GWPgZef7j9z" crossorigin="anonymous"></script>
 </body>
-
