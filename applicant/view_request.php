@@ -136,7 +136,7 @@ $conn->close();
                         confirmButtonText: 'OK'
                     }).then(function() {
                         // Redirect or handle as needed
-                        window.location.href = "home.php"; // Change to your desired redirect URL
+                        window.location.href = "index.php"; // Change to your desired redirect URL
                     });
                 });
             </script>
@@ -152,7 +152,7 @@ $conn->close();
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(function() {
-                        window.location.href = "home.php"; // Change to your desired redirect URL
+                        window.location.href = "index.php"; // Change to your desired redirect URL
                     });
                 });
             </script>
