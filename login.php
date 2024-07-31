@@ -61,6 +61,7 @@
   <main id="main" class="alert-info">
     <div id="login-right" class="container">
       <div class="w-100">
+     <center> <img src="img/mcc1.png" alt="Login Image" class="img-fluid" style="height: 200px;"></center>
         <h4 class="text-center" style="color:black;"><b>MADRIDEJOS COMMUNITY COLLEGE DOCUMENT TRACKER</b></h4>
         <br>
         <div class="card col-md-8 mx-auto">
