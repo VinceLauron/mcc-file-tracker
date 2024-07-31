@@ -1,13 +1,43 @@
+<?php
+// Check if session is already started
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "fms_db";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$email = $_SESSION['email'];
+
+// Fetch user's requests from the database
+$stmt = $conn->prepare("SELECT id, id_number, fullname, contact, course, docu_type, purpose, status, note FROM request WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$stmt->bind_result($id, $id_number, $fullname, $contact, $course, $docu_type, $purpose, $status, $note);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Requests - MCC Document Tracker</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .container {
             width: 90%;
@@ -156,7 +186,7 @@
                     echo "<td data-label='Status' class='$status_class'>" . htmlspecialchars($status) . "</td>";
                     echo "<td data-label='Note'>" . htmlspecialchars($note) . "</td>";
                     echo "<td data-label='Actions'>
-                            <button class='btn btn-view' data-toggle='modal' data-target='#viewModal' data-id='" . htmlspecialchars($id) . "' data-id_number='" . htmlspecialchars($id_number) . "' data-fullname='" . htmlspecialchars($fullname) . "' data-contact='" . htmlspecialchars($contact) . "' data-course='" . htmlspecialchars($course) . "' data-docu_type='" . htmlspecialchars($docu_type) . "' data-purpose='" . htmlspecialchars($purpose) . "' data-status='" . htmlspecialchars($status) . "' data-note='" . htmlspecialchars($note) . "'>View</button>
+                            <a href='view_request.php?id=" . htmlspecialchars($id) . "' class='btn btn-view'>View</a>
                             <a href='delete_request.php?id=" . htmlspecialchars($id) . "' class='btn btn-delete' onclick='return confirm(\"Are you sure you want to delete this request?\")'>Delete</a>
                           </td>";
                     echo "</tr>";
@@ -165,57 +195,6 @@
             </tbody>
         </table>
     </div>
-
-    <!-- View Modal -->
-    <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="viewModalLabel">Request Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p><strong>ID Number:</strong> <span id="modal-id-number"></span></p>
-                    <p><strong>Full Name:</strong> <span id="modal-fullname"></span></p>
-                    <p><strong>Contact:</strong> <span id="modal-contact"></span></p>
-                    <p><strong>Course/Program:</strong> <span id="modal-course"></span></p>
-                    <p><strong>Document Type:</strong> <span id="modal-docu-type"></span></p>
-                    <p><strong>Purpose:</strong> <span id="modal-purpose"></span></p>
-                    <p><strong>Status:</strong> <span id="modal-status"></span></p>
-                    <p><strong>Note:</strong> <span id="modal-note"></span></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        $('#viewModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var id_number = button.data('id_number');
-            var fullname = button.data('fullname');
-            var contact = button.data('contact');
-            var course = button.data('course');
-            var docu_type = button.data('docu_type');
-            var purpose = button.data('purpose');
-            var status = button.data('status');
-            var note = button.data('note');
-
-            var modal = $(this);
-            modal.find('#modal-id-number').text(id_number);
-            modal.find('#modal-fullname').text(fullname);
-            modal.find('#modal-contact').text(contact);
-            modal.find('#modal-course').text(course);
-            modal.find('#modal-docu-type').text(docu_type);
-            modal.find('#modal-purpose').text(purpose);
-            modal.find('#modal-status').text(status);
-            modal.find('#modal-note').text(note);
-        });
-    </script>
 </body>
 </html>
 

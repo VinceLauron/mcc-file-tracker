@@ -24,7 +24,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
   }
   main#main {
     width: 100%;
@@ -32,45 +31,35 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url('img/back.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
   }
-  #login-left {
-    display: none;
-  }
+
   .card {
     margin: auto;
+    background: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Optional: to give it a slight shadow */
+    padding: 20px;
+    border-radius: 10px;
   }
+
   .logo img {
     max-width: 100%;
   }
+
   @media (min-width: 768px) {
-    #login-left {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: darkblue;
-      color: white;
-      width: 50%;
-      height: 100vh;
-    }
     #login-right {
       width: 50%;
     }
   }
-  .responsive-img {
-    width: 70%;
-    height: 70%;
-  }
 </style>
 
 <body>
-  <main id="main" class="alert-info" style="background-color: white;">
-    <div id="login-left">
-      <div class="logo">
-        <img src="img/mcc1.png" alt="MCC Logo">
-      </div>
-    </div>
+  <main id="main" class="alert-info">
     <div id="login-right" class="container">
-     <center> <img src="img/mcc1.png" alt="MCC Logo" class="responsive-img" style="margin-bottom: 20px;"></center>
       <div class="w-100">
         <h4 class="text-center" style="color:black;"><b>MADRIDEJOS COMMUNITY COLLEGE DOCUMENT TRACKER</b></h4>
         <br>
