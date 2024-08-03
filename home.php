@@ -154,9 +154,9 @@ if ($result_status) {
           label: 'Requests',
           data: [<?php echo $requests_today; ?>, <?php echo $requests_week; ?>, <?php echo $requests_month; ?>],
           backgroundColor: [
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)'
+            '#3594cc',
+            '#0091D5',
+            '#1C4E80'
           ],
           borderColor: [
             'rgba(75, 192, 192, 1)',
@@ -184,10 +184,10 @@ if ($result_status) {
           label: 'Request Statuses',
           data: [<?php echo $pending_count; ?>, <?php echo $rejected_count; ?>, <?php echo $released_count; ?>, <?php echo $on_process_count; ?>],
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)'
+            '#ffa600',
+            '#ff6361',
+            '#008dff',
+            '#c701ff'
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
