@@ -127,9 +127,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #fff;
             padding: 0.75em 1.5em;
             border: none;
-            border-radius: 4px;
+            border-radius: 15px;
             cursor: pointer;
             margin-bottom: 1em;
+            width: 100%;
         }
         .submit:hover {
             background-color: #0056b3;
