@@ -15,9 +15,26 @@
 
    <title>MCC DOCUMENT TRACKER</title>
 </head>
+<style>
+
+     body {
+            background-image: url('../radiance/images/back.png'); /* Ensure the correct path to your image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+        }
+    .logo {
+    width: 250px;
+    height: 150px; /* Maintains aspect ratio */
+    max-width: 100%;
+    margin-bottom: 10px;
+}
+</style>
 <body>
     <div class="container">
         <header>Registration</header>
+        <center><img src="assets/img/mcc1.png" alt="Logo" class="logo"> </center>
        <center><h1> Create New Account</h1></center> 
 
         <form action="register.php" method="POST" id="registration-form">
@@ -89,10 +106,10 @@
                     </div>
 
                     <div class="buttons">
-                        <div class="backBtn">
+                    <button type="button" class="backBtn" onclick="window.location.href='login.php'">
                             <i class="uil uil-navigator"></i>
-                            <a href="login.php"> <span style="color: white;" class="btnText">Back</span></a>
-                        </div>
+                            <span class="btnText">Back</span>
+                        </button>
                         
                         <button type="submit" class="submit">
                             <span class="btnText">Submit</span>
