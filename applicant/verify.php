@@ -104,11 +104,11 @@ include 'db_connect.php';
         .container {
             background: #6EACDA;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             width: 100%;
-        
+            height: 50%;
         }
 
         header {
