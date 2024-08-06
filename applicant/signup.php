@@ -6,36 +6,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/img/mcc1.png" type="image/x-icon" />
 
-    
-    <!----======== CSS ======== -->
+    <!-- CSS -->
     <link rel="stylesheet" href="assets/style2.css">
-     
-    <!----===== Iconscout CSS ===== -->
+    
+    <!-- Iconscout CSS -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-   <title>MCC DOCUMENT TRACKER</title>
-</head>
-<style>
+    <title>MCC DOCUMENT TRACKER</title>
+    <style>
+    body {
+        background-image: url('../radiance/images/back.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
-     body {
-            background-image: url('../radiance/images/back.png'); /* Ensure the correct path to your image */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+    .container {
+        width: 90%;
+        max-width: 800px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
-        }
+    header {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
     .logo {
-    width: 250px;
-    height: 150px; /* Maintains aspect ratio */
-    max-width: 100%;
-    margin-bottom: 10px;
-}
+        width: 150px;
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    h1 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .details {
+        margin-bottom: 20px;
+    }
+
+    .input-field {
+        margin-bottom: 15px;
+    }
+
+    .input-field label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .input-field input,
+    .input-field select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center; /* Center-align buttons */
+        gap: 10px; /* Adds spacing between buttons */
+        margin-top: 20px; /* Optional: Adds margin above buttons */
+    }
+
+    .buttons button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        color: white;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    .backBtn {
+        background-color: #6c757d;
+    }
+
+    .submit {
+        background-color: #28a745;
+    }
+
+    .buttons button:hover {
+        opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            width: 95%;
+            padding: 15px;
+        }
+
+        .logo {
+            width: 120px;
+        }
+
+        h1 {
+            font-size: 18px;
+        }
+
+        .buttons {
+            flex-direction: column;
+            gap: 10px; /* Adjust spacing between buttons */
+        }
+
+        .buttons button {
+            width: 100%;
+            padding: 8px 16px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .logo {
+            width: 100px;
+        }
+
+        h1 {
+            font-size: 16px;
+        }
+
+        .buttons button {
+            padding: 8px 10px;
+        }
+    }
 </style>
+
+</head>
 <body>
     <div class="container">
         <header>Registration</header>
-        <center><img src="assets/img/mcc1.png" alt="Logo" class="logo"> </center>
-       <center><h1> Create New Account</h1></center> 
+        <center><img src="assets/img/mcc1.png" alt="Logo" class="logo"></center>
+        <center><h1>Create New Account</h1></center>
 
         <form action="register.php" method="POST" id="registration-form">
             <div class="form first">
@@ -43,7 +165,7 @@
                     <span class="title">Personal Details</span>
 
                     <div class="fields">
-                         <div class="input-field">
+                        <div class="input-field">
                             <label>School ID Number</label>
                             <input type="text" name="id_number" placeholder="Enter School ID number" required>
                         </div>
@@ -80,18 +202,17 @@
                 </div>
 
                 <div class="details ID">
-
                     <div class="fields">
-                    <div class="input-field">
+                        <div class="input-field">
                             <label>Program Graduated</label>
                             <select id="program_graduated" name="program_graduated" required>
-            <option value="" disabled selected>Select Course Here</option>
-            <option value="BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</option>
-            <option value="BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT">BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT</option>
-            <option value="BACHELOR OF SCIENCE IN HOSPITALITY MANAGMENT">BACHELOR OF SCIENCE IN HOSPITALITY MANAGMENT</option>
-            <option value="BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO">BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO</option>
-            <option value="BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION">BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION</option>
-          </select>
+                                <option value="" disabled selected>Select Course Here</option>
+                                <option value="BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</option>
+                                <option value="BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT">BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT</option>
+                                <option value="BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT">BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT</option>
+                                <option value="BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO">BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO</option>
+                                <option value="BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION">BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION</option>
+                            </select>
                         </div>
 
                         <div class="input-field">
@@ -106,7 +227,7 @@
                     </div>
 
                     <div class="buttons">
-                    <button type="button" class="backBtn" onclick="window.location.href='login.php'">
+                        <button type="button" class="backBtn" onclick="window.location.href='login.php'">
                             <i class="uil uil-navigator"></i>
                             <span class="btnText">Back</span>
                         </button>
@@ -115,8 +236,7 @@
                             <span class="btnText">Submit</span>
                             <i class="uil uil-navigator"></i>
                         </button>
-                       
-                    </div> 
+                    </div>
                 </div>
             </div>
         </form>
