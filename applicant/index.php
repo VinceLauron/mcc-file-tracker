@@ -1,44 +1,133 @@
-<?php
-session_start();
+<!DOCTYPE html>
+<html lang="en">
 
-// Enable error reporting for debugging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
 
-if (!isset($_SESSION['email'])) {
-    header('Location: login.php');
-    exit();
-}
+  <title>MCC FILE AND DOCUMENT TRACKER</title>
 
-// Database connection
-include 'db_connect.php';
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-?>
-
-<?php include 'sidebar.php'; ?>
-<?php include 'topbar.php'; ?>
-
-<center>
-    <div id="welcome-message">
-        <h1>Welcome, <?php echo htmlspecialchars($_SESSION['fullname']); ?>!</h1>
-        <p>You have successfully logged in</p>
-    </div>
-</center>
-
-<script>
-    function loadContent(page) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', page, true);
-        xhr.onload = function() {
-            if (this.status === 200) {
-                document.getElementById('main-content').innerHTML = this.responseText;
-                document.getElementById('welcome-message').style.display = 'none';
-            }
-        };
-        xhr.send();
+  <?php
+    session_start();
+    if(!isset($_SESSION['email'])) {
+      header('location:login.php');
+      exit();
     }
-</script>
+    include('./header.php'); 
+  ?>
+
+</head>
+<style>
+  body {
+    background: #80808045;
+  }
+</style>
+
+<body>
+  <?php include 'sidebar.php' ?>
+  <?php include 'topbar.php' ?>
+  
+  <div class="toast" id="alert_toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body text-white"></div>
+  </div>
+  
+  <main id="view-panel">
+    <?php 
+      $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+      include $page . '.php'; 
+    ?>
+  </main>
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <div class="modal fade" id="confirm_modal" role='dialog'>
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmation</h5>
+        </div>
+        <div class="modal-body">
+          <div id="delete_content"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id='confirm' onclick="">Continue</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="uni_modal" role='dialog'>
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"></h5>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id='submit' onclick="$('#uni_modal form').submit()">Save</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.start_load = function() {
+      $('body').prepend('<div id="preloader2"></div>');
+    }
+
+    window.end_load = function() {
+      $('#preloader2').fadeOut('fast', function() {
+        $(this).remove();
+      });
+    }
+
+    window.uni_modal = function(title = '', url = '') {
+      start_load();
+      $.ajax({
+        url: url,
+        error: function(err) {
+          console.log(err);
+          alert("An error occurred");
+        },
+        success: function(resp) {
+          if(resp) {
+            $('#uni_modal .modal-title').html(title);
+            $('#uni_modal .modal-body').html(resp);
+            $('#uni_modal').modal('show');
+            end_load();
+          }
+        }
+      });
+    }
+
+    window._conf = function(msg = '', func = '', params = []) {
+      $('#confirm_modal #confirm').attr('onclick', func + "(" + params.join(',') + ")");
+      $('#confirm_modal .modal-body').html(msg);
+      $('#confirm_modal').modal('show');
+    }
+
+    window.alert_toast = function(msg = 'TEST', bg = 'success') {
+      $('#alert_toast').removeClass('bg-success bg-danger bg-info bg-warning');
+
+      if(bg == 'success') $('#alert_toast').addClass('bg-success');
+      if(bg == 'danger') $('#alert_toast').addClass('bg-danger');
+      if(bg == 'info') $('#alert_toast').addClass('bg-info');
+      if(bg == 'warning') $('#alert_toast').addClass('bg-warning');
+      
+      $('#alert_toast .toast-body').html(msg);
+      $('#alert_toast').toast({delay: 3000}).toast('show');
+    }
+
+    $(document).ready(function() {
+      $('#preloader').fadeOut('fast', function() {
+        $(this).remove();
+      });
+    });
+  </script>
+</body>
+
+</html>
