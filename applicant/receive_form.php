@@ -11,7 +11,6 @@ if (!isset($_SESSION['email'])) {
 
 // Database connection
 include 'db_connect.php';
-
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -138,58 +137,6 @@ $stmt->bind_result($id, $id_number, $fullname, $contact, $course, $docu_type, $p
                 white-space: nowrap;
             }
         }
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-            padding-top: 60px;
-        }
-        .modal-content {
-            background-color: #fff;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover, .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .modal-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .modal-table th, .modal-table td {
-            border: none;
-            padding: 8px;
-            text-align: left;
-        }
-        .modal-table th {
-            width: 30%;
-            background: #f5f5f5;
-            font-weight: bold;
-        }
-        .modal-table td {
-            width: 70%;
-        }
     </style>
 </head>
 <body>
@@ -232,7 +179,7 @@ $stmt->bind_result($id, $id_number, $fullname, $contact, $course, $docu_type, $p
                     echo "<td data-label='Status' class='$status_class'>" . htmlspecialchars($status) . "</td>";
                     echo "<td data-label='Note'>" . htmlspecialchars($note) . "</td>";
                     echo "<td data-label='Actions'>
-                            <button class='btn btn-view' data-id='" . htmlspecialchars($id) . "' data-id-number='" . htmlspecialchars($id_number) . "' data-fullname='" . htmlspecialchars($fullname) . "' data-contact='" . htmlspecialchars($contact) . "' data-course='" . htmlspecialchars($course) . "' data-docu-type='" . htmlspecialchars($docu_type) . "' data-purpose='" . htmlspecialchars($purpose) . "' data-status='" . htmlspecialchars($status) . "' data-note='" . htmlspecialchars($note) . "'>View</button>
+                            <a href='view_request.php?id=" . htmlspecialchars($id) . "' class='btn btn-view'>View</a>
                             <a href='delete_request.php?id=" . htmlspecialchars($id) . "' class='btn btn-delete' onclick='return confirm(\"Are you sure you want to delete this request?\")'>Delete</a>
                           </td>";
                     echo "</tr>";
@@ -241,99 +188,6 @@ $stmt->bind_result($id, $id_number, $fullname, $contact, $course, $docu_type, $p
             </tbody>
         </table>
     </div>
-
-    <!-- The Modal -->
-    <div id="viewModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Request Details</h2>
-            <table class="modal-table">
-                <tr>
-                    <th>ID Number</th>
-                    <td id="modal-id-number"></td>
-                </tr>
-                <tr>
-                    <th>Full Name</th>
-                    <td id="modal-fullname"></td>
-                </tr>
-                <tr>
-                    <th>Contact</th>
-                    <td id="modal-contact"></td>
-                </tr>
-                <tr>
-                    <th>Course/Program</th>
-                    <td id="modal-course"></td>
-                </tr>
-                <tr>
-                    <th>Document Type</th>
-                    <td id="modal-docu-type"></td>
-                </tr>
-                <tr>
-                    <th>Purpose</th>
-                    <td id="modal-purpose"></td>
-                </tr>
-                <tr>
-                    <th>Status</th>
-                    <td id="modal-status"></td>
-                </tr>
-                <tr>
-                    <th>Note</th>
-                    <td id="modal-note"></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-    <script>
-        // Get the modal
-        var modal = document.getElementById("viewModal");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
-        // Get all view buttons
-        var viewButtons = document.querySelectorAll('.btn-view');
-
-        // Add click event to each view button
-        viewButtons.forEach(button => {
-            button.onclick = function() {
-                // Get data attributes
-                var idNumber = button.getAttribute('data-id-number');
-                var fullname = button.getAttribute('data-fullname');
-                var contact = button.getAttribute('data-contact');
-                var course = button.getAttribute('data-course');
-                var docuType = button.getAttribute('data-docu-type');
-                var purpose = button.getAttribute('data-purpose');
-                var status = button.getAttribute('data-status');
-                var note = button.getAttribute('data-note');
-
-                // Populate modal with data
-                document.getElementById('modal-id-number').innerText = idNumber;
-                document.getElementById('modal-fullname').innerText = fullname;
-                document.getElementById('modal-contact').innerText = contact;
-                document.getElementById('modal-course').innerText = course;
-                document.getElementById('modal-docu-type').innerText = docuType;
-                document.getElementById('modal-purpose').innerText = purpose;
-                document.getElementById('modal-status').innerText = status;
-                document.getElementById('modal-note').innerText = note;
-
-                // Display the modal
-                modal.style.display = "block";
-            }
-        });
-    </script>
 </body>
 </html>
 
