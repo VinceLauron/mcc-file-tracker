@@ -54,7 +54,6 @@ session_start();
     </style>
 </head>
 <body>
-    <?php include 'topbar.php'; ?>
     <div class="container">
         <h2>Home</h2>
         <img src="assets/img/Madridejos.jpg" alt="Description of Image">
