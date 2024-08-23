@@ -133,7 +133,7 @@ if ($result_all_requests) {
                         <td>
                             <div class="action-buttons">
                                 <button class="view-btn" data-toggle="modal" data-target="#viewModal" onclick="setModalData(<?php echo htmlspecialchars(json_encode($request)); ?>)">View</button>
-                                <button class="print-btn" data-toggle="modal" data-target="#printModal" onclick="setPrintData(<?php echo htmlspecialchars(json_encode($request)); ?>)">Print</button>
+                                <button class="print-btn" onclick="printRequest(<?php echo htmlspecialchars(json_encode($request)); ?>)">Print</button>
                             </div>
                         </td>
                     </tr>
@@ -205,27 +205,6 @@ if ($result_all_requests) {
   </div>
 </div>
 
-<!-- Print Modal -->
-<div class="modal fade" id="printModal" tabindex="-1" role="dialog" aria-labelledby="printModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="printModalLabel">Print Request</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- Dynamic content will be loaded here -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="printCurrentRequest()">Print</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
@@ -276,15 +255,17 @@ if ($result_all_requests) {
     }
 
     function getFilteredRows() {
-        const searchTerm = document.getElementById('search').value.toLowerCase();
-        return rows.filter(row => row.textContent.toLowerCase().includes(searchTerm));
+        const filter = document.getElementById('search').value.toLowerCase();
+        return rows.filter(row => {
+            const cells = Array.from(row.getElementsByTagName('td'));
+            return cells.some(cell => cell.textContent.toLowerCase().includes(filter));
+        });
     }
 
-    document.getElementById('search').addEventListener('keyup', function() {
-        updatePagination(getFilteredRows());
+    document.getElementById('search').addEventListener('input', function () {
+        const filteredRows = getFilteredRows();
+        updatePagination(filteredRows);
     });
-
-    displayPage(currentPage);
 
     function setModalData(request) {
         document.getElementById('view-id-number').textContent = request.id_number;
@@ -297,47 +278,85 @@ if ($result_all_requests) {
         document.getElementById('view-status').textContent = request.status;
     }
 
-    function setPrintData(request) {
-        const modalBody = document.querySelector('#printModal .modal-body');
-        modalBody.innerHTML = `
-            <div style="text-align: center;">
-                <h1>PRINT RECEIPT</h1>
-                <p>MADRIDEJOS COMMUNITY COLLEGE<p>
-                <p>Bunakan, Madridejos, Cebu<p>
-                <img src="img/mcc1.png" style="height: auto; width: 200px; float: right;">
-                <div style="clear: both;"></div>
-                <table class="table table-bordered" style="margin-top: 20px;">
-                    <tr>
-                        <th>ID Number</th>
-                        <td>${request.id_number}</td>
-                    </tr>
-                    <tr>
-                        <th>Full Name</th>
-                        <td>${request.fullname}</td>
-                    </tr>
-                    <tr>
-                        <th>Course</th>
-                        <td>${request.course}</td>
-                    </tr>
-                    <tr>
-                        <th>Document Type</th>
-                        <td>${request.docu_type}</td>
-                    </tr>
-                </table><br><br><br><br>
-                <p style="float: left;">___________________________<p>  <p style="float: right;">___________________________<p><br>
-                <p style="float: left;">Student Name<p>  <p style="float: right;">Registrar<p>
-            </div>
-        `;
-    }
+    function printRequest(request) {
+    let printWindow = window.open('', '_blank');
+    printWindow.document.write('<html><head><title>Print Request</title>');
+    printWindow.document.write('<style>');
+    printWindow.document.write('body { font-family: Arial, sans-serif; margin: 0; padding: 0; }');
+    printWindow.document.write('.invoice-box { max-width: 800px; margin: auto; padding: 30px; border: 1px solid #eee; box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); font-size: 16px; line-height: 24px; color: #555; }');
+    printWindow.document.write('.invoice-box table { width: 100%; line-height: inherit; text-align: left; }');
+    printWindow.document.write('.invoice-box table td { padding: 5px; vertical-align: top; }');
+    printWindow.document.write('.invoice-box table tr td:nth-child(2) { text-align: right; }');
+    printWindow.document.write('.invoice-box table tr.top table td { padding-bottom: 20px; }');
+    printWindow.document.write('.invoice-box table tr.top table td.title { font-size: 45px; line-height: 45px; color: #333; }');
+    printWindow.document.write('.invoice-box table tr.information table td { padding-bottom: 40px; }');
+    printWindow.document.write('.invoice-box table tr.heading td { background: #eee; border-bottom: 1px solid #ddd; font-weight: bold; }');
+    printWindow.document.write('.invoice-box table tr.details td { padding-bottom: 20px; }');
+    printWindow.document.write('.invoice-box table tr.item td { border-bottom: 1px solid #eee; }');
+    printWindow.document.write('.invoice-box table tr.item.last td { border-bottom: none; }');
+    printWindow.document.write('.invoice-box table tr.total td:nth-child(2) { border-top: 2px solid #eee; font-weight: bold; }');
+    printWindow.document.write('</style>');
+    printWindow.document.write('</head><body>');
 
-    function printCurrentRequest() {
-        const printContent = document.querySelector('#printModal .modal-body').innerHTML;
-        const newWin = window.open('', 'Print-Window');
-        newWin.document.open();
-        newWin.document.write('<html><head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"></head><body onload="window.print()">' + printContent + '</body></html>');
-        newWin.document.close();
-        setTimeout(function() {
-            newWin.close();
-        }, 10);
-    }
+    printWindow.document.write('<div class="invoice-box">');
+    printWindow.document.write('<table cellpadding="0" cellspacing="0">');
+    printWindow.document.write('<tr class="top">');
+    printWindow.document.write('<td colspan="2">');
+    printWindow.document.write('<table>');
+    printWindow.document.write('<tr>');
+    printWindow.document.write('<td class="title">');
+    printWindow.document.write('<img src="img/mcc1.png" style="width:100%; max-width:150px;">'); // Replace with your image URL
+    printWindow.document.write('</td>');
+    printWindow.document.write('<td>');
+    printWindow.document.write('Date: ' + request.date_created + '<br>');
+    printWindow.document.write('</td>');
+    printWindow.document.write('</tr>');
+    printWindow.document.write('</table>');
+    printWindow.document.write('</td>');
+    printWindow.document.write('</tr>');
+
+    printWindow.document.write('<tr class="information">');
+    printWindow.document.write('<td colspan="2">');
+    printWindow.document.write('<table>');
+    printWindow.document.write('<tr>');
+    printWindow.document.write('<td>');
+    printWindow.document.write('<strong>Full Name:</strong> ' + request.fullname + '<br>');
+    printWindow.document.write('<strong>ID Number:</strong> ' + request.id_number + '<br>');
+    printWindow.document.write('<strong>Contact:</strong> ' + request.contact + '<br>');
+    printWindow.document.write('</td>');
+    printWindow.document.write('</tr>');
+    printWindow.document.write('</table>');
+    printWindow.document.write('</td>');
+    printWindow.document.write('</tr>');
+
+    printWindow.document.write('<tr class="heading">');
+    printWindow.document.write('<td>Document Type</td>');
+    printWindow.document.write('<td>Details</td>');
+    printWindow.document.write('</tr>');
+
+    printWindow.document.write('<tr class="item">');
+    printWindow.document.write('<td>Course</td>');
+    printWindow.document.write('<td>' + request.course + '</td>');
+    printWindow.document.write('</tr>');
+
+    printWindow.document.write('<tr class="item">');
+    printWindow.document.write('<td>Document Type</td>');
+    printWindow.document.write('<td>' + request.docu_type + '</td>');
+    printWindow.document.write('</tr>');
+
+    printWindow.document.write('<tr class="item">');
+    printWindow.document.write('<td>Purpose</td>');
+    printWindow.document.write('<td>' + request.purpose + '</td>');
+    printWindow.document.write('</tr>');
+
+    printWindow.document.write('</table>');
+    printWindow.document.write('</div>');
+
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.print();
+}
+
+
+    displayPage(currentPage);
 </script>

@@ -7,15 +7,15 @@
   <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
 
   <title>MCC FILE AND DOCUMENT TRACKER</title>
- 	
+  
   <?php include('./header.php'); ?>
   <?php 
     session_start();
     if(isset($_SESSION['login_id']))
     header("location:indexs.php?page=home");
   ?>
-
 </head>
+
 <style>
   body {
     width: 100%;
@@ -61,7 +61,7 @@
   <main id="main" class="alert-info">
     <div id="login-right" class="container">
       <div class="w-100">
-     <center> <img src="img/mcc1.png" alt="Login Image" class="img-fluid" style="height: 200px;"></center>
+        <center><img src="img/mcc1.png" alt="Login Image" class="img-fluid" style="height: 200px;"></center>
         <h4 class="text-center" style="color:black;"><b>MADRIDEJOS COMMUNITY COLLEGE DOCUMENT TRACKER</b></h4>
         <br>
         <div class="card col-md-8 mx-auto">
@@ -75,9 +75,12 @@
                 <label for="password" class="control-label" style="color: black">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter Password" class="form-control">
               </div>
+              <div class="form-group">
+                <input type="checkbox" id="show-password"> <label for="show-password" style="color: black">Show Password</label>
+              </div>
               <center><button class="btn btn-primary btn-block">Login</button></center>
               <div class="text-center mt-3">
-                <a href="forgot-password.php" id="forgot-password-link">Forgot Password?</a>
+                <a href="forgot_password.php" id="forgot-password-link">Forgot Password?</a>
               </div>
             </form>
           </div>
@@ -90,7 +93,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $('#login-form').submit(function(e) {
-      e.preventDefault()
+      e.preventDefault();
       $('#login-form button').attr('disabled', true).html('Logging in...');
       if ($(this).find('.alert-danger').length > 0)
         $(this).find('.alert-danger').remove();
@@ -99,7 +102,7 @@
         method: 'POST',
         data: $(this).serialize(),
         error: err => {
-          console.log(err)
+          console.log(err);
           $('#login-form button').removeAttr('disabled').html('Login');
         },
         success: function(resp) {
@@ -110,8 +113,18 @@
             $('#login-form button').removeAttr('disabled').html('Login');
           }
         }
-      })
-    })
+      });
+    });
+
+    $('#show-password').click(function() {
+      var passwordField = $('#password');
+      var passwordFieldType = passwordField.attr('type');
+      if (passwordFieldType == 'password') {
+        passwordField.attr('type', 'text');
+      } else {
+        passwordField.attr('type', 'password');
+      }
+    });
   </script>
 </body>
 
