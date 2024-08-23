@@ -230,9 +230,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `password`, `code`, `status`, `type`) VALUES
-(1, 'Administrator', 'admin@admin.com', 'admin123', '', '', 1),
-(5, 'Vince Lauron', 'lauronvince13@gmail.com', 'vince123', '', '', 1);
+INSERT INTO `users` (`id`, `name`, `username`, `password`, `verification_code`, `is_verified`, `type`) VALUES
+(83, 'Administrator', 'lauronvincesimuelle@gmail.com', '7b7bc2512ee1fedcd76bdc68926d4f7b', '', 'Verified', 1),
+(84, 'vince lauron', 'anton@gmail.com', 'd8578edf8458ce06fbc5bb76a58c5ca4', '', 'Verified', 1);
 
 --
 -- Indexes for dumped tables
