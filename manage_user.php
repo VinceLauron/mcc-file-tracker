@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require 'applicant/phpmailer/vendor/autoload.php';
+require 'phpmailer/vendor/autoload.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $is_verified = 'Verified'; // Automatically set status to Verified
 
     // Database connection
-    include  ('db_connect.php');
+    include  'db_connect.php';
 
     // Check connection
     if ($conn->connect_error) {
