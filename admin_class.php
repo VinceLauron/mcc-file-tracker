@@ -81,18 +81,23 @@ class Action {
 
     function login() {
         extract($_POST);
-        $qry = $this->db->query("SELECT * FROM users where username = '".$username."' and password = '".$password."'");
+        $password = md5($password); // Hash the password using MD5
+        
+        // Query to check username and hashed password
+        $qry = $this->db->query("SELECT * FROM users WHERE username = '".$username."' AND password = '".$password."'");
+        
         if ($qry->num_rows > 0) {
+            // Set session variables excluding the password
             foreach ($qry->fetch_array() as $key => $value) {
                 if ($key != 'password' && !is_numeric($key))
                     $_SESSION['login_'.$key] = $value;
             }
-            return 1;
+            return 1; // Login successful
         } else {
-            return 2;
+            return 2; // Login failed
         }
     }
-
+    
     function logout() {
         session_destroy();
         foreach ($_SESSION as $key => $value) {
@@ -252,15 +257,21 @@ class Action {
 
     function save_user() {
         extract($_POST);
+
+        // Hash the password using MD5
+    $password = md5($password);
         $data = " name = '$name' ";
         $data .= ", username = '$username' ";
         $data .= ", password = '$password' ";
         $data .= ", type = '$type' ";
+        $data .= ", is_verified = 'Verified' "; // Automatically set to Verified
+    
         if (empty($id)) {
-            $save = $this->db->query("INSERT INTO users set ".$data);
+            $save = $this->db->query("INSERT INTO users SET ".$data);
         } else {
-            $save = $this->db->query("UPDATE users set ".$data." where id = ".$id);
+            $save = $this->db->query("UPDATE users SET ".$data." WHERE id = ".$id);
         }
+        
         if ($save) {
             return 1;
         }
