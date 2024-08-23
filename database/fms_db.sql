@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2024 at 03:06 PM
+-- Generation Time: Aug 23, 2024 at 08:34 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -52,8 +52,8 @@ CREATE TABLE `applicant` (
 
 INSERT INTO `applicant` (`id`, `verification_code`, `fullname`, `email`, `password`, `contact`, `address`, `sex`, `dob`, `occupation`, `id_number`, `year_graduated`, `school_graduated`, `program_graduated`, `admission`, `is_verified`) VALUES
 (88, '643654', 'Roxan Hilba', 'roxanhilba17@gmail.com', '', '09505501863', '', 'Female', '2000-06-28', '', '2020-1212', '2023', '', 'BSIT', '2020', 1),
-(89, '979722', 'vince lauron', 'lauronvince13@gmail.com', '', '09094513507', '', 'Male', '2002-12-30', '', '2021-1412', '2020-2021', '', 'BSIT', '2021', 1),
-(90, '662364', 'Bryan James Desuyo', 'bryanjamesdesuyo15@gmail.com', '', '09123767434', '', 'Male', '2003-05-15', '', '2021-1407', '2025', '', 'BSIT', '2021', 1);
+(90, '662364', 'Bryan James Desuyo', 'bryanjamesdesuyo15@gmail.com', '', '09123767434', '', 'Male', '2003-05-15', '', '2021-1407', '2025', '', 'BSIT', '2021', 1),
+(91, '472068', 'Mark John Servas Batasin-in', 'lauronvince13@gmail.com', '', '09094513507', '', 'Male', '2004-01-05', '', '2021-1412', '2025', '', 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY', '2021', 1);
 
 -- --------------------------------------------------------
 
@@ -166,8 +166,29 @@ INSERT INTO `notifications` (`id`, `user_email`, `message`, `status`, `date_crea
 (12, 'lauronvince13@gmail.com', 'New request submitted by Vince Lauron', '1', '2024-07-19 11:12:47'),
 (13, 'roxanhilba17@gmail.com', 'New request submitted by Vince Lauron', '1', '2024-07-20 02:48:22'),
 (14, 'roxanhilba17@gmail.com', 'New request submitted by Vince Lauron', '1', '2024-07-20 06:03:30'),
-(15, 'bryanjamesdesuyo15@gmail.com', 'New request submitted by Bryan James Desuyo', 'unread', '2024-07-20 12:46:17'),
-(16, 'roxanhilba17@gmail.com', 'New request submitted by Vince Lauron', 'unread', '2024-07-20 13:05:05');
+(15, 'bryanjamesdesuyo15@gmail.com', 'New request submitted by Bryan James Desuyo', '1', '2024-07-20 12:46:17'),
+(16, 'roxanhilba17@gmail.com', 'New request submitted by Vince Lauron', '1', '2024-07-20 13:05:05'),
+(17, 'roxanhilba17@gmail.com', 'New request submitted by Roxan Hlba', '1', '2024-07-21 07:22:03'),
+(18, 'roxanhilba17@gmail.com', 'New request submitted by Vince Lauron', '1', '2024-07-29 16:24:46'),
+(19, 'roxanhilba17@gmail.com', 'New request submitted by vince lauron simuelle', '1', '2024-07-30 06:20:12'),
+(20, 'roxanhilba17@gmail.com', 'New request submitted by Vince Lauron', '1', '2024-07-30 08:34:17'),
+(21, 'roxanhilba17@gmail.com', 'New request submitted by Joebert Bilbao', '1', '2024-07-30 09:48:13'),
+(22, 'roxanhilba17@gmail.com', 'New request submitted by Joebert Bilbao', '1', '2024-07-30 10:09:49'),
+(23, 'lauronvince13@gmail.com', 'New request submitted by Mark John Servas Batasin-in', '1', '2024-07-30 15:27:52'),
+(24, 'roxanhilba17@gmail.com', 'New request submitted by Roxan Hilba', '1', '2024-07-30 15:43:51'),
+(26, 'lauronvince13@gmail.com', 'New request submitted by Mark John Servas Batasin-in', '1', '2024-07-30 16:33:09'),
+(27, 'roxanhilba17@gmail.com', 'New request submitted by Roxan Hilba', '1', '2024-08-03 01:05:58'),
+(28, 'roxanhilba17@gmail.com', 'New request submitted by Vince Lauron', '1', '2024-08-08 01:58:57'),
+(29, 'roxanhilba17@gmail.com', 'New request submitted by vincelauron', '1', '2024-08-08 02:03:15'),
+(30, 'roxanhilba17@gmail.com', 'New request submitted by bantayan', '1', '2024-08-08 02:07:39'),
+(31, 'roxanhilba17@gmail.com', 'New request submitted by Roxan Hilba', '1', '2024-08-08 02:43:07'),
+(32, 'roxanhilba17@gmail.com', 'New request submitted by Roxan Hilba', '1', '2024-08-08 02:54:18'),
+(33, 'roxanhilba17@gmail.com', 'New request submitted by Roxan Hilba', '1', '2024-08-08 03:57:51'),
+(34, 'roxanhilba17@gmail.com', 'New request submitted by Roxan Hilba', '1', '2024-08-08 05:02:31'),
+(35, 'roxanhilba17@gmail.com', 'New request submitted by Roxan Hilba', '1', '2024-08-15 04:51:46'),
+(36, 'lauronvince13@gmail.com', 'Your request has been released. Note: ', '1', '2024-08-15 05:25:49'),
+(37, 'roxanhilba17@gmail.com', 'New request submitted by Roxan Hilba', '1', '2024-08-15 05:26:05'),
+(38, 'roxanhilba17@gmail.com', 'Your request has been onprocess. Note: adsda', '1', '2024-08-15 05:26:21');
 
 -- --------------------------------------------------------
 
@@ -202,13 +223,17 @@ INSERT INTO `request` (`id`, `email`, `fullname`, `course`, `contact`, `id_numbe
 (211, 'jbbilbao80@gmail.com', 'rolly recabar', 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY', '0945452582', '2021-1412', 'TRANSCRIPT OF RECORDS', 'for employment', 'please claim your document', '2024-07-13 14:38:00', 'released'),
 (212, 'jbbilbao80@gmail.com', 'Joebert Bilbao', 'BACHELOR OF SCIENCE IN HOSPITALITY MANAGMENT', '09866545643', '2021-1412', 'TRANSCRIPT OF RECORDS', 'adadas', '', '2024-07-13 15:26:00', 'released'),
 (213, 'jbbilbao80@gmail.com', 'Vince Lauron', 'BACHELOR OF SCIENCE IN HOSPITALITY MANAGMENT', '31414141423', '2021-1412', 'TRANSCRIPT OF RECORDS', 'for testing', '', '2024-07-13 17:54:00', 'released'),
-(214, 'jbbilbao80@gmail.com', 'Vince Lauron', 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY', '12345678909', '2021-1412', 'TRANSCRIPT OF RECORDS', 'afsfaasfsa', '', '2024-07-17 11:36:00', 'pending'),
+(214, 'jbbilbao80@gmail.com', 'Vince Lauron', 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY', '12345678909', '2021-1412', 'TRANSCRIPT OF RECORDS', 'afsfaasfsa', '', '2024-07-17 11:36:00', 'rejected'),
 (215, 'jbbilbao80@gmail.com', 'Joebert Bilbao', 'BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION', '0945452582', '2021-1412', 'TRANSCRIPT OF RECORDS', 'asadasda', 'lack of requirements', '2024-07-16 11:40:00', 'rejected'),
 (216, 'jbbilbao80@gmail.com', 'Joebert Bilbao', 'BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO', '0945452582', '2021-1412', 'TRANSCRIPT OF RECORDS', 'for testing', '', '2024-07-16 12:25:00', 'rejected'),
 (217, 'jbbilbao80@gmail.com', 'rolly recabar', 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY', '31414141423', '2021-1602', 'TRANSCRIPT OF RECORDS', 'testing', '', '2024-07-16 12:26:00', 'rejected'),
-(218, 'jbbilbao80@gmail.com', 'Joebert Bilbao', 'BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT', '09866545643', '2021-1412', 'TRANSCRIPT OF RECORDS', 'hahaha', '', '2024-07-16 12:27:00', 'pending'),
-(236, 'lauronvince13@gmail.com', 'Vince Lauron', 'BACHELOR OF SCIENCE IN HOSPITALITY MANAGMENT', '09094513507', '2021-1412', 'TRANSCRIPT OF RECORDS', 'dfsdf', '', '2024-07-19 19:12:00', 'rejected'),
-(240, 'bryanjamesdesuyo15@gmail.com', 'Bryan James Desuyo', 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY', '0945452582', '2021-1407', 'TRANSCRIPT OF RECORDS', 'for emplyoment', 'pwede na makuha', '2024-07-20 20:46:00', 'released');
+(218, 'jbbilbao80@gmail.com', 'Joebert Bilbao', 'BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT', '09866545643', '2021-1412', 'TRANSCRIPT OF RECORDS', 'hahaha', '', '2024-07-16 12:27:00', 'released'),
+(240, 'bryanjamesdesuyo15@gmail.com', 'Bryan James Desuyo', 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY', '0945452582', '2021-1407', 'TRANSCRIPT OF RECORDS', 'for emplyoment', 'pwede na makuha', '2024-07-20 20:46:00', 'released'),
+(248, 'lauronvince13@gmail.com', 'Mark John Servas Batasin-in', 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY', '09094513507', '2021-1412', 'TRANSCRIPT OF RECORDS', 'testonly', '', '2024-07-30 17:27:52', 'released'),
+(250, 'lauronvince13@gmail.com', 'Mark John Servas Batasin-in', 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY', '09094513507', '2021-1412', 'TRANSCRIPT OF RECORDS', 'est only', '', '2024-07-30 17:45:52', 'rejected'),
+(251, 'lauronvince13@gmail.com', 'Mark John Servas Batasin-in', 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY', '09094513507', '2021-1412', 'TRANSCRIPT OF RECORDS', 'sads', '', '2024-07-30 18:33:09', 'released'),
+(260, 'roxanhilba17@gmail.com', 'Roxan Hilba', 'BSIT', '09505501863', '2020-1212', 'TRANSCRIPT OF RECORDS', 'asdasd', '', '2024-08-15 06:51:46', 'released'),
+(261, 'roxanhilba17@gmail.com', 'Roxan Hilba', 'BSIT', '09505501863', '2020-1212', 'TRANSCRIPT OF RECORDS', 'adsa', 'adsda', '2024-08-15 07:26:05', 'onprocess');
 
 -- --------------------------------------------------------
 
@@ -232,8 +257,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `verification_code`, `is_verified`, `type`) VALUES
 (83, 'Administrator', 'lauronvincesimuelle@gmail.com', '7b7bc2512ee1fedcd76bdc68926d4f7b', '', 'Verified', 1),
-(84, 'vince lauron', 'anton@gmail.com', 'd8578edf8458ce06fbc5bb76a58c5ca4', '', 'Verified', 1)
-(85, 'vince', 'lauronvince13@gmail.com', 'admin123', '', 'Verified', 1),;
+(84, 'vince lauron', 'anton@gmail.com', 'd8578edf8458ce06fbc5bb76a58c5ca4', '', 'Verified', 1);
 
 --
 -- Indexes for dumped tables
@@ -289,7 +313,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `applicant`
 --
 ALTER TABLE `applicant`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `files`
@@ -313,19 +337,19 @@ ALTER TABLE `folders`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=242;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=262;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
