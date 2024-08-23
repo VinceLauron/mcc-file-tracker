@@ -1,10 +1,37 @@
-<?php 
-include('db_connect.php');
-if(isset($_GET['id'])){
-$user = $conn->query("SELECT * FROM users where id =".$_GET['id']);
-foreach($user->fetch_array() as $k =>$v){
-	$meta[$k] = $v;
-}
+<?php
+session_start();
+
+require 'phpmailer/vendor/autoload.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST['name'];
+    $username = $_POST['username'];
+    $password = md5($_POST['password']); // Hash the password using MD5
+    $is_verified = 'Verified'; // Automatically set status to Verified
+
+    // Database connection
+    include 'db_connect.php';
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Insert user data into the database
+    $stmt = $conn->prepare("INSERT INTO users (name, username, password, is_verified) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $name, $username, $password, $is_verified);
+
+    if ($stmt->execute()) {
+        // No need to send verification code, automatically verified
+        $_SESSION['username'] = $username;
+        header("Location: indexs.php?page=users"); // Redirect to dashboard or appropriate page
+        exit();
+    } else {
+        echo "Failed to store user data.";
+    }
+
+    $stmt->close();
+    $conn->close();
 }
 ?>
  <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
