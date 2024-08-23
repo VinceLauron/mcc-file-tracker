@@ -257,17 +257,21 @@ class Action {
 
     function save_user() {
         extract($_POST);
+
+        // Hash the password using MD5
+    $password = md5($password);
         $data = " name = '$name' ";
         $data .= ", username = '$username' ";
         $data .= ", password = '$password' ";
         $data .= ", type = '$type' ";
-        $data .= ", is_verified = 'Verified' ";
-
+        $data .= ", is_verified = 'Verified' "; // Automatically set to Verified
+    
         if (empty($id)) {
-            $save = $this->db->query("INSERT INTO users set ".$data);
+            $save = $this->db->query("INSERT INTO users SET ".$data);
         } else {
-            $save = $this->db->query("UPDATE users set ".$data." where id = ".$id);
+            $save = $this->db->query("UPDATE users SET ".$data." WHERE id = ".$id);
         }
+        
         if ($save) {
             return 1;
         }
