@@ -1,7 +1,11 @@
 <?php
 session_start();
 
-require 'phpmailer/vendor/autoload.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require 'applicant/phpmailer/vendor/autoload.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
@@ -10,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $is_verified = 'Verified'; // Automatically set status to Verified
 
     // Database connection
-    include 'db_connect.php';
+    include ('db_connect.php');
 
     // Check connection
     if ($conn->connect_error) {
@@ -19,6 +23,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Insert user data into the database
     $stmt = $conn->prepare("INSERT INTO users (name, username, password, is_verified) VALUES (?, ?, ?, ?)");
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
+    }
+
     $stmt->bind_param("ssss", $name, $username, $password, $is_verified);
 
     if ($stmt->execute()) {
@@ -27,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: indexs.php?page=users"); // Redirect to dashboard or appropriate page
         exit();
     } else {
-        echo "Failed to store user data.";
+        echo "Failed to store user data: " . $stmt->error;
     }
 
     $stmt->close();
@@ -46,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="email" name="username" id="username" class="form-control" required>
         </div>
         <div class="form-group">
-        <label for="password">Password</label>
+            <label for="password">Password</label>
             <input type="password" name="password" id="password" class="form-control" required>
             <input type="checkbox" id="showPassword" style="margin-top: 10px;"> Show Password
         </div>
@@ -69,21 +77,26 @@ document.getElementById('showPassword').addEventListener('change', function() {
         }
     });
 
-	$('#manage-user').submit(function(e){
-		e.preventDefault();
-		start_load();
-		$.ajax({
-			url:'ajax.php?action=save_user',
-			method:'POST',
-			data:$(this).serialize(),
-			success:function(resp){
-				if(resp ==1){
-					alert_toast("Data successfully saved",'success');
-					setTimeout(function(){
-						location.reload();
-					},1500);
-				}
-			}
-		});
-	});
+    $('#manage-user').submit(function(e){
+        e.preventDefault();
+        start_load();
+        $.ajax({
+            url:'ajax.php?action=save_user',
+            method:'POST',
+            data:$(this).serialize(),
+            success:function(resp){
+                if(resp ==1){
+                    alert_toast("Data successfully saved",'success');
+                    setTimeout(function(){
+                        location.reload();
+                    },1500);
+                } else {
+                    alert_toast("Failed to save data. Please try again.",'danger');
+                }
+            },
+            error:function(){
+                alert_toast("An error occurred while processing your request.",'danger');
+            }
+        });
+    });
 </script>
