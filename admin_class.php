@@ -256,24 +256,33 @@ class Action {
 
     function save_user() {
         extract($_POST);
-
+    
         // Hash the password using MD5
-    $password = md5($password);
+        $password = md5($password);
+    
+        // Prepare the data to be inserted or updated
         $data = " name = '$name' ";
         $data .= ", username = '$username' ";
         $data .= ", password = '$password' ";
         $data .= ", type = '$type' ";
         $data .= ", is_verified = 'Verified' "; // Automatically set to Verified
     
+        // Check if it's a new user or an update
         if (empty($id)) {
             $save = $this->db->query("INSERT INTO users SET ".$data);
         } else {
             $save = $this->db->query("UPDATE users SET ".$data." WHERE id = ".$id);
         }
-        
+    
+        // Check if the query was successful
         if ($save) {
             return 1;
+        } else {
+            // Log the error message
+            echo "Error: " . $this->db->error;
+            return 0;
         }
     }
+    
 }
 ?>

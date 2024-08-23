@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'db_connect.php';
 
 require 'phpmailer/vendor/autoload.php';
 
@@ -8,14 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = md5($_POST['password']); // Hash the password using MD5
     $is_verified = 'Verified'; // Automatically set status to Verified
-
-    // Database connection
-    include 'db_connect.php';
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
 
     // Insert user data into the database
     $stmt = $conn->prepare("INSERT INTO users (name, username, password, is_verified) VALUES (?, ?, ?, ?)");
