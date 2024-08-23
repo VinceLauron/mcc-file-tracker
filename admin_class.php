@@ -53,6 +53,56 @@ if (isset($_GET['action']) && $_GET['action'] == 'save_files') {
     exit;
 }
 
+
+if ($_GET['action'] == 'forgot_password') {
+    $username = $_POST['username'];
+    
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $token = bin2hex(random_bytes(50));
+        $stmt = $conn->prepare("UPDATE users SET reset_token = ?, reset_requested_at = NOW() WHERE username = ?");
+        $stmt->bind_param("ss", $token, $username);
+        $stmt->execute();
+
+        $reset_link = "http://yourdomain.com/reset_password.php?token=" . $token;
+        $subject = "Password Reset Request";
+        $message = "Click on the following link to reset your password: $reset_link";
+        $headers = "From: no-reply@yourdomain.com";
+        
+        if (mail($username, $subject, $message, $headers)) {
+            echo 1;
+        } else {
+            echo 0;
+        }
+    } else {
+        echo 0;
+    }
+}
+
+if ($_GET['action'] == 'reset_password') {
+    $token = $_POST['token'];
+    $new_password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE reset_token = ? AND reset_requested_at > NOW() - INTERVAL 1 HOUR");
+    $stmt->bind_param("s", $token);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $stmt = $conn->prepare("UPDATE users SET password = ?, reset_token = NULL WHERE reset_token = ?");
+        $stmt->bind_param("ss", $new_password, $token);
+        $stmt->execute();
+        echo 1;
+    } else {
+        echo 0;
+    }
+}
+
+
 function generateUniqueFileNumber($conn) {
     $file_number = sprintf("%'012d", mt_rand(0, 999999999999));
     $chk = $conn->query("SELECT * FROM files WHERE file_number = '$file_number'");
@@ -97,6 +147,7 @@ class Action {
             return 2; // Login failed
         }
     }
+    
 
     function logout() {
         session_destroy();
@@ -276,5 +327,6 @@ class Action {
             return 1;
         }
     }
+    
 }
 ?>
