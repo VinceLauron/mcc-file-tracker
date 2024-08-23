@@ -1,6 +1,12 @@
 <?php
 session_start();
-include 'db_connect.php';
+    // Database connection
+    include 'db_connect.php';
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
 require 'phpmailer/vendor/autoload.php';
 
@@ -29,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <div class="container-fluid">
-    <form action="indexs.php?page=users" id="manage-user" method="POST">
+    <form action="manage_user.php" id="manage-user" method="POST">
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" name="name" id="name" class="form-control" required>
