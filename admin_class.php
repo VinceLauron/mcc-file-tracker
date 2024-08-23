@@ -53,56 +53,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'save_files') {
     exit;
 }
 
-
-if ($_GET['action'] == 'forgot_password') {
-    $username = $_POST['username'];
-    
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows > 0) {
-        $token = bin2hex(random_bytes(50));
-        $stmt = $conn->prepare("UPDATE users SET reset_token = ?, reset_requested_at = NOW() WHERE username = ?");
-        $stmt->bind_param("ss", $token, $username);
-        $stmt->execute();
-
-        $reset_link = "http://yourdomain.com/reset_password.php?token=" . $token;
-        $subject = "Password Reset Request";
-        $message = "Click on the following link to reset your password: $reset_link";
-        $headers = "From: no-reply@yourdomain.com";
-        
-        if (mail($username, $subject, $message, $headers)) {
-            echo 1;
-        } else {
-            echo 0;
-        }
-    } else {
-        echo 0;
-    }
-}
-
-if ($_GET['action'] == 'reset_password') {
-    $token = $_POST['token'];
-    $new_password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-
-    $stmt = $conn->prepare("SELECT * FROM users WHERE reset_token = ? AND reset_requested_at > NOW() - INTERVAL 1 HOUR");
-    $stmt->bind_param("s", $token);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $stmt = $conn->prepare("UPDATE users SET password = ?, reset_token = NULL WHERE reset_token = ?");
-        $stmt->bind_param("ss", $new_password, $token);
-        $stmt->execute();
-        echo 1;
-    } else {
-        echo 0;
-    }
-}
-
-
 function generateUniqueFileNumber($conn) {
     $file_number = sprintf("%'012d", mt_rand(0, 999999999999));
     $chk = $conn->query("SELECT * FROM files WHERE file_number = '$file_number'");
@@ -131,23 +81,17 @@ class Action {
 
     function login() {
         extract($_POST);
-        $password = md5($password); // Hash the password using MD5
-        
-        // Query to check username and hashed password
-        $qry = $this->db->query("SELECT * FROM users WHERE username = '".$username."' AND password = '".$password."'");
-        
+        $qry = $this->db->query("SELECT * FROM users where username = '".$username."' and password = '".$password."'");
         if ($qry->num_rows > 0) {
-            // Set session variables excluding the password
             foreach ($qry->fetch_array() as $key => $value) {
                 if ($key != 'password' && !is_numeric($key))
                     $_SESSION['login_'.$key] = $value;
             }
-            return 1; // Login successful
+            return 1;
         } else {
-            return 2; // Login failed
+            return 2;
         }
     }
-    
 
     function logout() {
         session_destroy();
@@ -308,25 +252,18 @@ class Action {
 
     function save_user() {
         extract($_POST);
-
-        // Hash the password using MD5
-    $password = md5($password);
         $data = " name = '$name' ";
         $data .= ", username = '$username' ";
         $data .= ", password = '$password' ";
         $data .= ", type = '$type' ";
-        $data .= ", is_verified = 'Verified' "; // Automatically set to Verified
-    
         if (empty($id)) {
-            $save = $this->db->query("INSERT INTO users SET ".$data);
+            $save = $this->db->query("INSERT INTO users set ".$data);
         } else {
-            $save = $this->db->query("UPDATE users SET ".$data." WHERE id = ".$id);
+            $save = $this->db->query("UPDATE users set ".$data." where id = ".$id);
         }
-        
         if ($save) {
             return 1;
         }
     }
-    
 }
 ?>
