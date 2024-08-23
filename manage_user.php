@@ -61,22 +61,4 @@ document.getElementById('showPassword').addEventListener('change', function() {
             passwordField.type = 'password';
         }
     });
-
-	$('#manage-user').submit(function(e){
-		e.preventDefault();
-		start_load();
-		$.ajax({
-			url:'ajax.php?action=save_user',
-			method:'POST',
-			data:$(this).serialize(),
-			success:function(resp){
-				if(resp ==1){
-					alert_toast("Data successfully saved",'success');
-					setTimeout(function(){
-						location.reload();
-					},1500);
-				}
-			}
-		});
-	});
 </script>
