@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <div class="container-fluid">
-    <form action="manage_user.php" id="manage-user" method="POST">
+    <form action="indexs.php?page=users" id="manage-user" method="POST">
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" name="name" id="name" class="form-control" required>
