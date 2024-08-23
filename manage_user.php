@@ -1,79 +1,53 @@
-<?php
-session_start();
-
-require 'phpmailer/vendor/autoload.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['name'];
-    $username = $_POST['username'];
-    $password = md5($_POST['password']); // Hash the password using MD5
-    $is_verified = 'Verified'; // Automatically set status to Verified
-
-    // Database connection
-    include 'db_connect.php';
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Insert user data into the database
-    $stmt = $conn->prepare("INSERT INTO users (name, username, password, is_verified) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $name, $username, $password, $is_verified);
-
-    if ($stmt->execute()) {
-        // No need to send verification code, automatically verified
-        $_SESSION['username'] = $username;
-        header("Location: indexs.php?page=users"); // Redirect to dashboard or appropriate page
-        exit();
-    } else {
-        echo "Failed to store user data.";
-    }
-
-    $stmt->close();
-    $conn->close();
+<?php 
+include('db_connect.php');
+if(isset($_GET['id'])){
+$user = $conn->query("SELECT * FROM users where id =".$_GET['id']);
+foreach($user->fetch_array() as $k =>$v){
+	$meta[$k] = $v;
+}
 }
 ?>
-
+ <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
 <div class="container-fluid">
-    <form action="manage_user.php" id="manage-user" method="POST">
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="username">Email (Username)</label>
-            <input type="email" name="username" id="username" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="type">User Type</label>
-            <select name="type" id="type" class="custom-select">
-                <option value="1">Admin</option>
-            </select>
-        </div>
-    </form>
+	
+	<form action="" id="manage-user">
+		<input type="hidden" name="id" value="<?php echo isset($meta['id']) ? $meta['id']: '' ?>">
+		<div class="form-group">
+			<label for="name">Name</label>
+			<input type="text" name="name" id="name" class="form-control" value="<?php echo isset($meta['name']) ? $meta['name']: '' ?>" required>
+		</div>
+		<div class="form-group">
+			<label for="username">Username</label>
+			<input type="text" name="username" id="username" class="form-control" value="<?php echo isset($meta['username']) ? $meta['username']: '' ?>" required>
+		</div>
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input type="password" name="password" id="password" class="form-control" value="<?php echo isset($meta['password']) ? $meta['id']: '' ?>" required>
+		</div>
+		<div class="form-group">
+			<label for="type">User Type</label>
+			<select name="type" id="type" class="custom-select">
+				<option value="1" <?php echo isset($meta['type']) && $meta['type'] == 1 ? 'selected': '' ?>>Admin</option>
+			</select>
+		</div>
+	</form>
 </div>
-
 <script>
 	$('#manage-user').submit(function(e){
 		e.preventDefault();
-		start_load();
+		start_load()
 		$.ajax({
 			url:'ajax.php?action=save_user',
 			method:'POST',
 			data:$(this).serialize(),
 			success:function(resp){
 				if(resp ==1){
-					alert_toast("Data successfully saved",'success');
+					alert_toast("Data successfully saved",'success')
 					setTimeout(function(){
-						location.reload();
-					},1500);
+						location.reload()
+					},1500)
 				}
 			}
-		});
-	});
+		})
+	})
 </script>
