@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $is_verified = 'Verified'; // Automatically set status to Verified
 
     // Database connection
-    include  'db_connect.php';
+    include 'db_connect.php';
 
     // Check connection
     if ($conn->connect_error) {
