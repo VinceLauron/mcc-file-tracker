@@ -265,7 +265,7 @@ class Action {
         $data .= ", username = '$username' ";
         $data .= ", password = '$password' ";
         $data .= ", type = '$type' ";
-        $data .= ", is_verified = 'Verified' "; // Automatically set to Verified
+        $data .= ", status = 'Verified' "; // Automatically set to Verified
     
         // Check if it's a new user or an update
         if (empty($id)) {
