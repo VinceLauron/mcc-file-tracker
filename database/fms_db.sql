@@ -256,7 +256,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `verification_code`, `is_verified`, `type`) VALUES
-(83, 'Administrator', 'lauronvincesimuelle@gmail.com', '7b7bc2512ee1fedcd76bdc68926d4f7b', '', 'Verified', 1),
+(83, 'Administrator', 'lauronvincesimuelle@gmail.com', 'Admin12345', '', 'Verified', 1),
 (84, 'vince lauron', 'anton@gmail.com', 'd8578edf8458ce06fbc5bb76a58c5ca4', '', 'Verified', 1);
 
 --
