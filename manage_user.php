@@ -6,7 +6,7 @@ require 'phpmailer/vendor/autoload.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $username = $_POST['username'];
-    $password = md5($_POST['password']); // Hash the password using MD5
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password securely
     $is_verified = 'Verified'; // Automatically set status to Verified
 
     // Database connection
@@ -34,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
-
 <div class="container-fluid">
     <form action="manage_user.php" id="manage-user" method="POST">
         <div class="form-group">
@@ -46,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="email" name="username" id="username" class="form-control" required>
         </div>
         <div class="form-group">
-        <label for="password">Password</label>
+            <label for="password">Password</label>
             <input type="password" name="password" id="password" class="form-control" required>
             <input type="checkbox" id="showPassword" style="margin-top: 10px;"> Show Password
         </div>
@@ -56,16 +55,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="1">Admin</option>
             </select>
         </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 
 <script>
 document.getElementById('showPassword').addEventListener('change', function() {
-        var passwordField = document.getElementById('password');
-        if (this.checked) {
-            passwordField.type = 'text';
-        } else {
-            passwordField.type = 'password';
-        }
-    });
+    var passwordField = document.getElementById('password');
+    if (this.checked) {
+        passwordField.type = 'text';
+    } else {
+        passwordField.type = 'password';
+    }
+});
 </script>
