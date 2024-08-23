@@ -22,7 +22,8 @@ foreach($user->fetch_array() as $k =>$v){
 		</div>
 		<div class="form-group">
 			<label for="password">Password</label>
-			<input type="password" style="margin-top: 10px;" name="password" id="password" class="form-control" value="<?php echo isset($meta['password']) ? $meta['id']: '' ?>" required>Show Password
+			<input type="password"  name="password" id="password" class="form-control" value="<?php echo isset($meta['password']) ? $meta['id']: '' ?>" required>
+			<input type="checkbox" id="showPassword" style="margin-top: 10px;"> Show Password
 		</div>
 		<div class="form-group">
 			<label for="type">User Type</label>
