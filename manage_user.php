@@ -1,9 +1,13 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 require 'phpmailer/vendor/autoload.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    ob_start(); // Start output buffering
     $name = $_POST['name'];
     $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password securely
@@ -12,19 +16,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Database connection
     include 'db_connect.php';
 
-    // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Insert user data into the database
     $stmt = $conn->prepare("INSERT INTO users (name, username, password, is_verified) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $name, $username, $password, $is_verified);
 
     if ($stmt->execute()) {
-        // No need to send verification code, automatically verified
         $_SESSION['username'] = $username;
-        header("Location: indexs.php?page=users"); // Redirect to dashboard or appropriate page
+        header("Location: indexs.php?page=users");
         exit();
     } else {
         echo "Failed to store user data.";
@@ -32,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->close();
     $conn->close();
+    ob_end_flush(); // End output buffering and send output
 }
 ?>
 <div class="container-fluid">
