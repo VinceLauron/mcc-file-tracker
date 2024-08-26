@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $code = $_POST['code'];
+    $code = trim($_POST['code']); // Trim the code to remove any whitespace
     $password = md5($_POST['password']); // Hash the new password
 
     // Database connection
@@ -55,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
