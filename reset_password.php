@@ -6,37 +6,37 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $verificaton_code = $_POST['verificaton_code'];
+    $verification_code = $_POST['verification_code'];
     $password = md5($_POST['password']); // Hash the new password
 
     // Database connection
     include 'db_connect.php';
 
     // Validate the token
-    $stmt = $conn->prepare("SELECT id FROM users WHERE verificaton_code = ?");
+    $stmt = $conn->prepare("SELECT id FROM users WHERE verification_code = ?");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
 
-    $stmt->bind_param("s", $verificaton_code);
+    $stmt->bind_param("s", $verification_code);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
         // Update the password and reset the token
-        $update_stmt = $conn->prepare("UPDATE users SET password = ?, verificaton_code = NULL WHERE verificaton_code = ?");
+        $update_stmt = $conn->prepare("UPDATE users SET password = ?, verification_code = NULL WHERE verification_code = ?");
         if ($update_stmt === false) {
             die('Prepare failed: ' . htmlspecialchars($conn->error));
         }
 
-        $update_stmt->bind_param("ss", $password, $verificaton_code);
+        $update_stmt->bind_param("ss", $password, $verification_code);
         if ($update_stmt->execute()) {
             $message = "Password has been reset successfully.";
             $redirect = "login.php"; // Redirect to login page
             $status = "success";
         } else {
             $message = "Failed to reset password: " . htmlspecialchars($update_stmt->error);
-            $redirect = "reset_password.php?verificaton_code=" . urlencode($verificaton_code);
+            $redirect = "reset_password.php?verification_code=" . urlencode($verification_code);
             $status = "error";
         }
 
@@ -71,9 +71,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form id="resetPasswordForm" action="reset_password.php" method="POST">
             <?php
             // Retrieve reset_token from the URL
-            $verificaton_code = isset($_GET['verificaton_code']) ? htmlspecialchars($_GET['verificaton_code']) : '';
+            $verification_code = isset($_GET['verification_code']) ? htmlspecialchars($_GET['verification_code']) : '';
             ?>
-            <input type="hidden" name="verificaton_code" value="<?php echo $verificaton_code; ?>">
+            <input type="hidden" name="verification_code" value="<?php echo $verification_code; ?>">
             <div class="form-group">
                 <label for="password">New Password</label>
                 <input type="password" name="password" id="password" class="form-control" required>
