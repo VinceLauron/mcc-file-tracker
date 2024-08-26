@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2024 at 08:34 AM
+-- Generation Time: Aug 26, 2024 at 03:54 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -248,16 +248,18 @@ CREATE TABLE `users` (
   `password` varchar(200) NOT NULL,
   `verification_code` varchar(50) NOT NULL,
   `is_verified` varchar(100) NOT NULL,
-  `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=admin'
+  `type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=admin',
+  `reset_token` varchar(100) DEFAULT NULL,
+  `reset_token_expiry` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `password`, `verification_code`, `is_verified`, `type`, `reset_token`) VALUES
-(83, 'Administrator', 'lauronvincesimuelle@gmail.com', '7b7bc2512ee1fedcd76bdc68926d4f7b', '', 'Verified', 1),
-(84, 'vince lauron', 'anton@gmail.com', 'd8578edf8458ce06fbc5bb76a58c5ca4', '', 'Verified', 1);
+INSERT INTO `users` (`id`, `name`, `username`, `password`, `verification_code`, `is_verified`, `type`, `reset_token`, `reset_token_expiry`) VALUES
+(83, 'Administrator', 'lauronvincesimuelle@gmail.com', '7b7bc2512ee1fedcd76bdc68926d4f7b', '', 'Verified', 1, '75db0be9ece3e56430c0a43e8ca11b9110eb2e6f4b27947af81667ee4ad86901ace7e09665fb942f2424af7fb207265280e0', '2024-08-24 09:18:44'),
+(93, 'Vince Lauron', 'lauronvince13@gmail.com', '749f63feadca546a266c3321852a3998', '', 'Verified', 1, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -349,7 +351,7 @@ ALTER TABLE `request`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
