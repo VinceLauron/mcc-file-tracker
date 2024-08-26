@@ -6,37 +6,37 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $code = trim($_POST['code']); // Trim the code to remove any whitespace
+    $reset_token = trim($_POST['reset_token']); // Trim the code to remove any whitespace
     $password = md5($_POST['password']); // Hash the new password
 
     // Database connection
     include 'db_connect.php';
 
     // Validate the token
-    $stmt = $conn->prepare("SELECT id FROM users WHERE code = ?");
+    $stmt = $conn->prepare("SELECT id FROM users WHERE reset_token = ?");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
 
-    $stmt->bind_param("s", $code);
+    $stmt->bind_param("s", $reset_token);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
         // Update the password and reset the token
-        $update_stmt = $conn->prepare("UPDATE users SET password = ?, code = NULL WHERE code = ?");
+        $update_stmt = $conn->prepare("UPDATE users SET password = ?, reset_token = NULL WHERE reset_token = ?");
         if ($update_stmt === false) {
             die('Prepare failed: ' . htmlspecialchars($conn->error));
         }
 
-        $update_stmt->bind_param("ss", $password, $code);
+        $update_stmt->bind_param("ss", $password, $reset_token);
         if ($update_stmt->execute()) {
             $message = "Password has been reset successfully.";
             $redirect = "login.php"; // Redirect to login page
             $status = "success";
         } else {
             $message = "Failed to reset password: " . htmlspecialchars($update_stmt->error);
-            $redirect = "reset_password.php?code=" . urlencode($code);
+            $redirect = "reset_password.php?reset_token=" . urlencode($reset_token);
             $status = "error";
         }
 
@@ -73,9 +73,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form id="resetPasswordForm" action="reset_password.php" method="POST">
             <?php
             // Retrieve reset_token from the URL
-            $code = isset($_GET['code']) ? htmlspecialchars($_GET['code']) : '';
+            $reset_token = isset($_GET['reset_token']) ? htmlspecialchars($_GET['reset_token']) : '';
             ?>
-            <input type="hidden" name="code" value="<?php echo $code; ?>">
+            <input type="hidden" name="reset_token" value="<?php echo $reset_token; ?>">
             <div class="form-group">
                 <label for="password">New Password</label>
                 <input type="password" name="password" id="password" class="form-control" required>
