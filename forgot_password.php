@@ -22,18 +22,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->num_rows > 0) {
         // Generate a unique token
-        $reset_token = bin2hex(random_bytes(50));
+        $verificaton_code = bin2hex(random_bytes(50));
 
         // Store the token in the database
-        $update_stmt = $conn->prepare("UPDATE users SET reset_token = ? WHERE username = ?");
+        $update_stmt = $conn->prepare("UPDATE users SET verificaton_code = ? WHERE username = ?");
         if ($update_stmt === false) {
             die('Prepare failed: ' . htmlspecialchars($conn->error));
         }
-        $update_stmt->bind_param("ss", $reset_token, $username);
+        $update_stmt->bind_param("ss", $verificaton_code, $username);
         $update_stmt->execute();
 
         // Construct the reset link with the token as a parameter
-        $resetLink = "http://mccdocumenttracker.com/reset_password.php?reset_token=" . urlencode($reset_token);
+        $resetLink = "http://mccdocumenttracker.com/reset_password.php?verificaton_code=" . urlencode($verificaton_code);
 
         // Set up PHPMailer and send the email
         $mail = new PHPMailer\PHPMailer\PHPMailer();
@@ -82,6 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
 </head>
 <body>
+    <center><h1>FORGOT PASSWORD</h1></center>
 <div class="container-fluid">
     <?php if (isset($message)) echo $message; ?>
     <form action="forgot_password.php" method="POST">
