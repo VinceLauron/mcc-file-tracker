@@ -31,32 +31,90 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $update_stmt->bind_param("ss", $password, $code);
         if ($update_stmt->execute()) {
-            echo "Password has been reset successfully.";
+            $message = "Password has been reset successfully.";
+            $redirect = "login.php"; // Redirect to login page
+            $status = "success";
         } else {
-            echo "Failed to reset password: " . htmlspecialchars($update_stmt->error);
+            $message = "Failed to reset password: " . htmlspecialchars($update_stmt->error);
+            $redirect = "reset_password.php?code=" . urlencode($code);
+            $status = "error";
         }
 
         $update_stmt->close();
     } else {
-        echo "Invalid reset token.";
+        $message = "Invalid reset token.";
+        $redirect = "reset_password.php";
+        $status = "error";
     }
 
     $stmt->close();
     $conn->close();
+
+    // Return JSON response for SweetAlert to process
+    echo json_encode(['message' => $message, 'redirect' => $redirect, 'status' => $status]);
+    exit();
 }
 ?>
 
-<div class="container-fluid">
-    <form action="reset_password.php" method="POST">
-        <?php
-        // Retrieve reset_token from the URL
-        $code = isset($_GET['code']) ? htmlspecialchars($_GET['code']) : '';
-        ?>
-        <input type="hidden" name="code" value="<?php echo $code; ?>">
-        <div class="form-group">
-            <label for="password">New Password</label>
-            <input type="password" name="password" id="password" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Reset Password</button>
-    </form>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <link rel="stylesheet" href="assets/css/reset_password.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
+</head>
+<body>
+    <div class="container-fluid">
+        <center><h1>RESET PASSWORD</h1></center>
+        <form id="resetPasswordForm" action="reset_password.php" method="POST">
+            <?php
+            // Retrieve reset_token from the URL
+            $code = isset($_GET['code']) ? htmlspecialchars($_GET['code']) : '';
+            ?>
+            <input type="hidden" name="code" value="<?php echo $code; ?>">
+            <div class="form-group">
+                <label for="password">New Password</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Reset Password</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('resetPasswordForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            var formData = new FormData(this);
+
+            fetch('reset_password.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                Swal.fire({
+                    icon: data.status,
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    if (data.status === 'success') {
+                        window.location.href = data.redirect;
+                    }
+                });
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'An error occurred',
+                    text: 'Please try again later.',
+                    showConfirmButton: true
+                });
+            });
+        });
+    </script>
+</body>
+</html>
