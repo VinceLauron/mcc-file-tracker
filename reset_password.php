@@ -68,6 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container-fluid">
+        <center><h1>RESET PASSWORD</h1></center>
         <form id="resetPasswordForm" action="reset_password.php" method="POST">
             <?php
             // Retrieve reset_token from the URL
