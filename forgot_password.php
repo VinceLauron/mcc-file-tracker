@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include 'db_connect.php';
 
     // Check if the user exists and is verified
-    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? AND is_verified = 'Verified'");
+    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? AND status = 'Verified'");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $update_stmt->execute();
 
         // Construct the reset link with the token as a parameter
-        $resetLink = "http://localhost/FinalFirstQuiz/reset_password.php?reset_token=" . urlencode($reset_token);
+        $resetLink = "http://mccdocumenttracker.com/reset_password.php?reset_token=" . urlencode($reset_token);
 
         // Set up PHPMailer and send the email
         $mail = new PHPMailer\PHPMailer\PHPMailer();
