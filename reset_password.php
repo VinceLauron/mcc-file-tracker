@@ -13,18 +13,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include 'db_connect.php';
 
     // Validate the token
-        $stmt = $conn->prepare("SELECT id FROM users WHERE code = ?");
-        if ($stmt === false) {
-            die('Prepare failed: ' . htmlspecialchars($conn->error));
-        }
+    $stmt = $conn->prepare("SELECT id FROM users WHERE code = ?");
+    if ($stmt === false) {
+        die('Prepare failed: ' . htmlspecialchars($conn->error));
+    }
 
-        $stmt->bind_param("s", $code);
-        $stmt->execute();
-        $stmt->store_result();
-
-        // Debugging - print out the token
-        echo "Token provided: " . htmlspecialchars($code);
-        echo "Rows found: " . $stmt->num_rows;
+    $stmt->bind_param("s", $code);
+    $stmt->execute();
+    $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
         // Update the password and reset the token
