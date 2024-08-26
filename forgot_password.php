@@ -22,18 +22,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->num_rows > 0) {
         // Generate a unique token
-        $verification_code = bin2hex(random_bytes(50));
+        $code = bin2hex(random_bytes(50));
 
         // Store the token in the database
-        $update_stmt = $conn->prepare("UPDATE users SET verification_code = ? WHERE username = ?");
+        $update_stmt = $conn->prepare("UPDATE users SET code = ? WHERE username = ?");
         if ($update_stmt === false) {
             die('Prepare failed: ' . htmlspecialchars($conn->error));
         }
-        $update_stmt->bind_param("ss", $verification_code, $username);
+        $update_stmt->bind_param("ss", $code, $username);
         $update_stmt->execute();
 
         // Construct the reset link with the token as a parameter
-        $resetLink = "http://mccdocumenttracker.com/reset_password.php?verification_code=" . urlencode($verification_code);
+        $resetLink = "http://mccdocumenttracker.com/reset_password.php?code=" . urlencode($code);
 
         // Set up PHPMailer and send the email
         $mail = new PHPMailer\PHPMailer\PHPMailer();
