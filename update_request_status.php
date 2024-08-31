@@ -45,6 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Close the statement
         $stmt->close();
 
+        // Add a notification to the database
+        $notification_message = "Your request status has been updated to $status.";
+        $stmt = $conn->prepare("INSERT INTO notifications (user_email, message, status, date_created) VALUES (?, ?, 'unread', NOW())");
+        $stmt->bind_param('ss', $email, $notification_message);
+        $stmt->execute();
+        $stmt->close();
+
         // Send an email to the user with the note
         $subject = "Request Status Update";
         $message = "Your request has been " . $status . ".\n\nNote: " . $note;
