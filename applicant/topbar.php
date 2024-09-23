@@ -19,7 +19,7 @@ if (!isset($_SESSION['email'])) {
             position: fixed;
             width: 100%;
             height: 60px;
-            background-color: #2a2f5b;
+            background-color: #2568fb;
             color: white;
             display: flex;
             justify-content: space-between; /* Align items on both ends */
@@ -202,7 +202,7 @@ if (!isset($_SESSION['email'])) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Proceed with logout
-                    window.location.href = event.target.href;
+                    window.location.href = '../index.php';
                 }
             });
         }
