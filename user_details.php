@@ -11,13 +11,24 @@
             background: white;
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            overflow-x: auto;
         }
         h2 {
             margin-bottom: 20px;
             color: #343a40;
+            text-align: center;
         }
         table {
             margin-top: 10px;
+            width: 100%;
+            table-layout: auto;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
         }
         th {
             background-color: #f2f2f2;
@@ -34,11 +45,14 @@
             font-size: 1.2em;
             color: #6c757d;
         }
+        td {
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2 class="text-center">Registered Users</h2>
+        <h2>Registered Users</h2>
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
