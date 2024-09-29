@@ -58,8 +58,8 @@ $result = $conn->query($sql);
             text-align: left;
         }
         th {
-            background-color: #2a2f5b;
-            color: white;
+            background-color: #f2f2f2;
+            color: black;
         }
         .btn {
             padding: 8px 16px;

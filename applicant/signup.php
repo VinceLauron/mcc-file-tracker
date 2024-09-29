@@ -1,3 +1,8 @@
+<?php
+// Check if the query parameters for School ID and Full Name are set
+$id_number = isset($_GET['id_number']) ? $_GET['id_number'] : '';
+$fullname = isset($_GET['fullname']) ? $_GET['fullname'] : '';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -165,13 +170,15 @@
                     <span class="title">Personal Details</span>
 
                     <div class="fields">
-                        <div class="input-field">
+                    <div class="input-field">
                             <label>School ID Number</label>
-                            <input type="text" name="id_number" placeholder="Enter School ID number" required>
+                            <!-- Auto-fill the School ID Number, and make it read-only -->
+                            <input type="text" name="id_number" placeholder="Enter School ID number" value="<?php echo htmlspecialchars($id_number); ?>" readonly>
                         </div>
                         <div class="input-field">
                             <label>Full Name</label>
-                            <input type="text" name="fullname" placeholder="Enter your name" required>
+                            <!-- Auto-fill the Full Name, and make it read-only -->
+                            <input type="text" name="fullname" placeholder="Enter your name" value="<?php echo htmlspecialchars($fullname); ?>" readonly>
                         </div>
 
                         <div class="input-field">
@@ -227,7 +234,7 @@
                     </div>
 
                     <div class="buttons">
-                        <button type="button" class="backBtn" onclick="window.location.href='login.php'">
+                        <button type="button" class="backBtn" onclick="window.location.href='login_transfer.php'">
                             <i class="uil uil-navigator"></i>
                             <span class="btnText">Back</span>
                         </button>

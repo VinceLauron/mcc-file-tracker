@@ -32,6 +32,67 @@
   <!-- responsive style -->
   <link href="radiance/css/responsive.css" rel="stylesheet" />
 <style>
+ /* Make the header section sticky on scroll */
+.header_section {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: darkblue;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+}
+
+/* Style for the alumni link */
+.alumni-link {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column; /* Column layout to stack image and text */
+  align-items: center; /* Center the text below the image */
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 10px; /* Soft rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  width: 80px; /* Adjust width as necessary */
+}
+
+.alumni-link:hover {
+  background-color: #007bff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Make the alumni image circular with border */
+.alumni-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #007bff;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.alumni-link:hover .alumni-img {
+  transform: scale(1.1);
+}
+
+/* Alumni text below the image */
+.alumni-text {
+  font-size: 14px;
+  font-weight: bold;
+  color: #007bff;
+  margin-top: 8px; /* Adds space between image and text */
+  text-align: center; /* Center the text */
+  transition: color 0.3s ease;
+}
+
+.alumni-link:hover .alumni-text {
+  color: white;
+}
+
 </style>
 </head>
 
@@ -46,37 +107,44 @@
 
     <!-- header section strats -->
     <header class="header_section">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="index.php">
-            <span>
-              MCC DOCUMENT TRACKER
-            </span>
-             
-          </a>
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg custom_nav-container">
+      <a class="navbar-brand" href="index.php">
+        <span>MCC DOCUMENT TRACKER</span>
+      </a>
 
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class=""> </span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav  ">
-              <li class="nav-item active">
-                <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item" hidden>
-                <a class="nav-link" href="login.php"> <i class="fa fa-user" aria-hidden="true"></i> Login</a>
-              </li>
-              <form class="form-inline">
-                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-              </form>
-            </ul>
-          </div>
-        </nav>
+      <!-- Alumni tracker image link with text below -->
+      <div class="alumni-link">
+        <a href="https://mccalumnitracker.com" target="_blank">
+          <img src="img/cap.png" alt="Alumni Tracker" class="alumni-img">
+        </a>
+        <a href="https://mccalumnitracker.com" class="alumni-text" target="_blank">Alumni Tracker</a>
       </div>
-    </header>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item" hidden>
+            <a class="nav-link" href="login.php"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
+          </li>
+          <form class="form-inline">
+            <button class="btn my-2 my-sm-0 nav_search-btn" type="submit">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+          </form>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
     <!-- end header section -->
      
     <!-- slider section -->
@@ -97,7 +165,7 @@
                     </p>
                     <div class="btn-box">
                       <a href="applicant/login.php" class="btn1">
-                        SIGN UP HERE AS AN APPLICANT
+                      REQUEST DOCUMENT
                       </a>
                     </div>
                   </div>
@@ -124,7 +192,7 @@
                     </p>
                     <div class="btn-box">
                       <a href="applicant/login.php" class="btn1">
-                        SIGN UP HERE AS AN APPLICANT
+                      REQUEST DOCUMENT
                       </a>
                     </div>
                   </div>
@@ -151,7 +219,7 @@
                     </p>
                     <div class="btn-box">
                       <a href="applicant/login.php" class="btn1">
-                        SIGN UP HERE AS AN APPLICANT
+                      REQUEST DOCUMENT
                       </a>
                     </div>
                   </div>
@@ -356,7 +424,7 @@
                 Login
               </a>
               <a class="" href="applicant/login.php">
-                SIgn In as Applicant
+              REQUEST DOCUMENT
               </a>
             </div>
           </div>

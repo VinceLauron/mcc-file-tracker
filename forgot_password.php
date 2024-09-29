@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include 'db_connect.php';
 
     // Check if the user exists and is verified
-    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? AND status = 'Verified'");
+    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? AND is_verified = 'Verified'");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
@@ -22,18 +22,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->num_rows > 0) {
         // Generate a unique token
-        $code = bin2hex(random_bytes(50));
+        $reset_token = bin2hex(random_bytes(50));
 
         // Store the token in the database
-        $update_stmt = $conn->prepare("UPDATE users SET code = ? WHERE username = ?");
+        $update_stmt = $conn->prepare("UPDATE users SET reset_token = ? WHERE username = ?");
         if ($update_stmt === false) {
             die('Prepare failed: ' . htmlspecialchars($conn->error));
         }
-        $update_stmt->bind_param("ss", $code, $username);
+        $update_stmt->bind_param("ss", $reset_token, $username);
         $update_stmt->execute();
 
         // Construct the reset link with the token as a parameter
-        $resetLink = "http://mccdocumenttracker.com/reset_password.php?code=" . urlencode($code);
+        $resetLink = "http://localhost/FinalFirstQuiz/reset_password.php?reset_token=" . urlencode($reset_token);
 
         // Set up PHPMailer and send the email
         $mail = new PHPMailer\PHPMailer\PHPMailer();
@@ -82,9 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
 </head>
 <body>
-   
 <div class="container-fluid">
-<center><h1>FORGOT PASSWORD</h1></center>
     <?php if (isset($message)) echo $message; ?>
     <form action="forgot_password.php" method="POST">
         <div class="form-group">

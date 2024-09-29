@@ -1,79 +1,42 @@
 <?php
 session_start();
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_number = $_POST['id_number'];
-    $password = $_POST['password'];
-
-    // Database connection
+    $email = $_POST['email'];
+    $password = $_POST['password']; // In this case, the password is the verification code
+ // Database connection
     include 'db_connect.php';
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Check if id_number exists and retrieve the hashed password
-    $stmt = $conn->prepare("SELECT fullname, email, password FROM applicant WHERE id_number = ? AND is_verified = 1");
-    $stmt->bind_param("s", $id_number);
+    // Check if email and verification code match
+    $stmt = $conn->prepare("SELECT fullname FROM applicant WHERE email = ? AND verification_code = ? AND is_verified = 1");
+    $stmt->bind_param("ss", $email, $password);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Fetch user data
+        // Successful login
         $user = $result->fetch_assoc();
-        $stored_hash = $user['password'];
+        $_SESSION['email'] = $email;
+        $_SESSION['fullname'] = $user['fullname'];
 
-        // Verify the provided password against the stored hash
-        if (password_verify($password, $stored_hash)) {
-            // Successful login
-            $_SESSION['id_number'] = $id_number;
-            $_SESSION['email'] = $user['email'];
-            $_SESSION['fullname'] = $user['fullname'];
-
-            // Regenerate session ID to prevent session fixation
-            session_regenerate_id(true);
-
-            // Debugging
-            error_log("Login successful for id_number: $id_number");
-
-            // Display SweetAlert and redirect
-            echo '<script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        Swal.fire({
-                            title: "Success!",
-                            text: "Login successful!",
-                            icon: "success",
-                            confirmButtonText: "OK"
-                        }).then(function() {
-                            window.location.href = "index.php"; // Redirect to dashboard or another page
-                        });
+        // Display SweetAlert
+        echo '<script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    Swal.fire({
+                        title: "Success!",
+                        text: "Login successful!",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    }).then(function() {
+                        window.location.href = "index.php"; // Redirect to dashboard or another page
                     });
-                  </script>';
-        } else {
-            // Debugging
-            error_log("Password verification failed for id_number: $id_number");
-
-            // Display SweetAlert for invalid login
-            echo '<script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        Swal.fire({
-                            title: "Error!",
-                            text: "Invalid alumni ID or password.",
-                            icon: "error",
-                            confirmButtonText: "OK"
-                        });
-                    });
-                  </script>';
-        }
+                });
+              </script>';
     } else {
-        // Debugging
-        error_log("No user found for id_number: $id_number");
-
         // Display SweetAlert for invalid login
         echo '<script>
                 document.addEventListener("DOMContentLoaded", function() {
                     Swal.fire({
                         title: "Error!",
-                        text: "Invalid alumni ID or password.",
+                        text: "Invalid email or verification code.",
                         icon: "error",
                         confirmButtonText: "OK"
                     });
@@ -175,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .signup-link:hover {
             text-decoration: underline;
         }
-        .responsive-img {
+        .responsive-img{
             width: 70%;
             height: 70%;
         }
@@ -185,14 +148,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="container">
     <center> <img src="assets/img/mcc1.png" alt="MCC Logo" class="responsive-img" style="margin-bottom: 20px;"></center>
-    <h1>Request Document</h1>
-    <header>Login</header>
-    <form action="login.php" method="POST">
+    <h1>Login Students</h1>
+    <form action="login_transfer.php" method="POST">
         <div class="form">
             <div class="details">
                 <div class="input-field">
-                    <label>Alumni ID</label>
-                    <input type="text" name="id_number" placeholder="Enter your alumni ID" required>
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Enter your email" required>
                 </div>
                 <div class="input-field">
                     <label>Password</label>
@@ -202,7 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <button type="submit" class="submit">
                         <span class="btnText">Login</span>
                     </button>
-                    <a href="login_transfer.php" class="signup-link">For Transfer Students Only!!!</a>
+                    <a href="account_verified.php" class="signup-link">Create New Account for Transfer Students</a>
                 </div>
             </div>
         </div>
