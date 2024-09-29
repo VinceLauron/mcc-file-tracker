@@ -33,13 +33,15 @@ $stmt->bind_result($id, $id_number, $fullname, $contact, $course, $docu_type, $p
     <title>Your Requests - MCC Document Tracker</title>
     <style>
         .container {
-            width: 90%;
+            width: 100%;
+            max-width: 100%;
             margin: 0 auto;
             padding: 20px;
             background: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
             border-radius: 8px;
+            overflow-x: auto; /* Added for horizontal overflow */
         }
         h1 {
             text-align: center;
@@ -56,6 +58,7 @@ $stmt->bind_result($id, $id_number, $fullname, $contact, $course, $docu_type, $p
         th, td {
             padding: 12px;
             text-align: left;
+            word-wrap: break-word; /* Allow text to break within table cells */
         }
         th {
             background: silver;
@@ -141,7 +144,7 @@ $stmt->bind_result($id, $id_number, $fullname, $contact, $course, $docu_type, $p
 </head>
 <body>
     <div class="container">
-        <h1>Your Requests</h1>
+        <h1>Your Requests - MCC Document Tracker</h1>
         <table>
             <thead>
                 <tr>
