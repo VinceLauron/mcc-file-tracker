@@ -17,12 +17,12 @@ if ($result_all_requests) {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
     .container {
-        width: 100%;
-        margin: 20px auto;
-        background: #fff;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+    width: 100%;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
     .card {
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -44,17 +44,20 @@ if ($result_all_requests) {
         text-align: right;
     }
     table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-    table, th, td {
-        border: 1px solid #ddd;
-    }
-    th, td {
-        padding: 8px;
-        text-align: left;
-    }
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    max-width: 200px;
+}
     th {
         background-color: #f2f2f2;
     }
@@ -165,41 +168,42 @@ if ($result_all_requests) {
         </button>
       </div>
       <div class="modal-body">
-        <table class="table table-bordered">
-            <tr>
-                <th>ID Number</th>
-                <td id="view-id-number"></td>
-            </tr>
-            <tr>
-                <th>Full Name</th>
-                <td id="view-fullname"></td>
-            </tr>
-            <tr>
-                <th>Contact</th>
-                <td id="view-contact"></td>
-            </tr>
-            <tr>
-                <th>Course</th>
-                <td id="view-course"></td>
-            </tr>
-            <tr>
-                <th>Document Type</th>
-                <td id="view-docu-type"></td>
-            </tr>
-            <tr>
-                <th>Purpose</th>
-                <td id="view-purpose"></td>
-            </tr>
-            <tr>
-                <th>Date Created</th>
-                <td id="view-date-created"></td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td id="view-status"></td>
-            </tr>
-        </table>
-      </div>
+    <table class="table table-bordered">
+        <tr>
+            <th>ID Number</th>
+            <td id="view-id-number" style="word-wrap: break-word;"></td>
+        </tr>
+        <tr>
+            <th>Full Name</th>
+            <td id="view-fullname" style="word-wrap: break-word;"></td>
+        </tr>
+        <tr>
+            <th>Contact</th>
+            <td id="view-contact" style="word-wrap: break-word;"></td>
+        </tr>
+        <tr>
+            <th>Course</th>
+            <td id="view-course" style="word-wrap: break-word;"></td>
+        </tr>
+        <tr>
+            <th>Document Type</th>
+            <td id="view-docu-type" style="word-wrap: break-word;"></td>
+        </tr>
+        <tr>
+            <th>Purpose</th>
+            <td id="view-purpose" style="word-wrap: break-word;"></td>
+        </tr>
+        <tr>
+            <th>Date Created</th>
+            <td id="view-date-created" style="word-wrap: break-word;"></td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td id="view-status" style="word-wrap: break-word;"></td>
+        </tr>
+    </table>
+</div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>

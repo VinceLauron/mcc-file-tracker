@@ -34,60 +34,88 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <style>
         .container {
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-            color: black;
-        }
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-            color: #fff;
-            margin-top: 10px;
-        }
-        .btn-approve {
-            background-color: #28a745;
-        }
-        .btn-release {
-            background-color: #007bff;
-        }
-        .btn-reject {
-            background-color: #dc3545;
-        }
-        .btn:hover {
-            opacity: 0.9;
-        }
-        .note-input {
-            width: 100%;
-            padding: 8px;
-            margin-top: 10px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
+    width: 100%; /* Adjust the width to be more flexible */
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    max-width: 1200px; /* Maximum width to avoid it becoming too large */
+    overflow-x: auto; /* Allow horizontal scroll if table overflows */
+    word-wrap: break-word; /* Ensure long text breaks */
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    vertical-align: top; /* Ensures proper alignment of long text */
+}
+
+th {
+    background-color: #f2f2f2;
+    color: black;
+}
+
+td {
+    word-wrap: break-word; /* Break long text in table cells */
+    white-space: normal; /* Prevent text from overflowing */
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #fff;
+    margin-top: 10px;
+}
+
+.btn-approve {
+    background-color: #28a745;
+}
+
+.btn-release {
+    background-color: #007bff;
+}
+
+.btn-reject {
+    background-color: #dc3545;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.note-input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* Optional: Ensure modal overflow handling */
+.modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+    word-wrap: break-word;
+}
+
     </style>
 </head>
 <body>
