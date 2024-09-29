@@ -440,7 +440,7 @@
     <div class="container">
       <p>
         &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="index.php">Madridejos Community College</a>
+        <a href="index.php">Madridejos Community College -Designed By Vince Simuelle Lauron</a>
       </p>
     </div>
   </section>
