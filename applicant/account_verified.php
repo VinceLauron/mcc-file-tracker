@@ -117,10 +117,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form id="verifyForm" action="" method="POST">
         <div class="form">
             <div class="details">
-                <div class="input-field">
-                    <label>School ID Number</label>
-                    <input type="text" name="id_number" placeholder="Enter your School Number" required>
-                </div>
+            <div class="input-field">
+                <label>School ID Number</label>
+                <input type="text" name="id_number" placeholder="Enter your School Number" required pattern="^\d{4}-\d{4}$" title="Format: YYYY-YYYY (8 digits total)">
+            </div>
+
                 <div class="input-field">
                     <label>Fullname</label>
                     <input type="text" name="fullname" placeholder="Enter your Fullname" required>
@@ -137,6 +138,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <script>
 function confirmSubmission() {
+    const idInput = document.querySelector('input[name="id_number"]');
+    const idPattern = /^\d{4}-\d{4}$/;
+
+    if (!idPattern.test(idInput.value)) {
+        Swal.fire({
+            title: 'Invalid Format!',
+            text: "School ID Number must be in the format YYYY-YYYY.",
+            icon: 'error'
+        });
+        return;
+    }
+
     Swal.fire({
         title: 'Are you sure?',
         text: "Make sure the details are correct!",
@@ -151,6 +164,7 @@ function confirmSubmission() {
         }
     });
 }
+
 </script>
 
 </body>

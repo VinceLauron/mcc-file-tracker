@@ -2,7 +2,14 @@
 // Check if the query parameters for School ID and Full Name are set
 $id_number = isset($_GET['id_number']) ? $_GET['id_number'] : '';
 $fullname = isset($_GET['fullname']) ? $_GET['fullname'] : '';
+
+// Redirect if the ID number or Full Name is not set
+if (empty($id_number) || empty($fullname)) {
+    header("Location: login_transfer.php");
+    exit();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -165,88 +172,112 @@ $fullname = isset($_GET['fullname']) ? $_GET['fullname'] : '';
         <center><h1>Create New Account</h1></center>
 
         <form action="register.php" method="POST" id="registration-form">
-            <div class="form first">
-                <div class="details personal">
-                    <span class="title">Personal Details</span>
+    <div class="form first">
+        <div class="details personal">
+            <span class="title">Personal Details</span>
 
-                    <div class="fields">
-                    <div class="input-field">
-                            <label>School ID Number</label>
-                            <!-- Auto-fill the School ID Number, and make it read-only -->
-                            <input type="text" name="id_number" placeholder="Enter School ID number" value="<?php echo htmlspecialchars($id_number); ?>" readonly>
-                        </div>
-                        <div class="input-field">
-                            <label>Full Name</label>
-                            <!-- Auto-fill the Full Name, and make it read-only -->
-                            <input type="text" name="fullname" placeholder="Enter your name" value="<?php echo htmlspecialchars($fullname); ?>" readonly>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Date of Birth</label>
-                            <input type="date" name="dob" placeholder="Enter birth date" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Gender</label>
-                            <select name="sex" required>
-                                <option disabled selected>Select gender</option>
-                                <option>Male</option>
-                                <option>Female</option>
-                                <option>Others</option>
-                            </select>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Email</label>
-                            <input type="email" name="email" placeholder="Enter your email" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Mobile Number</label>
-                            <input type="text" name="contact" placeholder="Enter mobile number" required>
-                        </div>
-                    </div>
+            <div class="fields">
+                <div class="input-field">
+                    <label>School ID Number</label>
+                    <input type="text" name="id_number" placeholder="Enter School ID number" value="<?php echo htmlspecialchars($id_number); ?>" readonly>
+                </div>
+                <div class="input-field">
+                    <label>Full Name</label>
+                    <input type="text" name="fullname" placeholder="Enter your name" value="<?php echo htmlspecialchars($fullname); ?>" readonly>
                 </div>
 
-                <div class="details ID">
-                    <div class="fields">
-                        <div class="input-field">
-                            <label>Program Graduated</label>
-                            <select id="program_graduated" name="program_graduated" required>
-                                <option value="" disabled selected>Select Course Here</option>
-                                <option value="BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</option>
-                                <option value="BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT">BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT</option>
-                                <option value="BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT">BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT</option>
-                                <option value="BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO">BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO</option>
-                                <option value="BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION">BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION</option>
-                            </select>
-                        </div>
+                <div class="input-field">
+                    <label>Date of Birth</label>
+                    <input type="date" name="dob" placeholder="Enter birth date" required>
+                </div>
 
-                        <div class="input-field">
-                            <label>Year Of Admission</label>
-                            <input type="text" name="admission" placeholder="Enter Year Admission" required>
-                        </div>
+                <div class="input-field">
+                    <label>Gender</label>
+                    <select name="sex" required>
+                        <option disabled selected>Select gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Others</option>
+                    </select>
+                </div>
 
-                        <div class="input-field">
-                            <label>Year Graduated</label>
-                            <input type="text" name="year_graduated" placeholder="Enter Year Graduated" required>
-                        </div>
-                    </div>
+                <div class="input-field">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                </div>
 
-                    <div class="buttons">
-                        <button type="button" class="backBtn" onclick="window.location.href='login_transfer.php'">
-                            <i class="uil uil-navigator"></i>
-                            <span class="btnText">Back</span>
-                        </button>
-                        
-                        <button type="submit" class="submit">
-                            <span class="btnText">Submit</span>
-                            <i class="uil uil-navigator"></i>
-                        </button>
-                    </div>
+                <div class="input-field">
+                    <label>Mobile Number</label>
+                    <input type="text" name="contact" placeholder="Enter mobile number" required pattern="^\d{11}$" title="Mobile number must be exactly 11 digits." onkeypress="return isNumberKey(event)">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="details ID">
+            <div class="fields">
+                <div class="input-field">
+                    <label>Program Graduated</label>
+                    <select id="program_graduated" name="program_graduated" required>
+                        <option value="" disabled selected>Select Course Here</option>
+                        <option value="BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</option>
+                        <option value="BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT">BACHELOR OF SCIENCE IN BUSINESS ADMINISTRATION MAJOR IN FINANCIAL MANAGEMENT</option>
+                        <option value="BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT">BACHELOR OF SCIENCE IN HOSPITALITY MANAGEMENT</option>
+                        <option value="BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO">BACHELOR OF SCIENCE IN SECONDARY EDUCATION MAJOR IN FILIPINO</option>
+                        <option value="BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION">BACHELOR OF SCIENCE IN ELEMENTARY EDUCATION</option>
+                    </select>
+                </div>
+
+                <div class="input-field">
+                    <label>Year Of Admission</label>
+                    <input type="text" name="admission" placeholder="Enter Year of Admission" required pattern="^\d{4}-\d{4}$" title="Format: YYYY-YYYY (8 digits total)">
+                </div>
+
+                <div class="input-field">
+                    <label>Year Graduated</label>
+                    <input type="text" name="year_graduated" placeholder="Enter Year Graduated" required pattern="^\d{4}-\d{4}$" title="Format: YYYY-YYYY (8 digits total)">
                 </div>
             </div>
-        </form>
+
+            <div class="buttons">
+                <button type="button" class="backBtn" onclick="window.location.href='login_transfer.php'">
+                    <i class="uil uil-navigator"></i>
+                    <span class="btnText">Back</span>
+                </button>
+
+                <button type="submit" class="submit">
+                    <span class="btnText">Submit</span>
+                    <i class="uil uil-navigator"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
     </div>
 </body>
 </html>
+<script>
+    function confirmSubmission() {
+    const idInput = document.querySelector('input[name="id_number"]');
+    const idPattern = /^\d{4}-\d{4}$/;
+
+    if (!idPattern.test(idInput.value)) {
+        Swal.fire({
+            title: 'Invalid Format!',
+            text: "School ID Number must be in the format YYYY-YYYY.",
+            icon: 'error'
+        });
+        return;
+    }
+}
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    // Allow only numbers (0-9)
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+</script>
+
