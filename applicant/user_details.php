@@ -179,31 +179,31 @@ $conn->close();
             <div class="form-group-inline">
                 <div class="form-group">
                     <label for="dob">Date of Birth:</label>
-                    <input type="date" id="dob" name="dob" value="<?php echo htmlspecialchars($dob); ?>" required>
+                    <input type="date" id="dob" name="dob" value="<?php echo htmlspecialchars($dob); ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label for="contact">Mobile Number:</label>
-                    <input type="text" id="contact" name="contact" value="<?php echo htmlspecialchars($contact); ?>" required>
+                    <input type="text" id="contact" name="contact" value="<?php echo htmlspecialchars($contact); ?>" required maxlength="11" oninput="validateMobileNumber(this)">
                 </div>
             </div>
             <div class="form-group-inline">
                 <div class="form-group">
                     <label for="sex">Gender:</label>
-                    <input type="text" id="sex" name="sex" value="<?php echo htmlspecialchars($sex); ?>" required>
+                    <input type="text" id="sex" name="sex" value="<?php echo htmlspecialchars($sex); ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label for="program_graduated">Program Graduated:</label>
-                    <input type="text" id="program_graduated" name="program_graduated" value="<?php echo htmlspecialchars($program_graduated); ?>" required>
+                    <input type="text" id="program_graduated" name="program_graduated" value="<?php echo htmlspecialchars($program_graduated); ?>" readonly>
                 </div>
             </div>
             <div class="form-group-inline">
                 <div class="form-group">
                     <label for="year_graduated">Year Graduated:</label>
-                    <input type="text" id="year_graduated" name="year_graduated" value="<?php echo htmlspecialchars($year_graduated); ?>" required>
+                    <input type="text" id="year_graduated" name="year_graduated" value="<?php echo htmlspecialchars($year_graduated); ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label for="admission">Year Of Admission:</label>
-                    <input type="text" id="admission" name="admission" value="<?php echo htmlspecialchars($admission); ?>" required>
+                    <input type="text" id="admission" name="admission" value="<?php echo htmlspecialchars($admission); ?>" readonly>
                 </div>
             </div>
             <div class="form-group">
@@ -213,3 +213,8 @@ $conn->close();
     </div>
 </body>
 </html>
+<script>
+    function validateMobileNumber(input) {
+        input.value = input.value.replace(/[^0-9]/g, ''); // Allow only digits
+    }
+</script>

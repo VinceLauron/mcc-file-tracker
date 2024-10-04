@@ -420,10 +420,10 @@
               <a class="active" href="index.php">
                 Home
               </a>
-              <a class="" href="login.php">
+              <a class="" href="login.php" hidden>
                 Login
               </a>
-              <a class="" href="applicant/login.php">
+              <a class="" href="applicant/login.php" hidden>
               REQUEST DOCUMENT
               </a>
             </div>

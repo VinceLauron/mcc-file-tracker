@@ -133,7 +133,7 @@ $conn->close();
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Update Changes</button>
+                        <button type="submit" class="btn btn-primary">Resubmit Changes</button>
                     </div>
                 </div>
             </form>
