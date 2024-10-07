@@ -65,9 +65,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="assets/css/reset_password.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
+    <style>
+        body{
+            background-color: lightcyan;
+        }
+        .container-fluid {
+            text-align: center;
+            margin-top: 50px;
+            background-color: lavender;
+        }
+
+        img {
+            width: 250px; /* Adjust image size */
+            border-radius: 15px; /* Add border radius */
+            display: block;
+            margin: 0 auto 20px; /* Center image and add bottom margin */
+        }
+
+        p {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 300px;
+            margin: 0 auto;
+            text-align: center; /* Center the placeholder text */
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 10px; /* Add border-radius for the input field */
+        }
+
+        .btn {
+            border-radius: 10px;
+            padding: 10px 10px;
+            font-size: 16px;
+            width: 65%;
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid">
+        <img src="img/password-protected-email.gif" alt="Password Protection">
+        <p>Enter New Password</p>
         <form id="resetPasswordForm" action="reset_password.php" method="POST">
             <?php
             // Retrieve reset_token from the URL
@@ -75,8 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ?>
             <input type="hidden" name="reset_token" value="<?php echo $reset_token; ?>">
             <div class="form-group">
-                <label for="password">New Password</label>
-                <input type="password" name="password" id="password" class="form-control" required>
+                <input type="password" name="password" id="password" placeholder="Enter New Password" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-primary">Reset Password</button>
         </form>

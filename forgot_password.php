@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $update_stmt->execute();
 
         // Construct the reset link with the token as a parameter
-        $resetLink = "http://localhost/FinalFirstQuiz/reset_password.php?reset_token=" . urlencode($reset_token);
+        $resetLink = "http://mccdocumenttracker.com/reset_password.php?reset_token=" . urlencode($reset_token);
 
         // Set up PHPMailer and send the email
         $mail = new PHPMailer\PHPMailer\PHPMailer();
@@ -80,14 +80,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Forgot Password</title>
     <link rel="stylesheet" href="assets/css/forgot_password.css">
     <link rel="icon" href="applicant/assets/img/mcc1.png" type="image/x-icon" />
+    <style>
+        body{
+            background-color: lightcyan;
+        }
+        .container-fluid {
+            text-align: center;
+            margin-top: 50px;
+            background-color: lavender;
+        }
+
+        img {
+            width: 250px; /* Adjust image size */
+            border-radius: 15px; /* Add border radius */
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: justify;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 300px;
+            margin: 0 auto;
+            text-align: center; /* Center the placeholder text */
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid">
+    <img src="img/password-protection.gif" alt="Password Protection">
+    <h1>Please Enter The Email Address</h1>
+    <p>We will send you a link to reset your password</p>
     <?php if (isset($message)) echo $message; ?>
     <form action="forgot_password.php" method="POST">
         <div class="form-group">
-            <label for="username">Email (Username)</label>
-            <input type="email" name="username" id="username" class="form-control" required>
+            <input type="email" name="username" id="username" placeholder="Enter Email Address" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-primary">Request Password Reset</button>
     </form>
