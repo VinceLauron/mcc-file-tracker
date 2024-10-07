@@ -2,57 +2,6 @@
 session_start();
 include 'db_connect.php';
 
-if (isset($_GET['action']) && $_GET['action'] == 'save_files') {
-    $id = isset($_POST['id']) ? $_POST['id'] : '';
-    $folder_id = isset($_POST['folder_id']) ? $_POST['folder_id'] : '';
-    $fullname = isset($_POST['fullname']) ? $_POST['fullname'] : '';
-    $description = isset($_POST['description']) ? $_POST['description'] : '';
-    $is_public = isset($_POST['is_public']) ? 1 : 0;
-
-    if (empty($id)) {
-        // Insert new file
-        if ($_FILES['upload']['tmp_name'] != '') {
-            $fname = strtotime(date('Y-m-d H:i')) . '_' . $_FILES['upload']['name'];
-            $move = move_uploaded_file($_FILES['upload']['tmp_name'], 'assets/uploads/' . $fname);
-
-            if ($move) {
-                $file = $_FILES['upload']['name'];
-                $file = explode('.', $file);
-                $chk = $conn->query("SELECT * FROM files WHERE SUBSTRING_INDEX(name, ' ||', 1) = '$file[0]' AND folder_id = '$folder_id' AND file_type = '$file[1]'");
-
-                if ($chk->num_rows > 0) {
-                    $file[0] = $file[0] . ' ||' . ($chk->num_rows);
-                }
-
-                $file_number = generateUniqueFileNumber($conn);
-
-                $data = "name = '$file[0]', fullname = '$fullname', folder_id = '$folder_id', description = '$description', user_id = '".$_SESSION['login_id']."', file_type = '$file[1]', file_path = '$fname', is_public = $is_public, file_number = '$file_number'";
-                $save = $conn->query("INSERT INTO files SET $data");
-
-                if ($save) {
-                    // Return JSON response with success status and new data
-                    echo json_encode(array('status' => 1, 'data' => $data));
-                    exit;
-                }
-            }
-        }
-    } else {
-        // Update existing file
-        $data = "fullname = '$fullname', description = '$description', is_public = $is_public";
-        $save = $conn->query("UPDATE files SET $data WHERE id = $id");
-
-        if ($save) {
-            // Return JSON response with success status and updated data
-            echo json_encode(array('status' => 1, 'data' => $data));
-            exit;
-        }
-    }
-
-    // Return JSON response with failure status if saving fails
-    echo json_encode(array('status' => 0, 'msg' => 'Failed to save file.'));
-    exit;
-}
-
 function generateUniqueFileNumber($conn) {
     $file_number = sprintf("%'012d", mt_rand(0, 999999999999));
     $chk = $conn->query("SELECT * FROM files WHERE file_number = '$file_number'");
@@ -265,7 +214,7 @@ class Action {
         $data .= ", username = '$username' ";
         $data .= ", password = '$password' ";
         $data .= ", type = '$type' ";
-        $data .= ", status = 'Verified' "; // Automatically set to Verified
+        $data .= ", is_verified = 'Verified' "; // Automatically set to Verified
     
         // Check if it's a new user or an update
         if (empty($id)) {

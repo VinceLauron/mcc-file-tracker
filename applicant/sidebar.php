@@ -107,19 +107,19 @@ if (!isset($_SESSION['email'])) {
     <nav id="sidebar" class="mx-lt-5 bg-dark">
         <img src="assets/img/mcc1.png" class="logo">
         <div class="sidebar-list">
-            <div class="nav-item nav-home" onclick="loadContent('home.php')">
-                <span class="icon-field"><i class="fa fa-home"></i></span> Home
-            </div>
-            <div class="nav-item nav-files" onclick="loadContent('request_form.php')">
-                <span class="icon-field"><i class="fa fa-envelope"></i></span> Request Form
-            </div>
-            <div class="nav-item nav-files" onclick="loadContent('receive_form.php')">
-                <span class="icon-field"><i class="fa fa-envelope-open"></i></span> Status Request
-            </div>
-            <div class="nav-item nav-users" onclick="loadContent('user_details.php')">
-                <span class="icon-field"><i class="fa fa-users"></i></span> User Details
-            </div>
-        </div>
+        <a href="index.php?page=home" class="nav-item nav-home <?php echo isset($_GET['page']) && $_GET['page'] === 'home' ? 'active-dashboard' : ''; ?>">
+            <span class='icon-field'><i class="fa fa-home"></i></span> Home
+        </a>
+        <a href="index.php?page=request_form" class="nav-item nav-files <?php echo isset($_GET['page']) && $_GET['page'] === 'request_form' ? 'active-requests' : ''; ?>">
+            <span class='icon-field'><i class="fa fa-file"></i></span> Status Request
+        </a>
+        <a href="index.php?page=receive_form" class="nav-item nav-form <?php echo isset($_GET['page']) && $_GET['page'] === 'receive_form' ? 'active-all' : ''; ?>">
+            <span class='icon-field'><i class="fa fa-folder-open"></i></span> All Request
+        </a>
+		<a href="index.php?page=user_details" class="nav-item nav-form <?php echo isset($_GET['page']) && $_GET['page'] === 'user_details' ? 'active-all' : ''; ?>">
+            <span class='icon-field'><i class="fa fa-user-plus"></i></span> User Account
+        </a>
+    </div>
     </nav>
 
     <div id="main-content">

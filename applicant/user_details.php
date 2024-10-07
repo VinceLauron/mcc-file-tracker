@@ -1,5 +1,9 @@
 <?php
-session_start();
+
+// Check if session is already started
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 if (!isset($_SESSION['email'])) {
     header("Location: index.php");
     exit();

@@ -31,7 +31,7 @@ session_start();
         }
 
         img {
-            max-width: 100%;
+            max-width: 95%;
             height: auto;
             margin-bottom: 20px;
             animation: zoomIn 2s ease-in-out;

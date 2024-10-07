@@ -1,5 +1,9 @@
 <?php
-session_start();
+
+// Check if session is already started
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
@@ -92,32 +96,33 @@ $conn->close();
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     .main-container {
-      display: flex;
-      justify-content: space-between;
-      margin: 50px auto;
-      max-width: 1200px;
-    }
+  margin: 50px auto;
+  max-width: 1200px;
+}
 
-    .container, .table-container {
-      background: #fff;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      border-radius: 8px;
-    }
+.container, .table-container {
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  width: 100%; /* Ensure full width */
+  max-width: 800px; /* Set a max width */
+}
 
-    .container {
-      width: 60%;
-    }
+.container {
+  margin: 0 auto; /* Center horizontally */
+}
 
-    .table-container {
-      width: 50%;
-      margin-left: 20px;
-    }
+.table-container {
+  margin: 0 auto; /* Center horizontally */
+}
 
-    .container h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+.container h2, .table-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 
     .form-group {
       margin-bottom: 15px;
@@ -145,10 +150,10 @@ $conn->close();
       display: block;
       width: 100%;
       padding: 10px;
-      background: #2a2f5b;
+      background: #2568fb;
       color: #fff;
       border: none;
-      border-radius: 4px;
+      border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
     }

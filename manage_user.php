@@ -9,11 +9,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $username = $_POST['username'];
     $password = md5($_POST['password']); // Hash the password using MD5
-    $status = 'Verified'; // Automatically set status to Verified
+    $is_verified = 'Verified'; // Automatically set status to Verified
 
     // Insert user data into the database
-    $stmt = $conn->prepare("INSERT INTO users (name, username, password, status) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $name, $username, $password, $status);
+    $stmt = $conn->prepare("INSERT INTO users (name, username, password, is_verified) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $name, $username, $password, $is_verified);
 
     if ($stmt->execute()) {
         // No need to send verification code, automatically verified
