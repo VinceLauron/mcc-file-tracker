@@ -1,11 +1,9 @@
 <?php
-session_start();
+
 
 // Database connection
-    $conn = new mysqli("127.0.0.1", "u510162695_fms_db_root", "1Fms_db_root", "u510162695_fms_db");
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+include 'db_connect.php';
+    
         if (!isset($_SESSION['email'])) {
     header('location:login.php');
     exit();
