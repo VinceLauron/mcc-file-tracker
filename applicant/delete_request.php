@@ -27,7 +27,7 @@ if (isset($_GET['id'])) {
     $stmt->close();
 
     // Redirect back to the requests page after deletion
-    header("Location: index.php");
+    header("Location: index.php?page=receive_form");
     exit();
 } else {
     echo "Invalid request ID.";

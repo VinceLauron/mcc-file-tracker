@@ -12,6 +12,8 @@ if (!isset($_SESSION['email'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/img/mcc1.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <title>MCC DOCUMENT TRACKER</title>
     <style>
@@ -26,7 +28,7 @@ if (!isset($_SESSION['email'])) {
             position: fixed;
             width: 250px;
             height: 100%;
-            background-color: #2a2f5b;
+            background-color: black;
             padding-top: 20px;
             left: 0;
             transition: transform 0.3s ease-in-out;
@@ -104,7 +106,7 @@ if (!isset($_SESSION['email'])) {
 </head>
 <body>
     <div id="sidebar-toggle"><i class="fas fa-bars"></i></div>
-    <nav id="sidebar" class="mx-lt-5 bg-dark">
+    <nav id="sidebar" class="mx-lt-5 bg-black">
         <img src="assets/img/mcc1.png" class="logo">
         <div class="sidebar-list">
         <a href="index.php?page=home" class="nav-item nav-home <?php echo isset($_GET['page']) && $_GET['page'] === 'home' ? 'active-dashboard' : ''; ?>">

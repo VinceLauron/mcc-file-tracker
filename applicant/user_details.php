@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         icon: "success",
                         confirmButtonText: "OK"
                     }).then(function() {
-                        window.location.href = "index.php"; // Redirect to dashboard or another page
+                        window.location.href = "index.php?page=user_details"; // Redirect to dashboard or another page
                     });
                 });
               </script>';
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         icon: "error",
                         confirmButtonText: "OK"
                     }).then(function() {
-                        window.location.href = "index.php"; // Redirect to dashboard or another page
+                        window.location.href = "index.php?page=user_details"; // Redirect to dashboard or another page
                     });
                 });
               </script>';
@@ -93,6 +93,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Details</title>
     <style>
+        /* Same styling as before */
         .container {
             background-color: #fff;
             padding: 2em;
@@ -118,7 +119,6 @@ $conn->close();
             padding: 0.5em;
             border: 1px solid #ccc;
             border-radius: 4px;
-
             width: 100%;
             box-sizing: border-box;
         }
@@ -130,46 +130,36 @@ $conn->close();
         .form-group-inline .form-group {
             flex: 1;
         }
-         .form-group img {
-        max-width: 200px; /* Increased maximum width */
-        height: auto; /* Maintain aspect ratio */
-        border-radius: 10px; /* Optional: Add rounded corners for aesthetics */
-    }
-    .button-primary {
-        background-color: #007bff; /* Bootstrap primary color */
-        color: white; /* Text color */
-        border: none; /* Remove border */
-        border-radius: 4px; /* Rounded corners */
-        padding: 0.5em; /* Padding */
-        cursor: pointer; /* Pointer cursor on hover */
-        transition: background-color 0.3s; /* Smooth background color transition */
-    }
-
-    .button-primary:hover {
-        background-color: #0056b3; /* Darker shade on hover */
-    }
+        .form-group img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+        }
+        .button-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.5em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button-primary:hover {
+            background-color: #0056b3;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        function previewImage(event) {
-            var reader = new FileReader();
-            reader.onload = function() {
-                var output = document.getElementById('preview');
-                output.src = reader.result;
-            }
-            reader.readAsDataURL(event.target.files[0]);
-        }
-    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>User Details</h1>
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-                  <center> <label for="picture">Profile Picture:</label></center>
-                   <center><img id="preview" src="uploads/<?php echo htmlspecialchars($picture); ?>" alt="Profile Picture"></center>
-                    <input type="file" id="picture" name="picture" accept="image/*" onchange="previewImage(event)">
-                </div>
+        <form id="user-details-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <center><label for="picture">Profile Picture:</label></center>
+                <center><img id="preview" src="uploads/<?php echo htmlspecialchars($picture); ?>" alt="Profile Picture"></center>
+                <input type="file" id="picture" name="picture" accept="image/*" onchange="previewImage(event)">
+            </div>
             <div class="form-group-inline">
                 <div class="form-group">
                     <label for="id_number">ID Number:</label>
@@ -211,14 +201,68 @@ $conn->close();
                 </div>
             </div>
             <div class="form-group">
-            <button type="submit" class="button-primary">Update Details</button>
+                <button type="submit" class="button-primary">Update Details</button>
             </div>
         </form>
     </div>
+
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('preview');
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function validateMobileNumber(input) {
+            input.value = input.value.replace(/[^0-9]/g, ''); // Allow only digits
+        }
+
+        // Handle form submission with AJAX
+        $('#user-details-form').submit(function(event) {
+            event.preventDefault(); // Prevent traditional form submission
+
+            var formData = new FormData(this); // Create a FormData object to send files
+
+            $.ajax({
+                url: 'update_user.php', // Separate PHP file for processing the form
+                type: 'POST',
+                data: formData,
+                contentType: false, // Important for file uploads
+                processData: false, // Important for file uploads
+                success: function(response) {
+                    var data = JSON.parse(response); // Assuming PHP returns a JSON response
+
+                    if (data.success) {
+                        Swal.fire({
+                            title: "Success!",
+                            text: data.message,
+                            icon: "success",
+                            confirmButtonText: "OK"
+                        }).then(function() {
+                            window.location.href = "index.php?page=user_details";
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: data.message,
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "An error occurred while updating the details.",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
-<script>
-    function validateMobileNumber(input) {
-        input.value = input.value.replace(/[^0-9]/g, ''); // Allow only digits
-    }
-</script>
