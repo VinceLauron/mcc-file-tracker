@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     icon: "success",
                     confirmButtonText: "OK"
                 }).then(function() {
-                    window.location.href = "index.php";
+                    window.location.href = "index.php?page=request_form";
                 });
             });
         </script>';
@@ -96,41 +96,42 @@ $conn->close();
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     .main-container {
-  margin: 50px auto;
-  max-width: 1200px;
-}
+      margin: 50px auto;
+      max-width: 1200px;
+    }
 
-.container, .table-container {
-  background: #fff;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  margin-bottom: 20px;
-  width: 100%; /* Ensure full width */
-  max-width: 800px; /* Set a max width */
-}
+    .container, .table-container {
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 800px;
+    }
 
-.container {
-  margin: 0 auto; /* Center horizontally */
-}
+    .container {
+      margin: 0 auto;
+    }
 
-.table-container {
-  margin: 0 auto; /* Center horizontally */
-}
+    .table-container {
+      margin: 0 auto;
+    }
 
-.container h2, .table-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
+    .container h2, .table-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
     .form-group {
       margin-bottom: 15px;
+      font-family: Arial, sans-serif;
     }
 
     .form-group label {
+      font-size: 18px;
+      margin-bottom: 10px;
       display: block;
-      margin-bottom: 5px;
     }
 
     .form-group input,
@@ -175,6 +176,55 @@ $conn->close();
     tr:nth-child(even) {
       background-color: #f2f2f2;
     }
+
+    /* Radio button styling */
+    .radio-container {
+      margin-bottom: 15px;
+      width: 100%;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #f5f5f5;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .radio-option:hover {
+      background-color: #e6e6e6;
+    }
+
+    .radio-option input {
+      margin-right: 15px;
+      accent-color: #007bff;
+      flex-shrink: 0; /* Make sure radio buttons stay on the left side */
+    }
+
+    .radio-label {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .radio-label div {
+      font-size: 16px;
+      color: #333;
+    }
+
+    .radio-label span {
+      font-size: 16px;
+      color: #666;
+    }
+
+    .radio-option input:checked + .radio-label {
+      background-color: #e0f7fa;
+      border-color: #007bff;
+    }
   </style>
 </head>
 
@@ -182,7 +232,7 @@ $conn->close();
   <div class="main-container">
     <div class="container">
       <h2>Request Form</h2>
-      <form id="requestForm" action="request_form.php" method="POST">
+      <form id="requestForm" action="index.php?page=request_form" method="POST">
         <div class="form-group">
           <label for="id_number">ID Number:</label>
           <input type="text" id="id_number" name="id_number" value="<?php echo $user['id_number']; ?>" readonly>
@@ -199,14 +249,28 @@ $conn->close();
           <label for="course">Course:</label>
           <input type="text" id="course" name="course" value="<?php echo $user['program_graduated']; ?>" readonly>
         </div>
-        <div class="form-group">
-          <label for="docu_type">Document Type:</label>
-          <select id="docu_type" name="docu_type" required>
-            <option value="" disabled selected>Select Document Type</option>
-            <option value="GOOD MORAL CERTIFICATES">Good Moral Certificate</option>
-            <option value="TRANSCRIPT OF RECORDS">TOR</option>
-          </select>
+
+        <!-- Radio buttons for document type selection -->
+        <div class="radio-container">
+          <label for="docu_type">Choose Your Document:</label>
+
+          <label class="radio-option">
+            <input type="radio" id="good_moral" name="docu_type" value="GOOD MORAL CERTIFICATES" required>
+            <div class="radio-label">
+              <div>Good Moral Certificate</div>
+              <span>Free</span>
+            </div>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" id="tor" name="docu_type" value="TRANSCRIPT OF RECORDS" required>
+            <div class="radio-label">
+              <div>TOR</div>
+              <span>₱100</span>
+            </div>
+          </label>
         </div>
+
         <div class="form-group">
           <label for="purpose">Purpose of Request:</label>
           <textarea id="purpose" name="purpose" rows="4" required></textarea>
@@ -218,6 +282,8 @@ $conn->close();
         <button type="submit" class="btn">Submit Request</button>
       </form>
     </div>
+
+    <!-- Notes Table -->
     <div class="table-container">
       <table>
         <h2 style="text-align: center;">NOTES FOR REQUESTING DOCUMENTS</h2>
@@ -242,6 +308,8 @@ $conn->close();
       </table>
     </div>
   </div>
+
+  <!-- External Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 </body>
