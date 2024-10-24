@@ -167,7 +167,7 @@ $stmt->bind_result($id, $id_number, $fullname, $contact, $course, $docu_type, $p
                     echo "<td data-label='Status' class='$status_class'>" . htmlspecialchars($status) . "</td>";
                     echo "<td data-label='Actions'>
                             <a href=\"javascript:void(0);\" class=\"btn btn-view\" onclick=\"openModal($id)\">View</a>
-                            <a href='delete_request.php?id=" . htmlspecialchars($id) . "' class='btn btn-delete' onclick='return confirm(\"Are you sure you want to delete this request?\")'>Delete</a>
+                             <a href='javascript:void(0);' class='btn btn-delete' onclick='confirmDelete($id)'>Delete</a>
                         </td>";
 
                     echo "</tr>";
@@ -530,6 +530,25 @@ function submitFormData(formData) {
         });
         console.error('Error updating request:', error);
     });
+}
+</script>
+<script>
+function confirmDelete(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, Keep it!',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // If the user confirms, redirect to the delete_request.php with the id
+            window.location.href = 'delete_request.php?id=' + id;
+        }
+    })
 }
 </script>
 
