@@ -130,9 +130,6 @@
           <li class="nav-item active">
             <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item" hidden>
-            <a class="nav-link" href="login.php"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
-          </li>
           <form class="form-inline">
             <button class="btn my-2 my-sm-0 nav_search-btn" type="submit">
               <i class="fa fa-search" aria-hidden="true"></i>
@@ -419,9 +416,6 @@
             <div class="info_links">
               <a class="active" href="index.php">
                 Home
-              </a>
-              <a class="" href="login.php" hidden>
-                Login
               </a>
               <a class="" href="applicant/login.php">
               REQUEST DOCUMENT

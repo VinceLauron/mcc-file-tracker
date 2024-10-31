@@ -202,7 +202,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <button type="submit" class="submit">
                         <span class="btnText">Login</span>
                     </button>
-                    <a href="login_transfer.php" class="signup-link" hidden>For Transfer Students Only!!!</a>
+                    <a href="login_transfer.php" class="signup-link">For Transfer Students Only!!!</a>
                 </div>
             </div>
         </div>
