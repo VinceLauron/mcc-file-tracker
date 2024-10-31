@@ -423,7 +423,7 @@
               <a class="" href="login.php" hidden>
                 Login
               </a>
-              <a class="" href="applicant/login.php" hidden>
+              <a class="" href="applicant/login.php">
               REQUEST DOCUMENT
               </a>
             </div>
