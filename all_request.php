@@ -284,7 +284,17 @@ th, td {
         document.getElementById('view-status').textContent = request.status;
     }
 
-    function printRequest(request) {
+    function getDocumentFee(documentType) {
+    // Define document fees
+    const documentFees = {
+        'TRANSCRIPT OF RECORDS': 150,  // Based on the notes table showing TOR fee is 150
+        'GOOD MORAL CERTIFICATES': 0   // Good moral is free
+    };
+    
+    return documentFees[documentType] || 0;
+}
+
+function printRequest(request) {
     let printWindow = window.open('', '_blank');
     printWindow.document.write('<html><head><title>Print Request</title>');
     printWindow.document.write('<style>');
@@ -301,6 +311,8 @@ th, td {
     printWindow.document.write('.invoice-box table tr.item td { border-bottom: 1px solid #eee; }');
     printWindow.document.write('.invoice-box table tr.item.last td { border-bottom: none; }');
     printWindow.document.write('.invoice-box table tr.total td:nth-child(2) { border-top: 2px solid #eee; font-weight: bold; }');
+    printWindow.document.write('.fee-section { margin-top: 20px; border-top: 2px solid #eee; padding-top: 10px; }');
+    printWindow.document.write('.fee-amount { font-size: 18px; font-weight: bold; color: #333; }');
     printWindow.document.write('</style>');
     printWindow.document.write('</head><body>');
 
@@ -311,7 +323,7 @@ th, td {
     printWindow.document.write('<table>');
     printWindow.document.write('<tr>');
     printWindow.document.write('<td class="title">');
-    printWindow.document.write('<img src="img/mcc1.png" style="width:100%; max-width:150px;">'); // Replace with your image URL
+    printWindow.document.write('<img src="img/mcc1.png" style="width:100%; max-width:150px;">');
     printWindow.document.write('</td>');
     printWindow.document.write('<td>');
     printWindow.document.write('Date: ' + request.date_created + '<br>');
@@ -355,6 +367,13 @@ th, td {
     printWindow.document.write('<td>' + request.purpose + '</td>');
     printWindow.document.write('</tr>');
 
+    // Add document fee section
+    const fee = getDocumentFee(request.docu_type);
+    printWindow.document.write('<tr class="fee-section">');
+    printWindow.document.write('<td><strong>Document Fee:</strong></td>');
+    printWindow.document.write('<td class="fee-amount">₱' + fee.toFixed(2) + '</td>');
+    printWindow.document.write('</tr>');
+
     printWindow.document.write('</table>');
     printWindow.document.write('</div>');
 
@@ -362,7 +381,5 @@ th, td {
     printWindow.document.close();
     printWindow.print();
 }
-
-
     displayPage(currentPage);
 </script>
