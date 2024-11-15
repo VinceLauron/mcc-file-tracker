@@ -404,11 +404,11 @@
               <a class="active" href="index.php">
                 Home
               </a>
-              <a class="" href="login.php">
-                Login
+              <a class="" href="help.php">
+                Help Center
               </a>
               <a class="" href="applicant/login.php" >
-                SIgn In as Applicant
+                Request Documents
               </a>
             </div>
           </div>
@@ -489,6 +489,7 @@
             <li>Do not submit fake or tampered documents.</li>
             <li>Do not harass staff for expedited processing.</li>
             <li>Do not share your credentials with others.</li>
+            <li>Do not submit wrong credentials.</li>
           </ul>
       `,
       icon: 'warning',
