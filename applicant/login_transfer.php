@@ -142,6 +142,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 70%;
             height: 70%;
         }
+        .checkbox-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .styled-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
@@ -160,16 +172,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label>Password</label>
                     <input type="password" name="password" placeholder="Enter your password" required>
                 </div>
+                <!-- Terms and Conditions Checkbox -->
+        <div class="checkbox-container">
+            <input type="checkbox" name="terms" id="terms" class="styled-checkbox" required>
+            <label for="terms">
+                I agree to the <a href="#" onclick="showTerms()">Terms and Conditions</a>
+            </label>
+        </div>
                 <div class="buttons">
                     <button type="submit" class="submit">
                         <span class="btnText">Login</span>
                     </button>
-                    <a href="account_verified.php" class="signup-link">Create New Account for Transfer Students</a>
+                    <a href="account_verified.php" class="signup-link">Create New Account for Transfer and Non-graduates Students</a>
                 </div>
             </div>
         </div>
     </form>
 </div>
-
+<script>
+    function showTerms() {
+        Swal.fire({
+            title: 'Terms and Conditions',
+            html: `
+                <p>By using the Madridejos Community College (MCC) Document Tracker System, you agree to the following terms:</p>
+                <ul style="text-align:left;">
+                    <li><strong>Accuracy of Information:</strong> You confirm that all information provided during the request process is accurate and truthful. Providing false information may lead to disciplinary action.</li>
+                    <li><strong>Authorized Use:</strong> This system is intended for the use of MCC students, alumni, and staff only. Unauthorized access or use is strictly prohibited and may result in legal action.</li>
+                    <li><strong>Privacy and Confidentiality:</strong> Your personal information is collected solely for processing your document requests. MCC is committed to protecting your privacy and will not share your information without consent, unless required by law.</li>
+                    <li><strong>Request Processing Time:</strong> Document requests are processed in the order they are received. Processing times may vary depending on the document type and peak request periods.</li>
+                    <li><strong>Fees and Payments:</strong> Certain documents may require processing fees. These fees are non-refundable once the request is submitted.</li>
+                    <li><strong>Notification of Document Status:</strong> You will receive updates regarding the status of your document request through the notification system. It is your responsibility to regularly check for updates.</li>
+                    <li><strong>Prohibited Activities:</strong> Any misuse of this system, including attempting to access others' documents or bypass system security, will result in immediate suspension of access and possible disciplinary action.</li>
+                    <li><strong>Changes to Terms:</strong> MCC reserves the right to modify these terms and conditions at any time. It is your responsibility to review the terms periodically for any changes.</li>
+                </ul>
+                <p>By proceeding with your document request, you acknowledge that you have read, understood, and agree to these terms and conditions. Please contact the MCC administration for any questions.</p>
+            `,
+            icon: 'info',
+            confirmButtonText: 'I Agree',
+            confirmButtonColor: '#007BFF'
+        });
+    }
+</script>
 </body>
 </html>

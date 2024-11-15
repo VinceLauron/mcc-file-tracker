@@ -95,6 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Login</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+        /* Your existing CSS styles */
         body {
             font-family: Arial, sans-serif;
             background-image: url('../radiance/images/back.png');
@@ -121,20 +122,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-bottom: 1em;
             color: #333;
         }
-        .form {
-            width: 100%;
-        }
-        .details {
-            margin-bottom: 1em;
-        }
-        .title {
-            font-size: 18px;
-            margin-bottom: 0.5em;
-            color: #555;
-        }
-        .fields {
-            margin-bottom: 1em;
-        }
         .input-field {
             margin-bottom: 1em;
         }
@@ -149,11 +136,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-        .buttons {
+        .checkbox-container {
             display: flex;
-            justify-content: center;
-            flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
+            margin-top: 10px;
+        }
+        .styled-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            margin-right: 8px;
         }
         .submit {
             background-color: #007BFF;
@@ -184,30 +177,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
 <div class="container">
-    <center> <img src="assets/img/mcc1.png" alt="MCC Logo" class="responsive-img" style="margin-bottom: 20px;"></center>
+    <center><img src="assets/img/mcc1.png" alt="MCC Logo" class="responsive-img" style="margin-bottom: 20px;"></center>
     <h1>Request Document</h1>
     <header>Login</header>
     <form action="login.php" method="POST">
-        <div class="form">
-            <div class="details">
-                <div class="input-field">
-                    <label>Alumni ID</label>
-                    <input type="text" name="id_number" placeholder="Enter your alumni ID" required>
-                </div>
-                <div class="input-field">
-                    <label>Password</label>
-                    <input type="password" name="password" placeholder="Enter your password" required>
-                </div>
-                <div class="buttons">
-                    <button type="submit" class="submit">
-                        <span class="btnText">Login</span>
-                    </button>
-                    <a href="login_transfer.php" class="signup-link">For Transfer Students Only!!!</a>
-                </div>
-            </div>
+        <div class="input-field">
+            <label>Alumni ID</label>
+            <input type="text" name="id_number" placeholder="Enter your alumni ID" required>
+        </div>
+        <div class="input-field">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
+        </div>
+        
+        <!-- Terms and Conditions Checkbox -->
+        <div class="checkbox-container">
+            <input type="checkbox" name="terms" id="terms" class="styled-checkbox" required>
+            <label for="terms">
+                I agree to the <a href="#" onclick="showTerms()">Terms and Conditions</a>
+            </label>
+        </div>
+
+        <div class="buttons">
+            <button type="submit" class="submit">
+                <span class="btnText">Login</span>
+            </button>
+            <a href="login_transfer.php" class="signup-link">For Transfer Students and Non-Graduates only!!!</a>
         </div>
     </form>
 </div>
+
+<script>
+    function showTerms() {
+        Swal.fire({
+            title: 'Terms and Conditions',
+            html: `
+                <p>By using the Madridejos Community College (MCC) Document Tracker System, you agree to the following terms:</p>
+                <ul style="text-align:left;">
+                    <li><strong>Accuracy of Information:</strong> You confirm that all information provided during the request process is accurate and truthful. Providing false information may lead to disciplinary action.</li>
+                    <li><strong>Authorized Use:</strong> This system is intended for the use of MCC students, alumni, and staff only. Unauthorized access or use is strictly prohibited and may result in legal action.</li>
+                    <li><strong>Privacy and Confidentiality:</strong> Your personal information is collected solely for processing your document requests. MCC is committed to protecting your privacy and will not share your information without consent, unless required by law.</li>
+                    <li><strong>Request Processing Time:</strong> Document requests are processed in the order they are received. Processing times may vary depending on the document type and peak request periods.</li>
+                    <li><strong>Fees and Payments:</strong> Certain documents may require processing fees. These fees are non-refundable once the request is submitted.</li>
+                    <li><strong>Notification of Document Status:</strong> You will receive updates regarding the status of your document request through the notification system. It is your responsibility to regularly check for updates.</li>
+                    <li><strong>Prohibited Activities:</strong> Any misuse of this system, including attempting to access others' documents or bypass system security, will result in immediate suspension of access and possible disciplinary action.</li>
+                    <li><strong>Changes to Terms:</strong> MCC reserves the right to modify these terms and conditions at any time. It is your responsibility to review the terms periodically for any changes.</li>
+                </ul>
+                <p>By proceeding with your document request, you acknowledge that you have read, understood, and agree to these terms and conditions. Please contact the MCC administration for any questions.</p>
+            `,
+            icon: 'info',
+            confirmButtonText: 'I Agree',
+            confirmButtonColor: '#007BFF'
+        });
+    }
+</script>
 
 </body>
 </html>

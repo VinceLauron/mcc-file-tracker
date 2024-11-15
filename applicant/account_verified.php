@@ -35,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             height: 100vh;
             margin: 0;
         }
+        
         .container {
             background-color: #fff;
             padding: 2em;
@@ -43,46 +44,75 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 100%;
             max-width: 400px;
             text-align: center;
+            position: relative;
         }
+
+        .message-box {
+            position: absolute;
+            top: 60px; /* Adjust this to position below the button */
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+            width: 250px;
+            padding: 1em;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            color: #333;
+            font-size: 14px;
+            display: none; /* Hide by default */
+        }
+
+        .toggle-button {
+            margin-left: 70%;
+            position: relative;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 0.5em 1em;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .toggle-button:hover {
+            background-color: #0056b3;
+        }
+
         header {
             font-size: 24px;
             margin-bottom: 1em;
             color: #333;
         }
+
         .form {
             width: 100%;
         }
-        .details {
-            margin-bottom: 1em;
-        }
-        .title {
-            font-size: 18px;
-            margin-bottom: 0.5em;
-            color: #555;
-        }
-        .fields {
-            margin-bottom: 1em;
-        }
+
         .input-field {
             margin-bottom: 1em;
         }
+
         .input-field label {
             display: block;
             margin-bottom: 0.5em;
             color: #555;
         }
+
         .input-field input {
             width: 100%;
             padding: 0.5em;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
+
         .buttons {
             display: flex;
             justify-content: center;
             flex-direction: column;
             align-items: center;
         }
+
         .submit {
             background-color: #007BFF;
             color: #fff;
@@ -93,16 +123,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-bottom: 1em;
             width: 100%;
         }
+
         .submit:hover {
             background-color: #0056b3;
         }
-        .signup-link {
-            color: #007BFF;
-            text-decoration: none;
-        }
-        .signup-link:hover {
-            text-decoration: underline;
-        }
+
         .responsive-img {
             width: 70%;
             height: 70%;
@@ -112,31 +137,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
 <div class="container">
+    <button class="toggle-button" onclick="toggleMessageBox()">Instructions</button>
+    
+    <!-- Message Box positioned below the button -->
+    <div class="message-box" id="messageBox">
+        <strong>Instructions:</strong>
+        <p>Please make sure to enter your School ID in the correct format (YYYY-YYYY) and verify your full name as it appears in our records.</p>
+        <p>Try to get in touch with the BSIT Department or ask Mr. Dino Illustrismo for permission if you can't remember your school ID number.</p>
+    </div>
+
     <center> <img src="assets/img/mcc1.png" alt="MCC Logo" class="responsive-img" style="margin-bottom: 20px;"></center>
     <h1>Verify Credentials First To Proceed</h1>
     <form id="verifyForm" action="" method="POST">
         <div class="form">
-            <div class="details">
             <div class="input-field">
                 <label>School ID Number</label>
                 <input type="text" name="id_number" placeholder="Enter your School Number" required pattern="^\d{4}-\d{4}$" title="Format: YYYY-YYYY (8 digits total)">
             </div>
 
-                <div class="input-field">
-                    <label>Fullname</label>
-                    <input type="text" name="fullname" placeholder="Enter your Fullname" required>
-                </div>
-                <div class="buttons">
-                    <button type="button" class="submit" onclick="confirmSubmission()">
-                        <span class="btnText">Submit</span>
-                    </button>
-                </div>
+            <div class="input-field">
+                <label>Fullname</label>
+                <input type="text" name="fullname" placeholder="Enter your Fullname" required>
+            </div>
+            <div class="buttons">
+                <button type="button" class="submit" onclick="confirmSubmission()">
+                    <span class="btnText">Submit</span>
+                </button>
             </div>
         </div>
     </form>
 </div>
 
 <script>
+function toggleMessageBox() {
+    const messageBox = document.getElementById('messageBox');
+    if (messageBox.style.display === 'none' || messageBox.style.display === '') {
+        messageBox.style.display = 'block';
+    } else {
+        messageBox.style.display = 'none';
+    }
+}
+
 function confirmSubmission() {
     const idInput = document.querySelector('input[name="id_number"]');
     const idPattern = /^\d{4}-\d{4}$/;
@@ -164,7 +205,6 @@ function confirmSubmission() {
         }
     });
 }
-
 </script>
 
 </body>
