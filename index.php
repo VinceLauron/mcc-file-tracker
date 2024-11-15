@@ -31,6 +31,7 @@
   <link href="radiance/css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="radiance/css/responsive.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
  /* Make the header section sticky on scroll */
 .header_section {
@@ -43,55 +44,35 @@
   padding: 10px 20px;
 }
 
-/* Style for the alumni link */
-.alumni-link {
-  position: fixed;
-  top: 10px;
-  right: 20px;
-  z-index: 1001;
-  display: flex;
-  flex-direction: column; /* Column layout to stack image and text */
-  align-items: center; /* Center the text below the image */
-  background-color: #f8f9fa;
-  padding: 10px;
-  border-radius: 10px; /* Soft rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  width: 80px; /* Adjust width as necessary */
+.navbar-nav .nav-item-spacing {
+  position: relative; /* For the hover effect */
+  text-decoration: none;
+  color: blue; /* Customize link color */
+  font-size: 14px; /* Adjust the font size */
+  margin-right: 0; /* Reduce spacing between links */
 }
 
-.alumni-link:hover {
-  background-color: #007bff;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+.navbar-nav .nav-item-spacing:hover {
+  text-decoration: none;
+  color: #007bff; /* Change color on hover */
 }
 
-/* Make the alumni image circular with border */
-.alumni-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: 2px solid #007bff;
-  object-fit: cover;
-  transition: transform 0.3s ease;
+.navbar-nav .nav-item-spacing::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: #007bff; /* Line color */
+  transition: width 0.3s ease; /* Smooth animation */
+  position: absolute;
+  bottom: -3px; /* Position the line below the text */
+  left: 0;
 }
 
-.alumni-link:hover .alumni-img {
-  transform: scale(1.1);
+.navbar-nav .nav-item-spacing:hover::after {
+  width: 100%; /* Line expands fully on hover */
 }
 
-/* Alumni text below the image */
-.alumni-text {
-  font-size: 14px;
-  font-weight: bold;
-  color: #007bff;
-  margin-top: 8px; /* Adds space between image and text */
-  text-align: center; /* Center the text */
-  transition: color 0.3s ease;
-}
-
-.alumni-link:hover .alumni-text {
-  color: white;
-}
 
 </style>
 </head>
@@ -113,30 +94,36 @@
         <span>MCC DOCUMENT TRACKER</span>
       </a>
 
-      <!-- Alumni tracker image link with text below -->
-      <div class="alumni-link">
-        <a href="https://mccalumnitracker.com" target="_blank">
-          <img src="img/cap.png" alt="Alumni Tracker" class="alumni-img">
-        </a>
-        <a href="https://mccalumnitracker.com" class="alumni-text" target="_blank">Alumni Tracker</a>
-      </div>
-
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <form class="form-inline">
-            <button class="btn my-2 my-sm-0 nav_search-btn" type="submit">
-              <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
-          </form>
-        </ul>
-      </div>
+  <ul class="navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link nav-item-spacing" href="index.php">Home <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+      <a href="https://mccalumnitracker.com" class="nav-link nav-item-spacing" target="_blank">Alumni Tracker</a>
+    </li>
+    <li class="nav-item">
+      <a href="help.php" class="nav-link nav-item-spacing" target="_blank">Help Center</a>
+    </li>
+    <li class="nav-item">
+        <a id="reminders-link" href="javascript:void(0);" class="nav-link nav-item-spacing">Reminders for Requesters</a>
+      </li>
+      <li class="nav-item">
+        <a id="dosdonts-link" href="javascript:void(0);" class="nav-link nav-item-spacing">Do's and Don'ts</a>
+      </li>
+
+  </ul>
+  <form class="form-inline">
+    <button class="btn my-2 my-sm-0 nav_search-btn" type="submit">
+      <i class="fa fa-search" aria-hidden="true"></i>
+    </button>
+  </form>
+</div>
+
     </nav>
   </div>
 </header>
@@ -162,7 +149,7 @@
                     </p>
                     <div class="btn-box">
                       <a href="applicant/login.php" class="btn1">
-                      REQUEST DOCUMENT
+                        REQUEST DOCUMENT
                       </a>
                     </div>
                   </div>
@@ -417,8 +404,11 @@
               <a class="active" href="index.php">
                 Home
               </a>
-              <a class="" href="applicant/login.php">
-              REQUEST DOCUMENT
+              <a class="" href="login.php">
+                Login
+              </a>
+              <a class="" href="applicant/login.php" >
+                SIgn In as Applicant
               </a>
             </div>
           </div>
@@ -456,8 +446,55 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
   </script>
   <!-- End Google Map -->
-
-
 </body>
+<script>
+  // Handle "Reminders for Requesters" click
+  document.getElementById('reminders-link').addEventListener('click', function () {
+    Swal.fire({
+      title: 'Reminders for Requesters',
+      html: `
+        <ul style="text-align: left;">
+          <li>Submit complete documents to avoid delays.</li>
+          <li>Follow up only after the processing period.</li>
+          <li>Ensure all payments are settled beforehand.</li>
+          <li>Check your email for updates on your request.</li>
+          <li>The parent or guardian may be able to claim the desired document if the requester is unable to do so; however, they must bring the following documents.</li>
+          <li>Bring Valid Id or any valid documents that you are relatives to requester or authentication letter(signature) and Waiver.</li>
+          <li>For payment fees of the documents please proceed to the cashier.</li>
+        </ul>
+      `,
+      icon: 'info',
+      confirmButtonText: 'Got it!',
+    });
+  });
+
+  // Handle "Do's and Don'ts" click
+  document.getElementById('dosdonts-link').addEventListener('click', function () {
+    Swal.fire({
+      title: "Do's and Don'ts",
+      html: `
+        <ul style="text-align: left;">
+          <li><strong>Do's:</strong></li>
+          <ul>
+            <li>Sign in to Alumni Tracker to proceed sign up form of the requesting document.</li>
+            <li>Provide accurate information on forms.</li>
+            <li>Respect the processing timeline.</li>
+            <li>Ask questions if unsure about the process.</li>
+            <li>Submit all the requirements if needed.</li>
+            <li>Try to read Terms and Conditions, Do's and Don'ts for the clear instructions.</li>
+            <li>Don't click the link if you are already Alumni it is for Transferes and Non-Graduates students only.</li>
+          </ul>
+          <li><strong>Don'ts:</strong></li>
+          <ul>
+            <li>Do not submit fake or tampered documents.</li>
+            <li>Do not harass staff for expedited processing.</li>
+            <li>Do not share your credentials with others.</li>
+          </ul>
+      `,
+      icon: 'warning',
+      confirmButtonText: 'Understood',
+    });
+  });
+</script>
 
 </html>
