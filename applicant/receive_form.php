@@ -204,6 +204,7 @@ $stmt->bind_result($id, $id_number, $fullname, $contact, $course, $docu_type, $p
 		<label>Document Type:</label>
 		<div class="radio-item"><input name="docu_type" id="docuType1" type="radio" value="Transcript Of Records"><label for="docuType1">Transcript Of Records</label></div>
         <div class="radio-item"><input name="docu_type" id="docuType2" type="radio" value="Certificate Of Good Moral"><label for="docuType2">Certificate Of Good Moral</label></div>
+        <div class="radio-item"><input name="docu_type" id="docuType3" type="radio" value="Diploma"><label for="docuType3">Diploma</label></div>
 	</div>
 </section>
 
@@ -453,6 +454,8 @@ function openModal(id) {
                 document.getElementById('docuType1').checked = true;
             } else if (data.docu_type === 'Certificate Of Good Moral') {
                 document.getElementById('docuType2').checked = true;
+            } else if (data.docu_type === 'Diploma') {
+                document.getElementById('docuType3').checked = true;
             }
 
             // Set status (read-only)

@@ -13,6 +13,19 @@ if ($result_all_requests) {
 } else {
     echo "Error retrieving all requests: " . $conn->error;
 }
+// Fetch request details including the image path
+$sql = "SELECT * FROM request WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $requestId);
+$stmt->execute();
+$request = $stmt->get_result()->fetch_assoc();
+
+if ($request) {
+    echo "<div class='image-container'>";
+    echo "<img src='" . $request['image_path'] . "' alt='Document Image' style='max-width: 200px; height: auto;'>";
+    echo "</div>";
+}
+
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>
@@ -168,41 +181,44 @@ th, td {
         </button>
       </div>
       <div class="modal-body">
-    <table class="table table-bordered">
-        <tr>
-            <th>ID Number</th>
-            <td id="view-id-number" style="word-wrap: break-word;"></td>
-        </tr>
-        <tr>
-            <th>Full Name</th>
-            <td id="view-fullname" style="word-wrap: break-word;"></td>
-        </tr>
-        <tr>
-            <th>Contact</th>
-            <td id="view-contact" style="word-wrap: break-word;"></td>
-        </tr>
-        <tr>
-            <th>Course</th>
-            <td id="view-course" style="word-wrap: break-word;"></td>
-        </tr>
-        <tr>
-            <th>Document Type</th>
-            <td id="view-docu-type" style="word-wrap: break-word;"></td>
-        </tr>
-        <tr>
-            <th>Purpose</th>
-            <td id="view-purpose" style="word-wrap: break-word;"></td>
-        </tr>
-        <tr>
-            <th>Date Created</th>
-            <td id="view-date-created" style="word-wrap: break-word;"></td>
-        </tr>
-        <tr>
-            <th>Status</th>
-            <td id="view-status" style="word-wrap: break-word;"></td>
-        </tr>
-    </table>
-</div>
+        <table class="table table-bordered">
+            <tr>
+                <th>ID Number</th>
+                <td id="view-id-number" style="word-wrap: break-word;"></td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td id="view-fullname" style="word-wrap: break-word;"></td>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <td id="view-contact" style="word-wrap: break-word;"></td>
+            </tr>
+            <tr>
+                <th>Course</th>
+                <td id="view-course" style="word-wrap: break-word;"></td>
+            </tr>
+            <tr>
+                <th>Document Type</th>
+                <td id="view-docu-type" style="word-wrap: break-word;"></td>
+            </tr>
+            <tr>
+                <th>Purpose</th>
+                <td id="view-purpose" style="word-wrap: break-word;"></td>
+            </tr>
+            <tr>
+                <th>Date Created</th>
+                <td id="view-date-created" style="word-wrap: break-word;"></td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td id="view-status" style="word-wrap: break-word;"></td>
+            </tr>
+            <tr>
+                <th>Valid ID</th>
+                <td id="view-document-image" style="word-wrap: break-word;"></td>
+            </tr>
+        </table>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -210,6 +226,7 @@ th, td {
     </div>
   </div>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -282,17 +299,20 @@ th, td {
         document.getElementById('view-purpose').textContent = request.purpose;
         document.getElementById('view-date-created').textContent = request.date_created;
         document.getElementById('view-status').textContent = request.status;
+        document.getElementById('view-document-image').textContent = request.document_image;
     }
 
     function getDocumentFee(documentType) {
     // Define document fees
     const documentFees = {
-        'TRANSCRIPT OF RECORDS': 150,  // Based on the notes table showing TOR fee is 150
-        'GOOD MORAL CERTIFICATES': 0   // Good moral is free
+        'TRANSCRIPT OF RECORDS': 'PROCEED TO THE CASHIER',
+        'GOOD MORAL CERTIFICATES': 'PROCEED TO THE CASHIER', // Good moral is free
+        'DIPLOMA': 'PROCEED TO THE CASHIER'
     };
-    
-    return documentFees[documentType] || 0;
+
+    return documentFees[documentType] || 'FREE';
 }
+
 
 function printRequest(request) {
     let printWindow = window.open('', '_blank');
@@ -371,8 +391,9 @@ function printRequest(request) {
     const fee = getDocumentFee(request.docu_type);
     printWindow.document.write('<tr class="fee-section">');
     printWindow.document.write('<td><strong>Document Fee:</strong></td>');
-    printWindow.document.write('<td class="fee-amount">₱' + fee.toFixed(2) + '</td>');
+    printWindow.document.write('<td class="fee-amount">' + fee + '</td>'); // No numeric formatting
     printWindow.document.write('</tr>');
+
 
     printWindow.document.write('</table>');
     printWindow.document.write('</div>');

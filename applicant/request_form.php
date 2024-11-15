@@ -225,6 +225,12 @@ $conn->close();
       background-color: #e0f7fa;
       border-color: #007bff;
     }
+    .cancel-btn {
+  background-color: #f44336; /* Red color */
+  color: white;
+
+}
+
   </style>
 </head>
 
@@ -258,7 +264,6 @@ $conn->close();
             <input type="radio" id="good_moral" name="docu_type" value="GOOD MORAL CERTIFICATES" required>
             <div class="radio-label">
               <div>Good Moral Certificate</div>
-              <span>Free</span>
             </div>
           </label>
 
@@ -266,7 +271,12 @@ $conn->close();
             <input type="radio" id="tor" name="docu_type" value="TRANSCRIPT OF RECORDS" required>
             <div class="radio-label">
               <div>TOR</div>
-              <span>₱100</span>
+            </div>
+          </label>
+          <label class="radio-option">
+            <input type="radio" id="diploma" name="docu_type" value="DIPLOMA" required>
+            <div class="radio-label">
+              <div>Diploma</div>
             </div>
           </label>
         </div>
@@ -279,7 +289,11 @@ $conn->close();
           <label for="date_created">Date Of Request:</label>
           <input type="text" id="date_created" name="date_created" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly>
         </div>
-        <button type="submit" class="btn">Submit Request</button>
+        <div class="form-group">
+          <button type="submit" class="btn">Submit Request</button>
+          <button type="button" class="btn cancel-btn" onclick="window.location.href='index.php?page=home';">Cancel</button>
+        </div>
+
       </form>
     </div>
 
@@ -295,13 +309,19 @@ $conn->close();
         </tr>
         <tr>
           <td>TOR</td>
-          <td>150</td>
+          <td>Proceed to the Cashier</td>
           <td>VALID ID</td>
           <td>7 DAYS</td>
         </tr>
         <tr>
           <td>GOOD MORAL</td>
-          <td>FREE</td>
+          <td>Proceed to the Cashier</td>
+          <td>VALID ID</td>
+          <td>7 DAYS</td>
+        </tr>
+        <tr>
+          <td>DIPLOMA</td>
+          <td>Proceed to the Cashier</td>
           <td>VALID ID</td>
           <td>7 DAYS</td>
         </tr>
